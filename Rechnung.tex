@@ -31,9 +31,56 @@
 			T^*_1 = T^* + T^*_2 \\
 			T^*_2 = T^*_1 - T^*
 		\end{array} \right. \\
-		\frac{dT^*_1}{dt^*} - \frac{dT^*_2}{dt^*} = \frac{dT^*_1}{dt^*} &= k_T\left(T^*_{0} + T^*_{02} - T^* + T^*_2 \right) + \left|q^*\right|\left(T^*_2 - T^*_1\right)  - \left( k_T\left(T^*_{02} - T^*_2\right) + \left|q^*\right|\left(T^*_1 - T^*_2\right) \right) \\
+		\frac{dT^*}{dt^*} = \frac{dT^*_1}{dt^*} - \frac{dT^*_2}{dt^*} &= 
+		k_T\left(T^*_{0} + T^*_{02} - T^* + T^*_2 \right) + \left|q^*\right|\left(T^*_2 - T^*_1\right)  - \left( k_T\left(T^*_{02} - T^*_2\right) + \left|q^*\right|\left(T^*_1 - T^*_2\right) \right) \\
 		&= k_T\left(T^*_{0} - T^*\right) + k_T\left(T^*_{02} + T^*_2\right) + \left|q^*\right|\left(T^*_2 - T^*_1\right) - k_T\left(T^*_{02} - T^*_2\right) - \left|q^*\right|\left(T^*_1 - T^*_2\right) \\
-		&= k_T\left(T^*_{0} - T^*\right) - 2\left|q^*\right|\left(T^*_1 - T^*_2\right) = k_T\left(T^*_{0} - T^*\right) - 2\left|q^*\right|T^*
+		&= k_T\left(T^*_{0} - T^*\right) - 2\left|q^*\right|\left(T^*_1 - T^*_2\right) \\
+		&= k_T\left(T^*_{0} - T^*\right) - 2\left|q^*\right|T^*
+	\end{align*}
+	
+	\begin{align*}
+		S^* = S^*_1 - S^*_2 &\Rightarrow \left\{
+		\begin{array}{l}
+			S^*_1 = S^* + S^*_2 \\
+			S^*_2 = S^*_1 - S^*
+		\end{array} \right. \\
+		\frac{dS^*}{dt^*} &= k_S\left(S^*_{0} - S^*\right) - 2\left|q^*\right|S^*
+	\end{align*}
+	
+	\begin{align*}
+		q^* = a\left( \rho^*_2 - \rho^*_1 \right) &=
+		a \left( 
+			\rho^*_0 - bT^*_2 + cS^*_2 -
+			\left( \rho^*_0 - bT^*_1 + cS^*_1 \right)
+		\right) \\
+		&= a \left( b \left(T^*_1 - T^*_2\right) + c \left( S^*_2 - S^*_1 \right) \right) \\
+		&= a \left( bT^* - cS^* \right)
+	\end{align*}
+	
+	\newpage	
+	
+	\begin{align*}
+		t = k_T \cdot t^* \Rightarrow t^* = \frac{t}{k_T} &\qquad
+		q = 2\frac{q^*}{k_T} \Rightarrow q^* = \frac{q \cdot k_T}{2} \\
+		T = \frac{T^*}{T^*_0} \Rightarrow T^* = T \cdot T^*_0 \\
+		\frac{dT^*}{dt^*} &= k_T\left(T^*_{0} - T^*\right) - 2\left|q^*\right|T^* \\
+		\frac{dT \cdot T^*_0}{\frac{dt}{k_T}} &= 
+		k_T\left(T^*_{0} - T \cdot T^*_0 \right) - 2\left|\frac{q \cdot k_T}{2}\right|T \cdot T^*_0 \\
+		\stackrel{\substack{
+			T^*_{0} \textrm{ konst.}\\
+			k_T > 0
+		}}{\Rightarrow} \frac{dT}{dt} &=
+		\left(1 - T\right) - \left|q\right|T \\
+		S = \frac{S^*}{S^*_0} \Rightarrow S^* = S \cdot S^*_0 \\
+		\frac{dS^*}{dt^*} &= k_S\left(S^*_{0} - S^*\right) - 2\left|q^*\right|S^* \\
+		\frac{dS \cdot S^*_0}{\frac{dt}{k_T}} &= k_S\left(S^*_{0} - S \cdot S^*_0\right) - 2\left|\frac{q \cdot k_T}{2}\right|S \cdot S^*_0 \\
+		\Rightarrow \frac{dS}{dt} &= \underbrace{\frac{k_S}{k_T}}_{=\gamma}\left(1 - S\right) - \left|q\right|S
+	\end{align*}
+	
+	\begin{align*}
+		q^* &= a \left( bT^* - cS^* \right)
+		\Rightarrow \frac{q \cdot k_T}{2} = a\left(b \cdot T \cdot T^*_0 - c \cdot S \cdot S^*_0 \right) \\
+		\Rightarrow q &= \underbrace{2\frac{ab}{k_T}T^*_0}_{=\alpha}T - \underbrace{2\frac{ac}{k_T}S^*_0}_{=\beta}S
 	\end{align*}
 	
 \end{document}
