@@ -1,0 +1,42 @@
+\documentclass[11pt,a4paper]{article} 
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage[table]{xcolor}
+\geometry{
+  left=3cm,
+  right=3cm,
+  top=3cm,
+  bottom=3cm,
+  bindingoffset=0mm
+}
+\usepackage{graphicx}
+\usepackage{dsfont}
+
+\begin{document}
+
+	Bessere Aproximation für die Dichte-Funktion.
+	
+	Die Mathematische Modellbildung wie in 13.2 beschrieben implementieren und Schrittweise laufen lassen. Was sind sinnvolle Werte für \( T_0, S_0, k_t, k_s,  a, b, c\) ?
+
+	(Erweitern des Modells auf n-Behälter?)
+
+	Was bedeutet Skalierung?	 Das Verhältnis \( S = \frac{S^*}{S^*_0} \) hat keine Einheit(Dimension?) mehr. Ich gehe davon aus, dass zum Zeitpunkt \( t=0, S=1 \) gelten muss?
+	
+	Es wird stets mit \( |q| \) argumentiert, ist dies weil der Fluss jeweils in beide Richtungen geht? Das Model kann ja nur stabil sein, wenn auch wieder etwas zurück fließt?
+	
+	Simulieren des Models anhand historischer Werte: \\
+	\url{https://data.giss.nasa.gov/gistemp/} (Temperatur) \\
+	\url{https://podaac.jpl.nasa.gov/SeaSurfaceSalinity} (Salzgehalt) \\
+	Gibt sogar ein Datenimport für MATLAB: \url{https://podaac.jpl.nasa.gov/dataset/SMAP_RSS_L3_SSS_SMI_MONTHLY_V2?ids=&values=&search=aquarius%20%2Bproject}
+	
+	\( T_{0 1/2} \) Jahrestemperaturschwankungen als Sinus...
+	
+	Wie viel Salz müsste ins Nordmeer entleert werden um den Fluss auf dem gleichen Niveau halten zu können?
+	
+	Auswirkungen auf das Klima? Schnittstelle zu einem Temperatur-Modell von Europa?
+	
+\end{document}

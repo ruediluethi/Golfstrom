@@ -1,0 +1,39 @@
+\documentclass[11pt,a4paper]{article} 
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage[table]{xcolor}
+\geometry{
+  left=3cm,
+  right=3cm,
+  top=3cm,
+  bottom=3cm,
+  bindingoffset=0mm
+}
+\usepackage{graphicx}
+\usepackage{dsfont}
+
+\begin{document}
+
+	\begin{align*}
+		\frac{dT^*_1}{dt^*} &= k_T\left(T^*_{01} - T^*_1\right) + \left|q^*\right|\left(T^*_2 - T^*_1\right) \\
+		\frac{dT^*_2}{dt^*} &= k_T\left(T^*_{02} - T^*_2\right) + \left|q^*\right|\left(T^*_1 - T^*_2\right) \\
+		\frac{dS^*_1}{dt^*} &= k_S\left(S^*_{01} - S^*_1\right) + \left|q^*\right|\left(S^*_2 - S^*_1\right) \\
+		\frac{dS^*_2}{dt^*} &= k_S\left(S^*_{02} - S^*_2\right) + \left|q^*\right|\left(S^*_1 - S^*_2\right)
+	\end{align*}
+	
+	\begin{align*}
+		T^* = T^*_1 - T^*_2 &\Rightarrow \left\{
+		\begin{array}{l}
+			T^*_1 = T^* + T^*_2 \\
+			T^*_2 = T^*_1 - T^*
+		\end{array} \right. \\
+		\frac{dT^*_1}{dt^*} - \frac{dT^*_2}{dt^*} = \frac{dT^*_1}{dt^*} &= k_T\left(T^*_{0} + T^*_{02} - T^* + T^*_2 \right) + \left|q^*\right|\left(T^*_2 - T^*_1\right)  - \left( k_T\left(T^*_{02} - T^*_2\right) + \left|q^*\right|\left(T^*_1 - T^*_2\right) \right) \\
+		&= k_T\left(T^*_{0} - T^*\right) + k_T\left(T^*_{02} + T^*_2\right) + \left|q^*\right|\left(T^*_2 - T^*_1\right) - k_T\left(T^*_{02} - T^*_2\right) - \left|q^*\right|\left(T^*_1 - T^*_2\right) \\
+		&= k_T\left(T^*_{0} - T^*\right) - 2\left|q^*\right|\left(T^*_1 - T^*_2\right) = k_T\left(T^*_{0} - T^*\right) - 2\left|q^*\right|T^*
+	\end{align*}
+	
+\end{document}
