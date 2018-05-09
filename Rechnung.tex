@@ -18,6 +18,7 @@
 
 \begin{document}
 
+	Ursprüngliche Gleichungen aus dem Konvektionsmodell:
 	\begin{align*}
 		\frac{dT^*_1}{dt^*} &= k_T\left(T^*_{01} - T^*_1\right) + \left|q^*\right|\left(T^*_2 - T^*_1\right) \\
 		\frac{dT^*_2}{dt^*} &= k_T\left(T^*_{02} - T^*_2\right) + \left|q^*\right|\left(T^*_1 - T^*_2\right) \\
@@ -25,6 +26,7 @@
 		\frac{dS^*_2}{dt^*} &= k_S\left(S^*_{02} - S^*_2\right) + \left|q^*\right|\left(S^*_1 - S^*_2\right)
 	\end{align*}
 	
+	Reduzieren der Gleichungen, indem nur die Differenz betrachtet wird:
 	\begin{align*}
 		T^* = T^*_1 - T^*_2 &\Rightarrow \left\{
 		\begin{array}{l}
@@ -38,6 +40,7 @@
 		&= k_T\left(T^*_{0} - T^*\right) - 2\left|q^*\right|T^*
 	\end{align*}
 	
+	Der Fluss berechnet sich ja gerade jeweils durch die Differenzen der beiden Behälter:
 	\begin{align*}
 		S^* = S^*_1 - S^*_2 &\Rightarrow \left\{
 		\begin{array}{l}
@@ -59,6 +62,8 @@
 	
 	\newpage	
 	
+	Entdimensionalisierung:	
+	
 	\begin{align*}
 		t = k_T \cdot t^* \Rightarrow t^* = \frac{t}{k_T} &\qquad
 		q = 2\frac{q^*}{k_T} \Rightarrow q^* = \frac{q \cdot k_T}{2} \\
@@ -76,11 +81,39 @@
 		\frac{dS \cdot S^*_0}{\frac{dt}{k_T}} &= k_S\left(S^*_{0} - S \cdot S^*_0\right) - 2\left|\frac{q \cdot k_T}{2}\right|S \cdot S^*_0 \\
 		\Rightarrow \frac{dS}{dt} &= \underbrace{\frac{k_S}{k_T}}_{=\gamma}\left(1 - S\right) - \left|q\right|S
 	\end{align*}
+	\(\gamma :\) beschreibt das Verhältnis des Einflusses von Umgebungstemperatur zu Umgebungssalzgehalt. \( \rightarrow \) Was vermischt sich schneller? Die Temperatur oder der Salzgehalt?
 	
 	\begin{align*}
 		q^* &= a \left( bT^* - cS^* \right)
 		\Rightarrow \frac{q \cdot k_T}{2} = a\left(b \cdot T \cdot T^*_0 - c \cdot S \cdot S^*_0 \right) \\
 		\Rightarrow q &= \underbrace{2\frac{ab}{k_T}T^*_0}_{=\alpha}T - \underbrace{2\frac{ac}{k_T}S^*_0}_{=\beta}S
+	\end{align*}
+	
+	\newpage	
+	
+	Gleichgewichtsuntersuchung:
+	\begin{align*}
+		\frac{dT}{dt} = 0 &= \left(1 - T\right) - \left|q\right|T \\
+		&\Rightarrow T = \frac{1}{1+|q|} \\
+		\Rightarrow \frac{dS}{dt} = 0 &= \gamma \left(1 - S\right) - \left|q\right|S \\
+		&\Rightarrow S = \frac{\gamma}{\gamma + |q|}
+	\end{align*}
+	
+	Flussmenge wenn \(S\) und \(T\) im Gleichgewicht:
+	\begin{align*}
+		q = \alpha T - \beta T = \alpha \frac{1}{1+|q|} - \beta \frac{\gamma}{\gamma + |q|} = g(q)
+	\end{align*}
+	
+	Sei nun (Schnittpunkte der Winkelhalbierenden mit g(q))
+	\begin{align*}
+		q = g(q) &\Rightarrow 0 = q - g(q) \stackrel{q > 0}{=}  q - \left(\alpha \frac{1}{1+q} - \beta \frac{\gamma}{\gamma + q} \right) \\
+		& \stackrel{\substack{\textrm{warum}\\\textrm{äquivalent?}}}{\Rightarrow}
+		k(q) := \left( q - g(q) \right) (1+q) (\gamma + q) = 0 \\
+		k(q) &= q(1+q) (\gamma + q) - \alpha \frac{(1+q) (\gamma + q)}{1+q} + \beta \frac{\gamma (1+q) (\gamma + q)}{\gamma + q} \\
+		&= q(1+q) (\gamma + q) - \alpha (\gamma + q) + \beta \gamma (1+q) \\
+		&= q \gamma + q^2 + q^2 \gamma + q^3 - \alpha \gamma - \alpha q + \beta \gamma + \beta \gamma q \\
+		&= q^3 + q^2(1 + \gamma) + q(\gamma - \alpha + \beta \gamma) - \alpha \gamma + \beta \gamma \\
+		& \stackrel{\textrm{Nullstellen}}{\Rightarrow} k(q) \stackrel{!}{=} 0
 	\end{align*}
 	
 \end{document}
