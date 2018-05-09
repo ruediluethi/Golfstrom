@@ -63,8 +63,8 @@ c = 1;
 %             rho = rho_0 - b(T2 - T1*S2/S1) + S2/S1(rho - rho_0)
 %               b = 1/(T2 - T1*S2/S1)( rho_0 - rho - S2/S1(rho_0 - rho) )
 %               b = 1/(T2 - T1*S2/S1)(rho_0 - rho)(1 - S2/S1)
-%{
-abbRho = 1.0275;
+rho_0 = 1000;
+abbRho = 1027.5;
 abbS1 = 33;
 abbT1 = 0;
 abbS2 = 37;
@@ -72,13 +72,11 @@ abbT2 = 30;
 
 b = 1/(abbT2 - abbT1*abbS2/abbS1)*(rho_0 - abbRho)*(1 - abbS2/abbS1)
 c = 1/abbS1*(abbRho - rho_0 + b*abbT1)
-%}
 
 rho = @(T_i,S_i) rho_0 - b*T_i + c*S_i;
 
-%{
-% rho_test_sequence = [abbRho];
-rho_test_sequence = [1.024:1/1000:1.030];
+hold on;
+rho_test_sequence = [1024:1030];
 for rho_i = rho_test_sequence
     T_rho = @(S) 1/b*(rho_0 - rho_i + c*S);
     s = [33:37];
@@ -90,7 +88,6 @@ xlabel('Salzgehalt');
 ylabel('Temperatur');
 hold off;
 return;
-%}
 
 
 % Proportionalitätskonstante a > 0

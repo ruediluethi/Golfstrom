@@ -9,21 +9,38 @@ close all;
 % sollten aber alpha und beta nicht jeweils > 0 sein?
 
 % Anfangsbedingungen
-Tstar_01 = 1;   % wärmer
-Tstar_02 = 0.65; % kälter
+Tstar_01 = 1;    % wärmer
+Tstar_02 = 0.5; % kälter
+
+%Tstar_01 = 20;    % wärmer
+%Tstar_02 = 10;    % kälter
+
 Tstar_0  = Tstar_01 - Tstar_02; 
-Sstar_01 = 1;
-Sstar_02 = 0.5;
-Sstar_0  = Sstar_01 - Sstar_02;
+
+
+Sstar_01 = 0.5;
+Sstar_02 = 1;
+
+%Sstar_01 = 28;
+%Sstar_02 = 30;
+
+Sstar_0  = Sstar_01 - Sstar_02; % Sstar_1 < Sstar_2 => Sstar < 0 => beta < 0
 
 % Austauschraten
 k_T = 1;
 k_S = 0.1; % damit gamma = 0.1 = k_S/k_T
 
+%k_T = 0.5;
+%k_S = 0.2;
+
 % weitere Proportionalitätskonstanten
 a = 1; % > 0
 b = 1; % > 0
 c = 1; % > 0
+
+%a = 1;
+%b = 1;
+%c = 0.5;
 
 % dimensionslose Konstanten
 alpha = 2*(a*b/k_T)*Tstar_0; 
@@ -43,16 +60,22 @@ Sstar   = [Sstar_0]; % Differenz
 S       = [Sstar(end)/Sstar_0]; % dimensionslose Differenz
 
 % Zeitschritt dt^*
-dtstar = 0.1;
+dtstar = 0.01;
 dt     = k_T*dtstar; % dimensionslos
 
 % Begin der Simulation
 tstar = [0];
 t     = [0];
 amount_of_iterations = 10;
+
+% Fluss zum Zeitpunkt t
+Qstar = [];
+Q =     [];
+
 for i = [1:amount_of_iterations/dtstar]
     % Original Gleichungen
     qstar = a*(b*(Tstar_1(end) - Tstar_2(end)) + c*(Sstar_2(end) - Sstar_1(end)));
+    Qstar(end+1) = qstar;
     
     dTstar_1 = ( k_T*(Tstar_01 - Tstar_1(end)) + abs(qstar)*(Tstar_2(end) - Tstar_1(end)) )*dtstar;
     dTstar_2 = ( k_T*(Tstar_02 - Tstar_2(end)) + abs(qstar)*(Tstar_1(end) - Tstar_2(end)) )*dtstar;
@@ -77,6 +100,8 @@ for i = [1:amount_of_iterations/dtstar]
     
     % dimensionslose Rechnung
     q  = alpha*T(end) - beta*S(end);
+    Q(end+1) = q;
+    
     dT = (       (1 - T(end)) - abs(q)*T(end) )*dt;
     dS = ( gamma*(1 - S(end)) - abs(q)*S(end) )*dt;
     
@@ -114,11 +139,16 @@ subplot(row_count,cols_count,8);
 plot(t, S, 'k', k_T*tstar, Sstar./Sstar_0, ':r');
 legend('S','S^*/S^*_0');
 
+% Fluss
+t = t(1:end-1);
+subplot(row_count,cols_count,3);
+plot(t,Qstar,t,Q);
+
 % Gleichgewichtsuntersuchung
 g = @(q) alpha.*(1./(1+abs(q))) - beta.*(gamma./(gamma+abs(q)));
 q = linspace(-2,2,1000);
 
-subplot(row_count,cols_count,3);
+subplot(row_count,cols_count,6);
 plot(q,g(q),q,q,'k',[min(q),max(q)],[0,0],':k');
 axis([min(q) max(q) min(g(q))*2 max(g(q))*2]);
-title({['alpha=',num2str(alpha),', beta=',num2str(beta),', gamma=',num2str(gamma)],['g(0)=alpha-beta=',num2str(alpha-beta),' > 0']});
+title({['alpha=',num2str(alpha),', beta=',num2str(beta),', gamma=',num2str(gamma)],['g(0)=alpha-beta=',num2str(alpha-beta),' < 0']});

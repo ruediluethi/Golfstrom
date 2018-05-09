@@ -34,8 +34,8 @@
 			T^*_2 = T^*_1 - T^*
 		\end{array} \right. \\
 		\frac{dT^*}{dt^*} = \frac{dT^*_1}{dt^*} - \frac{dT^*_2}{dt^*} &= 
-		k_T\left(T^*_{0} + T^*_{02} - T^* + T^*_2 \right) + \left|q^*\right|\left(T^*_2 - T^*_1\right)  - \left( k_T\left(T^*_{02} - T^*_2\right) + \left|q^*\right|\left(T^*_1 - T^*_2\right) \right) \\
-		&= k_T\left(T^*_{0} - T^*\right) + k_T\left(T^*_{02} + T^*_2\right) + \left|q^*\right|\left(T^*_2 - T^*_1\right) - k_T\left(T^*_{02} - T^*_2\right) - \left|q^*\right|\left(T^*_1 - T^*_2\right) \\
+		k_T\left(T^*_{0} + T^*_{02} - T^* - T^*_2 \right) + \left|q^*\right|\left(T^*_2 - T^*_1\right)  - \left( k_T\left(T^*_{02} - T^*_2\right) + \left|q^*\right|\left(T^*_1 - T^*_2\right) \right) \\
+		&= k_T\left(T^*_{0} - T^*\right) + k_T\left(T^*_{02} - T^*_2\right) + \left|q^*\right|\left(T^*_2 - T^*_1\right) - k_T\left(T^*_{02} - T^*_2\right) - \left|q^*\right|\left(T^*_1 - T^*_2\right) \\
 		&= k_T\left(T^*_{0} - T^*\right) - 2\left|q^*\right|\left(T^*_1 - T^*_2\right) \\
 		&= k_T\left(T^*_{0} - T^*\right) - 2\left|q^*\right|T^*
 	\end{align*}
@@ -101,7 +101,8 @@
 	
 	Flussmenge wenn \(S\) und \(T\) im Gleichgewicht:
 	\begin{align*}
-		q = \alpha T - \beta T = \alpha \frac{1}{1+|q|} - \beta \frac{\gamma}{\gamma + |q|} = g(q)
+		q = \alpha T - \beta S
+		 = \alpha \frac{1}{1+|q|} - \beta \frac{\gamma}{\gamma + |q|} = g(q)
 	\end{align*}
 	
 	Sei nun (Schnittpunkte der Winkelhalbierenden mit g(q))
