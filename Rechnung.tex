@@ -93,9 +93,10 @@
 	
 	Gleichgewichtsuntersuchung:
 	\begin{align*}
-		\frac{dT}{dt} = 0 &= \left(1 - T\right) - \left|q\right|T \\
+		\frac{dT}{dt} &= \left(1 - T\right) - \left|q\right|T \stackrel{!}{=} 0 \\
+		&\Rightarrow 1 - T\left(1 + |q|\right) \stackrel{!}{=} 0 \\
 		&\Rightarrow T = \frac{1}{1+|q|} \\
-		\Rightarrow \frac{dS}{dt} = 0 &= \gamma \left(1 - S\right) - \left|q\right|S \\
+		\Rightarrow \frac{dS}{dt} &= \gamma \left(1 - S\right) - \left|q\right|S \stackrel{!}{=} 0 \\
 		&\Rightarrow S = \frac{\gamma}{\gamma + |q|}
 	\end{align*}
 	
@@ -114,6 +115,7 @@
 		&= q(1+q) (\gamma + q) - \alpha (\gamma + q) + \beta \gamma (1+q) \\
 		&= q \gamma + q^2 + q^2 \gamma + q^3 - \alpha \gamma - \alpha q + \beta \gamma + \beta \gamma q \\
 		&= q^3 + q^2(1 + \gamma) + q(\gamma - \alpha + \beta \gamma) - \alpha \gamma + \beta \gamma \\
+		&= q^3 + q^2(1 + \gamma) + q\left(\gamma \left(1 + \beta\right) - \alpha \right) + \gamma \left( \beta - \alpha \right) \\
 		& \stackrel{\textrm{Nullstellen}}{\Rightarrow} k(q) \stackrel{!}{=} 0
 	\end{align*}
 	
