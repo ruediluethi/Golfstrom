@@ -1,4 +1,4 @@
-\documentclass[11pt,a4paper]{article} 
+\documentclass[10pt,a4paper]{article} 
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman]{babel}
 \usepackage{amsmath}
@@ -6,6 +6,7 @@
 \usepackage{geometry}
 \usepackage{hyperref}
 \usepackage[table]{xcolor}
+\usepackage{wasysym}
 \geometry{
   left=3cm,
   right=3cm,
@@ -36,16 +37,20 @@
 	
 	Wie der Abb. 1 zu entnehmen ist, kann aber die in den Unterlagen beschrieben charakteristische Form (hier gestrichelt und gepunktet) nur für Werte mit \(\beta > 0\) angenommen werden?
 	
-	Allgemeiner noch, wie ist überhaupt der Graph für die Funktion \(g(q)\) zu deuten? In Worten: \(g(q)\) zeigt die Flussmenge (abhängig von der Flussmenge?) wenn \(T\) und \(S\) im Gleichgewicht?  Klar ist, dass bei den Schnittpunkten mit der Achsenhalbierenden \(q = g(q)\) sein muss. Also sind bei den Schnittpunkten alle drei Größen \(T,S,q\) im Gleichgewicht? Aber was bedeuten die anderen Punkte auf dem Graphen? Oder die Punkte leicht neben den Schnittpunkte? \\
+	Allgemeiner noch, wie ist überhaupt der Graph für die Funktion \(g(q)\) zu deuten? In Worten: \(g(q)\) zeigt die Flussmenge (abhängig von der Flussmenge?) wenn \(T\) und \(S\) im Gleichgewicht sind? Klar ist, dass bei den Schnittpunkten mit der Achsenhalbierenden \(q = g(q)\) sein muss. Also sind bei den Schnittpunkten alle drei Größen \(T,S,q\) im Gleichgewicht? Aber was bedeuten die anderen Punkte auf dem Graphen? Oder die Punkte leicht neben den Schnittpunkte? \\
 	
 	Wie ist die Äquivalenz von \(g(q)\) und \(k(q)\) zu verstehen?
 	\begin{align*}
 		q = g(q) &\Rightarrow 0 = q - g(q) \stackrel{q > 0}{=}  q - \left(\alpha \frac{1}{1+q} - \beta \frac{\gamma}{\gamma + q} \right) \\
 		& \stackrel{\substack{\textrm{warum}\\\textrm{äquivalent?}}}{\Rightarrow}
 		k(q) := \left( q - g(q) \right) (1+q) (\gamma + q) = 0 \\
-	\end{align*}
+	\end{align*} \\
 	
+	Bei der Gleichgewichtsuntersuchung sind ja jeweils \(T^*_{01}, T^*_{02}, S^*_{01}, S^*_{02}\) feste Größen. Jetzt werden aber ja genau diese durch den Fluss des Golfstromes beeinflusst. Um eine Aussage über die Auswirkungen treffen zu können, müssen nun die Werte dieser Größen variiert werden, oder sollen diese Größen auch als Funktion der Zeit beschrieben sein? Denn eigentlich starten man ja mit einer bestimmten Umgebungstemperatur, welche sich aber ja erst durch Klimawandel etc. verändert. \\
 	
+	Wie wird die Matrix A im Abschnitt 13.4.2 konstruiert?
+	
+	\newpage
 	\subsection*{Parameterwahl}
 	
 	Um das Modell mit der Realität vergleichen zu können, möchten wir realistische Werte für die Konstanten \( T_0, S_0, k_t, k_s,  a, b, c\) bestimmen.
@@ -62,17 +67,25 @@
 	
 	\begin{center}
 	\includegraphics[width=9cm]{Diagramme/salz_temp_dichte.png} \\
-	\textit{hier kommt noch ne schöner Grafik und etwas Rechnung wie die Werte bestimmt wurden.}
+	\textit{Aus der Abbildung 13.2 in den Unterlagen, wurde für eine Dichte von \(1027.5~kg/m^3\) ein Salzgehalt von \(33~\permil\) und eine Temperatur von \(0^\circ\) abgelesen. Gehen wir nun von einem linearen Verhalten aus, so müsste bei gleichbleibender Dichte und einem Salzgehalt von \(37~\permil\) die Temperatur \(30^\circ\) abzulesen sein. Mit diesen Werten und den folgenden zwei Gleichungen, können nun die Konstanten \(b\) und \(c\) (unter der Annahme von \(\rho_0 = 1000~kg/m^3\)) bestimmt werden:}
+	\begin{align*}
+		\left. \begin{array}{ll}
+			\rho = \rho_0 - b T^*_1 + c S^*_1 \\
+			\rho = \rho_0 - b T^*_2 + c S^*_2
+		\end{array} \right\}
+		\Rightarrow b = 0.111, c = 0.833
+	\end{align*}
 	\end{center}	
 	
+	\newpage
 	\subsection*{Erweiterungen}
 	
 	Eine notwendige Erweiterung ist sicherlich, dass \(T_0\) (sowie evtl. \(S_0\)?) als eine Funktion von \(t\) beschrieben werden. So unterliegt \(T_0\) über das Jahr hinweg einer Temperaturschwankung, welche problemlos als Sinus interpoliert werden könnte:
 	
 	\begin{center}
 	\includegraphics[width=9cm]{Diagramme/GISTEMP.png} \\
-	\textit{schönere Grafik und etwas bla bla...\\
-	Quelle: \url{https://podaac.jpl.nasa.gov/SeaSurfaceSalinity}}
+	\textit{Historischer Temperaturverlauf der globalen Umgebungstemperatur über das Jahr. Es wird die Differenz zu einem jährlichen globalen Mittel dargestellt.  \\
+	Quelle: \url{https://data.giss.nasa.gov/gistemp/graphs/}}
 	\end{center}	
 	
 	Für eine genauere Aussage über die lokalen Temperatur könnte das Modell in \(n\) Behälter (anstatt nur 2) gegliedert werden, welche jeweils mit ihren Nachbarn über einen Fluss Temperatur und Salzgehalt austauschen.
@@ -80,21 +93,26 @@
 	\newpage
 	\subsection*{Anhang}
 	
-	Für ein besseres Verständnis des Modelles haben wir in einer ersten Studie die 6 verschiedenen Fälle von \(\alpha, \beta \) und \(\alpha - \beta\) betrachtet. Dabei wurden jeweils nur die Konstanten \(T^*_{01}, T^*_{02}\) und \(S^*_{01}, S^*_{02}\) verändert. Für die restlichen Konstanten wurden folgende Werte benutzt: \(k_T = 1, k_S = 0.1 \Rightarrow \gamma = 0.1\) und \(a = b = c = 1 \). 
+	Für ein besseres Verständnis des Modelles haben wir in einer ersten Studie die 6 verschiedenen Fälle von \(\alpha, \beta \) und \(\alpha - \beta\) betrachtet. Dabei wurden jeweils nur die Konstanten \(T^*_{01}, T^*_{02}\) und \(S^*_{01}, S^*_{02}\) variiert. Für die restlichen Konstanten wurden folgende Werte benutzt: \(k_T = 1, k_S = 0.1 \Rightarrow \gamma = 0.1\) und \(a = b = c = 1 \). 
 	
 	\begin{center}
 	\includegraphics[width=14cm]{Diagramme/Fallstudie.png}
 	\begin{align*}
-		\textrm{Fall 1: } &\qquad \alpha > \beta > 0: g(0) = \alpha - \beta > 0 &\qquad \textrm{(rot)} \\
-		\textrm{Fall 2: } &\qquad \beta > \alpha > 0: g(0) = \alpha - \beta < 0 &\qquad \textrm{(grün)} \\
-		\textrm{Fall 3: } &\qquad \alpha > 0 > \beta: g(0) = \alpha - \beta > 0 &\qquad \textrm{(orange)} \\
-		\textrm{Fall 4: } &\qquad \beta > 0 > \alpha: g(0) = \alpha - \beta < 0 &\qquad \textrm{(gelb)} \\
-		\textrm{Fall 5: } &\qquad \alpha < \beta < 0: g(0) = \alpha - \beta < 0 &\qquad \textrm{(lila)} \\
-		\textrm{Fall 6: } &\qquad \beta < \alpha < 0: g(0) = \alpha - \beta > 0 &\qquad \textrm{(türkis)}
+		\textrm{Fall 1: } &\qquad \alpha > \beta > 0: g(0) = \alpha - \beta > 0 &\qquad \footnotesize{\textrm{(rot, durchgezogen)}} \\
+		&\qquad T^*_{01} = 1, T^*_{02} = 0.5, S^*_{01} = 1, S^*_{02} = 0.75 \Rightarrow \alpha = 1, \beta = 0.5 \\
+		\textrm{Fall 2: } &\qquad \beta > \alpha > 0: g(0) = \alpha - \beta < 0 &\qquad \footnotesize{\textrm{(grün, durchgezogen)}} \\
+		&\qquad T^*_{01} = 1, T^*_{02} = 0.75, S^*_{01} = 1, S^*_{02} = 0.5 \Rightarrow \alpha = 0.5, \beta = 1 \\
+		\textrm{Fall 3: } &\qquad \alpha > 0 > \beta: g(0) = \alpha - \beta > 0 &\qquad \footnotesize{\textrm{(orange, durchgezogen)}} \\
+		&\qquad T^*_{01} = 1, T^*_{02} = 0.5, S^*_{01} = 0.5, S^*_{02} = 1 \Rightarrow \alpha = 1, \beta = -1 \\
+		\textrm{Fall 4: } &\qquad \beta > 0 > \alpha: g(0) = \alpha - \beta < 0 &\qquad \footnotesize{\textrm{(gelb, gestrichelt)}} \\
+		&\qquad T^*_{01} = 0.5, T^*_{02} = 1, S^*_{01} = 1, S^*_{02} = 0.5 \Rightarrow \alpha = -1, \beta = 1 \\
+		\textrm{Fall 5: } &\qquad \alpha < \beta < 0: g(0) = \alpha - \beta < 0 &\qquad \footnotesize{\textrm{(lila, gestrichelt)}} \\
+		&\qquad T^*_{01} = 0.5, T^*_{02} = 1, S^*_{01} = 0.75, S^*_{02} = 1 \Rightarrow \alpha = -1, \beta = -0.5 \\
+		\textrm{Fall 6: } &\qquad \beta < \alpha < 0: g(0) = \alpha - \beta > 0 &\qquad \footnotesize{\textrm{(türkis, gestrichelt)}} \\
+		&\qquad T^*_{01} = 0.75, T^*_{02} = 1, S^*_{01} = 0.5, S^*_{02} = 1 \Rightarrow \alpha = -0.5, \beta = -1
 	\end{align*}
 	\end{center}		
 	
-	Es fällt auf, dass jeweils die Fälle 1,5 (rot,lila) sowie 2,6 (grün,türkis) und 3,4 (orange,gelb) jeweils symmetrisch zueinander stehen.
-	
+	Es fällt auf, dass jeweils die Fälle 1,5 (rot,lila) sowie 2,6 (grün,türkis) und 3,4 (orange,gelb) jeweils symmetrisch zueinander stehen. Die Bedingungen des Golfstroms  ( \(T^*_1 > T^*_2, S^*_1 < S^*_2\)) erfüllt aber nur der Fall 3.
 
 \end{document}

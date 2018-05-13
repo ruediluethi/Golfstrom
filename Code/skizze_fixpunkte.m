@@ -5,8 +5,6 @@ a = 1;
 b = 1;
 c = 1;
 
-
-
 hold on;
 variation_list = linspace(-1,3,9);
 for variation = variation_list

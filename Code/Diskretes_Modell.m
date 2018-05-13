@@ -3,6 +3,8 @@ close all;
 
 row_count = 3;
 cols_count = 3;
+line_strength_thin = 1.5;
+line_strength_thick = 1.5;
 
 sub_plots = [];
 for k = [1:row_count*cols_count]
@@ -13,6 +15,8 @@ end
 
 parameter_list = [];
 color_list = []; % für die Farbe des Graphen
+line_styles = {'-','-','-','--','--','--'};
+line_strengths = [line_strength_thin,line_strength_thin,line_strength_thin,line_strength_thick,line_strength_thick,line_strength_thick];
 
 % Behälter 1: Golf von Mexiko
 % Behälter 2: Nordmeer
@@ -132,14 +136,19 @@ for n = [1:parameter_list_size(1)] % gehe alle Paramter aus parameter_list durch
     disp(['Fall: ',num2str(n)]);
     
     graph_color = color_list(n,:);
+    line_style = line_styles{n};
+    line_strength = line_strengths(n);
 
+    %value_shift = 1/(n*10);
+    value_shift = 0;
+    
     % Anfangsbedingungen
-    Tstar_01 = parameter_list(n,1);    
-    Tstar_02 = parameter_list(n,2);
+    Tstar_01 = parameter_list(n,1)+value_shift;
+    Tstar_02 = parameter_list(n,2)+value_shift;
     Tstar_0  = Tstar_01 - Tstar_02; 
 
-    Sstar_01 = parameter_list(n,3);
-    Sstar_02 = parameter_list(n,4);
+    Sstar_01 = parameter_list(n,3)+value_shift;
+    Sstar_02 = parameter_list(n,4)+value_shift;
     Sstar_0  = Sstar_01 - Sstar_02;
 
     % Austauschraten
@@ -173,6 +182,7 @@ for n = [1:parameter_list_size(1)] % gehe alle Paramter aus parameter_list durch
     % Zeitschritt dt^*
     dtstar = 0.1;
     dt     = k_T*dtstar; % dimensionslos
+    %dt = dtstar;
 
     % Begin der Simulation
     tstar = [0];
@@ -223,37 +233,37 @@ for n = [1:parameter_list_size(1)] % gehe alle Paramter aus parameter_list durch
 
     % Temperatur
     subplot(row_count,cols_count,1);
-    plot(sub_plots(1), tstar, Tstar_1, '--', 'Color', graph_color);
-    plot(sub_plots(1), tstar, Tstar_2, '-.', 'Color', graph_color);
+    plot(sub_plots(1), tstar, Tstar_1, line_style, 'Color', graph_color, 'LineWidth', line_strength);
+    plot(sub_plots(1), tstar, Tstar_2, ':', 'Color', graph_color, 'LineWidth', line_strength);
     title(sub_plots(1), 'Temperatur');
     legend(sub_plots(1), 'T^*_1','T^*_2');
 
-    plot(sub_plots(4), tstar, Tstar, 'Color', graph_color);
+    plot(sub_plots(4), tstar, Tstar, line_style, 'Color', graph_color, 'LineWidth', line_strength);
     plot(sub_plots(4), tstar, Tstar_1-Tstar_2, ':', 'Color', graph_color*0.5);
     legend(sub_plots(4), 'T^*','T^*_1-T^*_2');
 
-    plot(sub_plots(7), t, T, 'Color', graph_color)
+    plot(sub_plots(7), t, T, line_style, 'Color', graph_color, 'LineWidth', line_strength)
     plot(sub_plots(7), k_T*tstar, Tstar./Tstar_0, ':', 'Color', graph_color*0.5);
     legend(sub_plots(7), 'T','T^*/T^*_0');
-
+    
     % Salzgehalt
-    plot(sub_plots(2), tstar, Sstar_1, '--', 'Color', graph_color);
-    plot(sub_plots(2), tstar, Sstar_2, '-.', 'Color', graph_color);
+    plot(sub_plots(2), tstar, Sstar_1, line_style, 'Color', graph_color, 'LineWidth', line_strength);
+    plot(sub_plots(2), tstar, Sstar_2, ':', 'Color', graph_color, 'LineWidth', line_strength);
     title(sub_plots(2), 'Salzgehalt');
     legend(sub_plots(2), 'S^*_1','S^*_2');
 
-    plot(sub_plots(5), tstar, Sstar, 'Color', graph_color);
+    plot(sub_plots(5), tstar, Sstar, line_style, 'Color', graph_color, 'LineWidth', line_strength);
     plot(sub_plots(5), tstar, Sstar_1-Sstar_2, ':', 'Color', graph_color*0.5);
     legend(sub_plots(5), 'S^*','S^*_1-S^*_2');
 
-    plot(sub_plots(8), t, S, 'Color', graph_color)
+    plot1 = plot(sub_plots(8), t, S, line_style, 'Color', graph_color, 'LineWidth', line_strength);
     plot(sub_plots(8), k_T*tstar, Sstar./Sstar_0, ':', 'Color', graph_color*0.5);
     legend(sub_plots(8), 'S','S^*/S^*_0');
 
     % Fluss
     t = t(1:end-1);
 
-    plot(sub_plots(3), t, Q, 'Color', graph_color);
+    plot(sub_plots(3), t, Q, line_style, 'Color', graph_color, 'LineWidth', line_strength);
     plot(sub_plots(3), t, (Qstar/k_T)*2, ':', 'Color', graph_color*0.5);
     title(sub_plots(3), 'Fluss');
     legend(sub_plots(3), 'q','2 q^*/k_T');
@@ -264,7 +274,7 @@ for n = [1:parameter_list_size(1)] % gehe alle Paramter aus parameter_list durch
     
     disp(['g(0) = alpha - beta = ',num2str(g(0))]);
 
-    plot(sub_plots(6), q, g(q), 'Color', graph_color);
+    plot(sub_plots(6), q, g(q), line_style, 'Color', graph_color, 'LineWidth', line_strength);
     plot(sub_plots(6), q, q, 'k'); % Achsenhalbierende
     plot(sub_plots(6), [min(q),max(q)],[0,0],':k'); % x-Achse
     plot(sub_plots(6), [0,0],[min(g(q))*2,max(g(q))*2],':k'); % y-Achse
@@ -278,7 +288,7 @@ for n = [1:parameter_list_size(1)] % gehe alle Paramter aus parameter_list durch
     % k(q)
     k = @(q) (q - g(q)).*(1+q).*(gamma+q);
    
-    plot(sub_plots(9), q, k(q), 'Color', graph_color);
+    plot(sub_plots(9), q, k(q), 'Color', graph_color, 'LineWidth', line_strength);
     plot(sub_plots(9), [-1,1], [0,0], ':k'); % x-Achse
     %axis(sub_plots(9), [0 max(q) min(k(q))*2 max(k(q))]);
     axis(sub_plots(9), [0 max(q) -1 2]);
