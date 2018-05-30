@@ -83,12 +83,14 @@ for rho_i = rho_test_sequence
     line_style = line_styles{rho_i-rho_start+1};
     T_rho = @(S) 1/b*(rho_0 - rho_i + c*S);
     s = [33:37];
-    plot(s,T_rho(s),line_style,'Color',[0,0,0],'DisplayName',num2str(rho_i));
+    plot(s,T_rho(s),line_style,'Color',[0,0,0],'DisplayName',['\rho = ',num2str(rho_i),' kg/m^3']);
 end
 axis([33 37 0 30]);
 legend('show');
 xlabel('Salzgehalt');
 ylabel('Temperatur');
+%legend('boxoff');
+%legend('Location','northoutside');
 hold off;
 
 fig = gcf;

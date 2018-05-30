@@ -59,7 +59,7 @@
 	
 	Für den Salzgehalt \(S_0\) haben wir als Quelle \url{https://podaac.jpl.nasa.gov/SeaSurfaceSalinity} gefunden. Hier gibt es auch historische Jahreswerte, sowie Werte zu den einzelnen Monaten. Wobei aber eine lokale Bestimmung für Nordmeer und Golf von Mexiko aus den Daten exportiert werden müsste.
 	
-	Die Größen \(k_t, k_s\) sind physikalische Konstanten und sicherlich einfach zu finden.
+	Die Größen \(k_T, k_S\) sind physikalische Konstanten und sicherlich einfach zu finden.
 	
 	Der Wert des Proportionalitätsfaktor \(a\) ist uns noch unklar?
 	
@@ -80,13 +80,17 @@
 	\newpage
 	\subsection*{Erweiterungen}
 	
-	Eine notwendige Erweiterung ist sicherlich, dass \(T_0\) (sowie evtl. \(S_0\)?) als eine Funktion von \(t\) beschrieben werden. So unterliegt \(T_0\) über das Jahr hinweg einer Temperaturschwankung, welche problemlos als Sinus interpoliert werden könnte:
+	In den Unterlagen wird das Temperatur, Salzgehalt, Dichter Verhältnis durch eine lineare Funktion approximiert, denkbar wäre aber auch eine Approximation mittels eines Polynoms.
+	
+	Eine notwendige Erweiterung ist sicherlich, dass \(T_0\) (sowie evtl. \(S_0\)?) als eine Funktion von \(t\) beschrieben werden. So unterliegt \(T_0\) über das Jahr hinweg einer Temperaturschwankung, welche problemlos als Sinus interpoliert werden könnten:
 	
 	\begin{center}
 	\includegraphics[width=9cm]{Diagramme/GISTEMP.png} \\
 	\textit{Historischer Temperaturverlauf der globalen Umgebungstemperatur über das Jahr. Es wird die Differenz zu einem jährlichen globalen Mittel dargestellt.  \\
 	Quelle: \url{https://data.giss.nasa.gov/gistemp/graphs/}}
 	\end{center}	
+	
+	(Auch könnte man sich einen Zusammenhang zwischen Fluss und Temperatur überlegen und so \(T_0\) abhängig von \(q\) machen.)
 	
 	Für eine genauere Aussage über die lokalen Temperatur könnte das Modell in \(n\) Behälter (anstatt nur 2) gegliedert werden, welche jeweils mit ihren Nachbarn über einen Fluss Temperatur und Salzgehalt austauschen.
 	

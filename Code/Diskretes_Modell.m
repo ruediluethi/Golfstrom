@@ -132,7 +132,8 @@ parameter_list(n,9) = 1;    % c > 0
 
 color_list = color_list./256;
 parameter_list_size = size(parameter_list);
-for n = [1:parameter_list_size(1)] % gehe alle Paramter aus parameter_list durch und zeichne das Modell
+%for n = [1:parameter_list_size(1)] % gehe alle Paramter aus parameter_list durch und zeichne das Modell
+for n = [3:3]
     disp(['Fall: ',num2str(n)]);
     
     graph_color = color_list(n,:);
