@@ -64,5 +64,5 @@ Backup[ ]of[ ]*.numbers/
 .DS_Store
 
 # js stuff
-node_modules/*
-builds/*
+node_modules/
+builds/
