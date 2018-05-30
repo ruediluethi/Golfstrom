@@ -63,7 +63,6 @@ Backup[ ]of[ ]*.numbers/
 # Mac finder files and hidden folders
 .DS_Store
 
-
 # js stuff
 node_modules/*
 builds/*
