@@ -13,8 +13,10 @@ var VPlot = require('./views/plot');
 
 var colorGulf = '#ed4f80';
 var colorNorthSea = '#40a1dd';
+var colorFlow = '#49e2a3';
 var colorDiff = '#444444';
 var colorGray = '#DDDDDD';
+var colorYellow = '#f4c237';
 
 module.exports = Backbone.View.extend({
 
@@ -45,10 +47,19 @@ module.exports = Backbone.View.extend({
 	vKq: undef,
 
 	// constants
-	T01: 1.5,
+	T01: 1.2,
 	T02: 1,
 	S01: 1,
-	S02: 1.5,
+	S02: 1.3,
+
+	// zwei Nullstellen für k(q)
+	/*
+	T01: 2,
+	T02: 1,
+	S01: 1.7,
+	S02: 0.3,
+	*/
+
 	kT: 1,
 	kS: 0.2,
 	a: 1,
@@ -56,7 +67,8 @@ module.exports = Backbone.View.extend({
 	c: 1,
 
 	events: {
-		'click a.route': 'linkClick'
+		'click a.route': 'linkClick',
+		'click .button': 'chooseState'
 	},
 
 	initialize: function(options) {
@@ -91,27 +103,27 @@ module.exports = Backbone.View.extend({
 		var self = this;
 
 
-		self.vT01slider = new VValueSlider({ title: 'Wassertemperatur im Golf von Mexiko', color: colorGulf });
-		self.vS01slider = new VValueSlider({ title: 'Salzgehalt im Golf von Mexiko', color: colorGulf });
-		self.vT02slider = new VValueSlider({ title: 'Wassertemperatur in der Nordsee', color: colorNorthSea });
-		self.vS02slider = new VValueSlider({ title: 'Salzgehalt in der Nordsee', color: colorNorthSea });
+		self.vT01slider = new VValueSlider({ title: 'T<sub>01</sub> : Wassertemperatur im Golf von Mexiko', color: colorGulf });
+		self.vS01slider = new VValueSlider({ title: 'S<sub>01</sub> : Salzgehalt im Golf von Mexiko', color: colorGulf });
+		self.vT02slider = new VValueSlider({ title: 'T<sub>02</sub> : Wassertemperatur in der Nordsee', color: colorNorthSea });
+		self.vS02slider = new VValueSlider({ title: 'S<sub>02</sub> : Salzgehalt in der Nordsee', color: colorNorthSea });
 		
-		self.vKTslider = new VValueSlider({ title: 'Temperaturaustauschrate' });
-		self.vKSslider = new VValueSlider({ title: 'Salzgehaltaustauschrate' });
-		self.vAslider = new VValueSlider({ title: 'Fluss-Proportionalitätskonstante' });
-		self.vBslider = new VValueSlider({ title: 'B' });
-		self.vCslider = new VValueSlider({ title: 'C' });
+		self.vKTslider = new VValueSlider({ title: 'k<sub>T</sub> : Temperaturaustauschrate' });
+		self.vKSslider = new VValueSlider({ title: 'k<sub>S</sub> : Salzgehaltaustauschrate' });
+		self.vAslider = new VValueSlider({ title: 'a : Fluss-Proportionalitätskonstante', color: colorFlow });
+		self.vBslider = new VValueSlider({ title: 'b : Temperatur-Dichte Konstante', color: colorFlow });
+		self.vCslider = new VValueSlider({ title: 'c : Salzgehalt-Dichte Konstante', color: colorFlow });
 		
 		self.vTemperatureAbs = new VPlot({ title: 'Absolut', colors: [colorGulf,colorNorthSea], minValue: 0, maxValue: 2 });
 		self.vSaltinessAbs = new VPlot({ title: 'Absolut', colors: [colorGulf,colorNorthSea], minValue: 0, maxValue: 2 });
-		self.vTemperatureDiff = new VPlot({ title: 'Differenz', minValue: -1, maxValue: 1 });
-		self.vSaltinessDiff = new VPlot({ title: 'Differenz', minValue: -1, maxValue: 1 });
+		self.vTemperatureDiff = new VPlot({ title: 'Differenz', minValue: -1.5, maxValue: 1.5 });
+		self.vSaltinessDiff = new VPlot({ title: 'Differenz', minValue: -1.5, maxValue: 1.5 });
 		self.vTemperatureNoDim = new VPlot({ title: 'ohne Dimension', minValue: 0, maxValue: 1 });
 		self.vSaltinessNoDim = new VPlot({ title: 'ohne Dimension', minValue: 0, maxValue: 1 });
 
-		self.vFlow = new VPlot({ title: 'Absolut', colors: [colorDiff, colorGray], minValue: -2, maxValue: 2 });
-		self.vGq = new VPlot({ title: 'g(q)', colors: [colorDiff, colorGray], minValue: -2, maxValue: 2, startT: -3, endT: 3, showHalfHalf: true });
-		self.vKq = new VPlot({ title: 'k(q)', minValue: -0.5, maxValue: 0.5, startT: 0, endT: 1 });
+		self.vFlow = new VPlot({ title: 'Absolut', colors: [colorFlow, colorFlow], alpha: [1, 0.3], minValue: -2, maxValue: 2 });
+		self.vGq = new VPlot({ title: 'Stabilitätsuntersuchung', colors: [colorFlow, colorFlow, colorYellow], alpha: [1, 0.3, 0.3], minValue: -1, maxValue: 1, startT: -1, endT: 1, showHalfHalf: true });
+		//self.vKq = new VPlot({ title: 'k(q)', minValue: -1, maxValue: 1, startT: -1, endT: 1 });
 
 
 		self.vT01slider.bind('valueHasChanged', function(){
@@ -153,6 +165,8 @@ module.exports = Backbone.View.extend({
 
 		self.render();
 		self.calculate();
+
+		self.$el.find('.selection .button').first().addClass('active');
 	},
 
 
@@ -182,21 +196,21 @@ module.exports = Backbone.View.extend({
 
 		self.$el.html(templates['app']({ }));
 
-		self.$el.find('#slider-area').append(self.vT01slider.render().$el);
-		self.$el.find('#slider-area').append(self.vS01slider.render().$el);
-		self.$el.find('#slider-area').append(self.vT02slider.render().$el);
-		self.$el.find('#slider-area').append(self.vS02slider.render().$el);
+		self.$el.find('#slider-area > .interactive').append(self.vT01slider.render().$el);
+		self.$el.find('#slider-area > .interactive').append(self.vS01slider.render().$el);
+		self.$el.find('#slider-area > .interactive').append(self.vT02slider.render().$el);
+		self.$el.find('#slider-area > .interactive').append(self.vS02slider.render().$el);
 
 		self.vT01slider.setValue(self.T01);
 		self.vS01slider.setValue(self.S01);
 		self.vT02slider.setValue(self.T02);
 		self.vS02slider.setValue(self.S02);
 
-		self.$el.find('#slider-area').append(self.vKTslider.render().$el);
-		self.$el.find('#slider-area').append(self.vKSslider.render().$el);
-		self.$el.find('#slider-area').append(self.vAslider.render().$el);
-		self.$el.find('#slider-area').append(self.vBslider.render().$el);
-		self.$el.find('#slider-area').append(self.vCslider.render().$el);
+		self.$el.find('#slider-area > .interactive').append(self.vKTslider.render().$el);
+		self.$el.find('#slider-area > .interactive').append(self.vKSslider.render().$el);
+		self.$el.find('#slider-area > .interactive').append(self.vAslider.render().$el);
+		self.$el.find('#slider-area > .interactive').append(self.vBslider.render().$el);
+		self.$el.find('#slider-area > .interactive').append(self.vCslider.render().$el);
 
 		self.vKTslider.setValue(self.kT);
 		self.vKSslider.setValue(self.kS);
@@ -211,24 +225,37 @@ module.exports = Backbone.View.extend({
 		self.$el.find('#plot-area .col.temp').append(self.vTemperatureNoDim.$el);
 		self.$el.find('#plot-area .col.salt').append(self.vSaltinessNoDim.$el);
 		self.vTemperatureAbs.render();
+		self.vTemperatureAbs.addLegend(0,'T<sub>1</sub>: Golf von Mexiko');
+		self.vTemperatureAbs.addLegend(1,'T<sub>2</sub>: Nordsee');
 		self.vSaltinessAbs.render();
+		self.vSaltinessAbs.addLegend(0,'T<sub>1</sub>: Golf von Mexiko');
+		self.vSaltinessAbs.addLegend(1,'T<sub>2</sub>: Nordsee');
 		self.vTemperatureDiff.render();
 		self.vSaltinessDiff.render();
 		self.vTemperatureNoDim.render();
+		self.vTemperatureNoDim.addLegend(0,'T = T<sub>1</sub> &minus; T<sub>2</sub>');
 		self.vSaltinessNoDim.render();
+		self.vSaltinessNoDim.addLegend(0,'S = S<sub>1</sub> &minus; S<sub>2</sub>');
 
-		self.$el.find('#plot-area .col.flow').append(self.vFlow.$el);
-		self.$el.find('#plot-area .col.flow').append(self.vGq.$el);
-		self.$el.find('#plot-area .col.flow').append(self.vKq.$el);
+		self.$el.find('#plot-area .col.flow .plots').append(self.vFlow.$el);
+		self.$el.find('#plot-area .col.flow .plots').append(self.vGq.$el);
+		//self.$el.find('#plot-area .col.flow .plots').append(self.vKq.$el);
 		self.vFlow.render([colorDiff, colorGray]);
+		self.vFlow.addLegend(0,'q = a(bT &minus; cS) : Absolut');
+		self.vFlow.addLegend(1,'q = &alpha;T - &beta;S : Dimensionslos');
 		self.vGq.render();
-		self.vKq.render();
+		self.vGq.addLegend(0,'g(q) = &alpha;(1 / (1 + |q|)) &minus; &beta;(&gamma; / (&gamma; + |q|))');
+		self.vGq.addLegend(1,'q &minus; g(q)');
+		self.vGq.addLegend(2,'k(q) = (q &minus; g(q))(1 + q)(&gamma; + q)');
+		//self.vKq.render();
 		
 		self.hideLoading();
 	},
 
 	calculate: function(){
 		var self = this;
+
+		self.$el.find('.selection .button').removeClass('active');
 
 		// function values
 		var Tstar1 = [self.T01];
@@ -239,8 +266,8 @@ module.exports = Backbone.View.extend({
 		// difference
 		var T0 = self.T01 - self.T02;
 		var S0 = self.S01 - self.S02;
-		var Tstar = [T0];
-		var Sstar = [S0];
+		var Tstar = [];
+		var Sstar = [];
 		var Qstar = [];
 
 		// without dimensions
@@ -251,14 +278,22 @@ module.exports = Backbone.View.extend({
     	var beta  = 2*(self.a*self.c/self.kT)*S0;
     	var gamma = self.kS/self.kT;
 
+    	self.$el.find('span.alpha').html(Math.round(alpha*10)/10);
+    	self.$el.find('span.beta').html(Math.round(beta*10)/10);
+    	self.$el.find('span.alpha-beta').html(Math.round((beta-alpha)*10)/10);
+
 		// timesteps
 		var dtstar = 0.1;
 		var dt = self.kT * dtstar;
 
-		for(var t = 0; t < 100; t++){
+		for(var t = 0; t < 10/dtstar; t++){
+
+			var dTstar = Tstar1[t] - Tstar2[t];
+	        var dSstar = Sstar1[t] - Sstar2[t];
 
 			// Original Gleichungen
-	        var qstarValue = self.a*(self.b*(Tstar1[t] - Tstar2[t]) + self.c*(Sstar2[t] - Sstar1[t]));
+	        //var qstarValue = self.a*(self.b*(Tstar1[t] - Tstar2[t]) + self.c*(Sstar2[t] - Sstar1[t]));
+	        var qstarValue = self.a*(self.b*dTstar - self.c*dSstar);
 	        //Qstar[Qstar.length] = 2*qstarValue/self.kT;
 	        Qstar[Qstar.length] = qstarValue;
 
@@ -275,11 +310,15 @@ module.exports = Backbone.View.extend({
 	        Sstar2[Sstar2.length] = Sstar2[t] + dSstar2;
 
 	        // Gleichungen für die Differenz
+	        /*
 	        var dTstar = ( self.kT*(T0 - Tstar[t]) - 2*Math.abs(qstarValue)*Tstar[t] )*dtstar;
 	        var dSstar = ( self.kS*(S0 - Sstar[t]) - 2*Math.abs(qstarValue)*Sstar[t] )*dtstar;
+			*/
+			// var dTstar = dTstar1 - dTstar2;
+	  //       var dSstar = dSstar1 - dSstar2;
 
-	        Tstar[Tstar.length] = Tstar[t] + dTstar;
-	        Sstar[Sstar.length] = Sstar[t] + dSstar;
+	        Tstar[Tstar.length] = dTstar;
+	        Sstar[Sstar.length] = dSstar;
 
 	        // dimensionslose Rechnung
 	        q  = alpha*T[t] - beta*S[t];
@@ -302,26 +341,92 @@ module.exports = Backbone.View.extend({
 		self.vFlow.update([Qstar, Q]);
 
 		var G = [];
+		var Z = [];
 		var K = [];
 		var resolution = 100;
+		var zeroPoints = [];
+		var stableQs = [];
 		for(var i = 0; i < resolution; i++){
-			var q = i/resolution*6-3;
+			//var q = i/resolution*6-3;
+			var q = i/resolution*2-1;
 			var g = alpha*(1/(1+Math.abs(q))) - beta*(gamma/(gamma+Math.abs(q)) );
 			G[i] = g;
 
 			//var g = alpha*(1/(1+Math.abs(q))) - beta*(gamma/(gamma+q) );
-			K[i] = (Math.abs(q) - g)*(1 + Math.abs(q))*(gamma + Math.abs(q));
-		}
-		self.vGq.update([G,K]);
-		
-		var K = [];
-		for(var i = 0; i < resolution; i++){
-			var q = i/resolution;
-			g = alpha*(1/(1+Math.abs(q))) - beta*(gamma/(gamma+Math.abs(q)));
-			K[i] = (q - g)*(1 + q)*(gamma + q);
+			//K[i] = (Math.abs(q) - g)*(1 + Math.abs(q))*(gamma + Math.abs(q));
+			var z = q - g;
+			Z[i] = z;
+			if (i > 0 && q > 0){
+				if (Z[i]*Z[i-1] < 0){
+					zeroPoints.push(i-0.5);
+					stableQs.push(q);
+				}
+			}
 		}
 
-		self.vKq.update([K]);
+		var K = [];
+		for(var i = 1/1000000; i < resolution; i++){
+			//var q = i/resolution;
+			var q = i/resolution*2-1;
+			var g = alpha*(1/(1 + q)) - beta*(gamma/(gamma + q));
+			//var g = alpha*(1/(1+Math.abs(q))) - beta*(gamma/(gamma+Math.abs(q)) );
+			var k = (q - g)*(1 + q)*(gamma + q);
+			if (!isNaN(k)){
+				K[K.length] = k;
+			}
+		}
+
+		//self.vKq.update([K]);
+
+		self.vGq.update([G,Z,K]);
+		self.$el.find('#plot-area .col.flow .formula').html('');
+		for (var i = 0; i < zeroPoints.length; i++){
+			self.vGq.plotVerticalLine(zeroPoints[i]/resolution);
+			self.vFlow.plotHorizontalLine(stableQs[i]);
+			self.vFlow.plotHorizontalLine(-stableQs[i]);
+			self.$el.find('#plot-area .col.flow .formula').append('Nullstelle bei q = <span>'+Math.round(stableQs[i]*10)/10+'</span><br>');
+		}
+	},
+
+	chooseState: function(e){
+		var self = this;
+
+		var $btn = $(e.currentTarget);
+		var params = $btn.data('params');
+
+		var oldT01 = self.T01;
+		var oldT02 = self.T02;
+		var oldS01 = self.S01;
+		var oldS02 = self.S02;
+
+		var animationSteps = 50;
+		var counter = 0;
+		var valueStep = setInterval(function(){
+			counter++;
+			if (counter > animationSteps){
+				clearInterval(valueStep);
+				$btn.addClass('active');
+				return;
+			}
+
+			var s = -Math.sin((counter/animationSteps)*Math.PI+Math.PI/2)/2+0.5;
+
+			self.T01 = oldT01 + (params.T01 - oldT01)*s;
+			self.vT01slider.setValue(self.T01);
+
+			self.T02 = oldT02 + (params.T02 - oldT02)*s;
+			self.vT02slider.setValue(self.T02);
+
+			self.S01 = oldS01 + (params.S01 - oldS01)*s;
+			self.vS01slider.setValue(self.S01);
+
+			self.S02 = oldS02 + (params.S02 - oldS02)*s;
+			self.vS02slider.setValue(self.S02);
+
+			self.calculate();
+
+		},1/20);
+
 	},
 
 

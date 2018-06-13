@@ -23,6 +23,11 @@ body {
     font-size: 14px;
 }
 
+#wrapper {
+    margin: 0px auto;
+    max-width: 960px;
+}
+
 h2 {
     text-align: center;
     font-weight: 700;
@@ -31,7 +36,47 @@ h2 {
 }
 h3 {
     text-align: center;
+    text-decoration: underline;
 }
+
+p {
+    padding: 20px;
+}
+
+p.formula {
+    line-height: 1.5;
+    font-size: 18px;
+}
+
+p.formula span {
+    font-weight: 700;
+    background: #fffd4f;
+    padding: 1px 4px;
+}
+
+sub, sup {
+  /* Specified in % so that the sup/sup is the
+     right size relative to the surrounding text */
+  font-size: 75%;
+
+  /* Zero out the line-height so that it doesn't
+     interfere with the positioning that follows */
+  line-height: 0;
+
+  /* Where the magic happens: makes all browsers position
+     the sup/sup properly, relative to the surrounding text */
+  position: relative;
+
+  /* Note that if you're using Eric Meyer's reset.css, this
+     is already set and you can remove this rule */
+  vertical-align: baseline;
+}
+
+
+sub {
+    bottom: -0.25em;
+}
+
 
 #slider-area, #plot-area {
     float: left;
@@ -45,6 +90,37 @@ h3 {
 #plot-area > .col {
     width: 33.3%;
     float: left;
+}
+
+#slider-area > div,
+#plot-area .zero-points {
+    float: left;
+    display: block;
+}
+
+.selection {
+    float: left;
+    width: 100%;
+}
+.selection .inside-selection {
+    padding: 20px 20px 0px 20px;
+}
+
+.button {
+    font-size: 16px;
+    padding: 5px 6px;
+    margin-bottom: 5px;
+    border: 1px solid #2b6ce0;
+    color: #2b6ce0;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.button:hover, .button.active {
+    background: #2b6ce0;
+    color: #FFFFFF;
 }
 
 .v-slider {
@@ -76,7 +152,7 @@ h3 {
 }
 
 .v-slider .v-slider-container .v-slider-back {
-    background: #7f7f7f;
+    background: #bbbbbb;
     width: 100%;
 }
 
@@ -99,6 +175,22 @@ h3 {
 .plot {
     float: left;
     width: 100%;
+    margin-bottom: 10px;
+}
+
+.plot svg {
+    float: left;
+}
+
+.plot .plot-legend{
+    float: left;
+    width: 100%;
+    font-size: 12px;
+    padding-left: 20px;
+    margin-bottom: 2px;
+}
+.plot .plot-legend svg {
+    margin-right: 5px;
 }
 
 svg text.small {

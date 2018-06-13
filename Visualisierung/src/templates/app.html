@@ -1,5 +1,21 @@
 <div id="slider-area">
-	
+	<h2>Parameter</h2>
+	<div class="selection">
+		<div class="inside-selection">
+			<div class="button" data-params='{"T01":1.2,"T02":1,"S01":1,"S02":1.3}'>Realitätsnaher Zustand</div>
+			<div class="button" data-params='{"T01":1.2,"T02":1,"S01":1,"S02":0.3}'>Arktis schmilzt ab</div>
+			<div class="button" data-params='{"T01":2,"T02":1,"S01":1.7,"S02":0.3}'>Zwei Nullstellen</div>
+			<div class="button" data-params='{"T01":2,"T02":0.6,"S01":2,"S02":0.4}'>???</div>
+		</div>
+	</div>
+	<div class="interactive"></div>
+	<div class="calculated-params">
+		<p class="formula">
+			&alpha; = 2 &middot; (ab / k<sub>T</sub>) &middot; T<sub>0</sub> = <span class="alpha"></span><br>
+			&beta; = 2 &middot; (ac / k<sub>T</sub>) &middot; S<sub>0</sub> = <span class="beta"></span><br>
+			&beta; &minus; &alpha; = <span class="alpha-beta"></span>
+		</p>
+	</div>
 </div>
 
 <div id="plot-area">
@@ -11,5 +27,9 @@
 	</div>
 	<div class="col flow">
 		<h2>Fluss</h2>
+		<div class="plots"></div>
+		<div class="zero-points">
+			<p class="formula"></p>
+		</div>
 	</div>	
 </div>

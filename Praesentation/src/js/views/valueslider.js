@@ -13,7 +13,7 @@ module.exports = Backbone.View.extend({
 	color: '#444444',
 	minValue: 0,
 	maxValue: 2,
-	value: 0,
+	value: 1,
 
 	initialize: function(options) {
 		var self = this;

@@ -133,7 +133,7 @@ parameter_list(n,9) = 1;    % c > 0
 color_list = color_list./256;
 parameter_list_size = size(parameter_list);
 %for n = [1:parameter_list_size(1)] % gehe alle Paramter aus parameter_list durch und zeichne das Modell
-for n = [3:3]
+for n = [2,3,5]
     disp(['Fall: ',num2str(n)]);
     
     graph_color = color_list(n,:);
@@ -292,7 +292,7 @@ for n = [3:3]
     plot(sub_plots(9), q, k(q), 'Color', graph_color, 'LineWidth', line_strength);
     plot(sub_plots(9), [-1,1], [0,0], ':k'); % x-Achse
     %axis(sub_plots(9), [0 max(q) min(k(q))*2 max(k(q))]);
-    axis(sub_plots(9), [0 max(q) -1 2]);
+    axis(sub_plots(9), [min(q) max(q) -1 2]);
     legend(sub_plots(9), 'hide');
     xlabel(sub_plots(9), 'q');
     ylabel(sub_plots(9), 'k(q)');
