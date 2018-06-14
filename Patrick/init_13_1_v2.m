@@ -30,10 +30,8 @@ S02 = 35;
 %Golfstrom
 T1 = 10.8;
 T2 = 9.2;
-S1 = 32.3;
-S2 = 32.7;
-
-
+S1 = 31.87;
+S2 = 33.13;
 
 %Propfaktoren
 a = 1;
@@ -41,3 +39,9 @@ b = 0.1111;
 c = 0.8333;
 kT = 1;
 kS = 1;
+
+%fürs Wachstum 
+kw = 0.1;
+kwS = 0.35;
+grenze = 20;
+grenzeSalz = 30;
