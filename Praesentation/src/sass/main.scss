@@ -20,8 +20,9 @@ html {
 body {
     font-family: 'Merriweather', serif;
     color: #222222;
-    font-size: 24px;
+    font-size: 22px;
     line-height: 30px;
+    background: #222222;
 }
 
 #wrapper {
@@ -66,8 +67,11 @@ body {
     background: #EEEEEE;
     font-family: 'Roboto Condensed', sans-serif;
     font-size: 16px;
-    line-height: 20px;
+    line-height: 22px;
     padding: 10px;
+}
+.full-screen #parameters {
+    display: none;
 }
 
 #parameters p {
@@ -85,6 +89,11 @@ body {
     left: 0px;
     overflow: hidden;
     padding-right: 220px;
+    background: #FFFFFF;
+}
+
+.full-screen #slides-container {
+    padding-right: 0px;   
 }
 
 #slides-container .slide {
@@ -95,6 +104,21 @@ body {
 }
 
 /* TYPOGRAPHY */
+h1 {
+    font-family: 'Merriweather', serif;
+    font-style: italic;
+    text-align: center;
+    font-weight: bold;
+    font-size: 72px;
+    padding: 0px 50px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    line-height: 1;
+    color: #000000;
+}
+h1 span {
+    border-bottom: 5px solid #000000;
+}
 h2 {
     font-family: 'Merriweather', serif;
     font-style: italic;
@@ -105,9 +129,10 @@ h2 {
     margin-top: 50px;
     margin-bottom: 50px;
     line-height: 1;
+    color: #000000;
 }
 h2 span {
-    border-bottom: 4px solid #222222;
+    border-bottom: 4px solid #000000;
 }
 h3 {
     font-family: 'Merriweather', serif;
@@ -116,37 +141,49 @@ h3 {
     font-weight: 700;
     font-size: 24px;
     margin-bottom: 30px;
+    color: #000000;
 }
 h3 span {
-    border-bottom: 3px solid #222222;
+    border-bottom: 3px solid #000000;
 }
 
 p {
-    margin-bottom: 10px;
+    margin-bottom: 30px;
+}
+.pull-back {
+    margin-top: -20px;
 }
 
 strong {
     font-weight: 700;
 }
 
+span.high {
+    color: #fff800;
+}
+
 .footnote {
     font-size: 14px;
+    vertical-align: baseline;
+    top: -10px;
+    position: relative;
+    line-height: 16px;
 }
 
 .formula {
-    line-height: 1.5;
+    font-size: 24px;
+    line-height: 32px;
     font-family: 'Roboto Condensed', sans-serif;
+    color: #000000;
+}
+
+.footnote .formula {
+    font-size: 15px;
+    line-height: 16px;
 }
 
 p.formula {
     text-align: center;
-}
-
-p.push-one {
-    margin-bottom: 30px;
-}
-p.pull-one {
-    margin-top: 30px;
 }
 
 sub, sup {
@@ -165,7 +202,8 @@ sup {
 
 .formula span.fraction {
     position: relative;
-    line-height: 2;
+    line-height: 60px;
+    display: inline-block;
 }
 
 .formula span.enumerator,
@@ -185,9 +223,34 @@ sup {
     left: 0px;
     top: 50%;
     text-align: center;
-    border-top: 2px solid #555555;
+    border-top: 2px solid #000000;
     line-height: 1;
 }
+
+.formula span.tilde {
+    color: #79b7bf;
+}
+
+.formula span.stackrel {
+    content: '\007E';
+    margin-left: -0.45em;
+    top: -0.9em;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+    font-size: 75%;
+}
+
+/*
+.formula span.tilde:after {
+    content: '\007E';
+    margin-left: -0.55em;
+    top: -0.6em;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+*/
 
 ul {
 
@@ -213,14 +276,30 @@ span.quad {
 
 .col {
     float: left;
-    padding: 0px 50px;
     margin-bottom: 20px;
 }
 .col-100 {
     width: 100%;
+    padding: 0px 50px;
 }
 .col-50 {
     width: 50%;
+}
+.col-50:first-child {
+    padding: 0px 25px 0px 50px;
+}
+.col-50:last-child {
+    padding: 0px 50px 0px 25px;
+}
+.col-33 {
+    width: 33.333%;
+    padding: 0px 33px 0px 33px;
+}
+.col-33:first-child {
+    padding: 0px 17px 0px 50px;
+}
+.col-33:last-child {
+    padding: 0px 50px 0px 17px;
 }
 
 .col.center {
@@ -319,16 +398,24 @@ span.quad {
 .v-slider .v-slider-value {
     width: 100%;
     text-align: center;
-    padding: 1px 0px;
+    padding: 3px 0px;
     color: #FFFFFF;
+    height: 20px;
+    line-height: 1;
 }
-
-/*
 
 .plot {
     float: left;
     width: 100%;
-    margin-bottom: 10px;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.plot h4 {
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
 }
 
 .plot svg {
@@ -338,7 +425,6 @@ span.quad {
 .plot .plot-legend{
     float: left;
     width: 100%;
-    font-size: 12px;
     padding-left: 20px;
     margin-bottom: 2px;
 }
@@ -349,5 +435,4 @@ span.quad {
 svg text.small {
     font-size: 12px;
 }
-*/
 

@@ -15,7 +15,7 @@ var html2tpl = require('gulp-html2tpl');
 
 var env = process.env.ENV || 'dev';
 var devBase = 'http://localhost:9000/';
-var distBase = '/golfstrom/';
+var distBase = '/golfstromslides/';
 
 gulp.task('html', function(){
 

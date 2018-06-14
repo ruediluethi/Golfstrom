@@ -84,12 +84,15 @@ module.exports = Backbone.View.extend({
 			.attr('stroke', function(d){
 				return d;
 			})
-			.attr('stroke-width', 2)
+			.attr('stroke-width', 3)
 			.attr('opacity', function(d,i){
 				if (self.alpha != undef){
 					return self.alpha[i];
 				}
-			});
+			})
+			/*.style('stroke-dasharray', function(d,i){
+				return ("3, 3");
+			});*/
 
 		return self;
 	},
@@ -99,14 +102,14 @@ module.exports = Backbone.View.extend({
 
 		var $legend = $('<div class="plot-legend"><svg></svg>'+text+'<div>');
 		var svgIcon = d3.select($legend.find('svg')[0]);
-		svgIcon.attr('width', 12);
-		svgIcon.attr('height', 12);
+		svgIcon.attr('width', 14);
+		svgIcon.attr('height', 14);
 		svgIcon.append('line')
 			.attr('x1', 0)
-			.attr('y1', 6)
-			.attr('x2', 12)
-			.attr('y2', 6)
-			.attr('stroke-width', 3)
+			.attr('y1', 8)
+			.attr('x2', 14)
+			.attr('y2', 8)
+			.attr('stroke-width', 4)
 			.attr('stroke',self.colors[i])
 			.attr('opacity', function(){
 				if (self.alpha != undef){
@@ -163,7 +166,14 @@ module.exports = Backbone.View.extend({
 				.attr('x2', self.diagramWidth)
 				.attr('y2', self.valueToY(self.endT))
 				.attr('stroke-width', 1)
-				.attr('stroke','#777777');
+				.attr('stroke','#DDDDDD');
+			/*self.gAxis.append('line')
+				.attr('x1', self.diagramWidth)
+				.attr('y1', self.valueToY(self.starT))
+				.attr('x2', 0)
+				.attr('y2', self.valueToY(self.endT))
+				.attr('stroke-width', 1)
+				.attr('stroke','#DDDDDD');*/
 		}
 
 	},

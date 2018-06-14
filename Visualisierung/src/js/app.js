@@ -116,8 +116,8 @@ module.exports = Backbone.View.extend({
 		
 		self.vTemperatureAbs = new VPlot({ title: 'Absolut', colors: [colorGulf,colorNorthSea], minValue: 0, maxValue: 2 });
 		self.vSaltinessAbs = new VPlot({ title: 'Absolut', colors: [colorGulf,colorNorthSea], minValue: 0, maxValue: 2 });
-		self.vTemperatureDiff = new VPlot({ title: 'Differenz', minValue: -1.5, maxValue: 1.5 });
-		self.vSaltinessDiff = new VPlot({ title: 'Differenz', minValue: -1.5, maxValue: 1.5 });
+		self.vTemperatureDiff = new VPlot({ title: 'Differenz', minValue: -0.5, maxValue: 0.5 });
+		self.vSaltinessDiff = new VPlot({ title: 'Differenz', minValue: -0.5, maxValue: 0.5 });
 		self.vTemperatureNoDim = new VPlot({ title: 'ohne Dimension', minValue: 0, maxValue: 1 });
 		self.vSaltinessNoDim = new VPlot({ title: 'ohne Dimension', minValue: 0, maxValue: 1 });
 
