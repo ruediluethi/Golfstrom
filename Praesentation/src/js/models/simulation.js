@@ -6,10 +6,10 @@ Backbone.$ = $;
 module.exports = Backbone.Model.extend({
 
 	defaults: {
-		T01: 1,
-		T02: 1,
-		S01: 1,
-		S02: 1,
+		T01: 1.2,
+		T02: 0.8,
+		S01: 0.8,
+		S02: 1.2,
 
 		kT: 1,
 		kS: 1,
@@ -56,10 +56,11 @@ module.exports = Backbone.Model.extend({
     	this.set('gamma', Math.round(gamma*100)/100);
 
     	// timesteps
-		var dt = 0.1;
+		var dt = 0.01;
 		var dtNoDim = dt * this.get('kT');
+		var time = [dt];
 
-		for(var t = 0; t < 10/dt; t++){
+		for(var t = 0; t < 3/dt; t++){
 
 			var dT = T1[t] - T2[t];
 	        var dS = S1[t] - S2[t];
@@ -83,6 +84,8 @@ module.exports = Backbone.Model.extend({
 	        T[T.length] = Math.abs(T1[t] - T2[t]);
 	        S[S.length] = Math.abs(S1[t] - S2[t]);
 
+	        time[time.length] = time[t] + dt;
+
 	        Stest[Stest.length] = (S1[t] - S2[t])/S0;
 
 	        // Dimensionslos
@@ -104,6 +107,7 @@ module.exports = Backbone.Model.extend({
 		this.set('T',T);
 		this.set('S',S);
 		this.set('Q',Q);
+		this.set('time',time);
 		this.set('TnoDim',TnoDim);
 		this.set('SnoDim',SnoDim);
 		this.set('QnoDim',QnoDim);
@@ -143,9 +147,10 @@ module.exports = Backbone.Model.extend({
 
 			var g = alpha*(1/(1+q)) - beta*(gamma/(gamma+q) );
 			var k = (q - g)*(1 + q)*(gamma + q);
-			
-			if (!isNaN(k)){
+			if (q >= 0){
 				K[K.length] = k;
+			}else{
+				K[K.length] = null;
 			}
 		}
 

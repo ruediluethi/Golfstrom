@@ -65,6 +65,18 @@ module.exports = Backbone.View.extend({
 		var self = this;
 
 		self.mSimulation = new MSimulation();
+
+		document.onkeydown = function(evt) {
+		    evt = evt || window.event;
+		    switch (evt.keyCode) {
+		        case 37:
+		            self.goBack();
+		            break;
+		        case 39:
+		            self.goForward();
+		            break;
+		    }
+		};
 	},
 
 
@@ -138,14 +150,6 @@ module.exports = Backbone.View.extend({
 			self.$el.removeClass('full-screen');
 		}
 
-		if (template == 'modell' || template == 'ersterplot' || template == 'stabilplot'){
-			self.mSimulation.set('T01',1.2);
-			self.mSimulation.set('T02',0.8);
-			self.mSimulation.set('S01',0.8);
-			self.mSimulation.set('S02',1.2);
-			self.mSimulation.set('kT',1.0);
-			self.mSimulation.set('kS',1.0);
-		}
 
 		if (slideNr >= 2){
 			self.$el.find('#parameters .gulf').show();
@@ -211,9 +215,9 @@ module.exports = Backbone.View.extend({
 		if (template == 'ersterplot'){
 
 			// Temperatur
-			var vTemperature = new VPlot({ title: 'Temperatur', colors: [colorGulf,colorNorthSea,colorDiff], minValue: 0, maxValue: 2 });
+			var vTemperature = new VPlot({ title: 'Temperatur', colors: [colorGulf,colorNorthSea,colorDiff], minValue: 0, maxValue: 1.5 , helpLinesCount: 4});
 			vTemperature.listenTo(self.mSimulation, 'simulationend', function(){
-				vTemperature.update([self.mSimulation.get('T1'), self.mSimulation.get('T2'), self.mSimulation.get('T')]);
+				vTemperature.update([self.mSimulation.get('T1'), self.mSimulation.get('T2'), self.mSimulation.get('T')], self.mSimulation.get('time'));
 			});
 			newVSlide.$el.find('.temp').append(vTemperature.$el);
 			vTemperature.render();
@@ -222,9 +226,9 @@ module.exports = Backbone.View.extend({
 			vTemperature.addLegend(2,'T = |T<sub>1</sub> &minus; T<sub>2</sub>|: Differenz');
 
 			// Salzgehalt
-			var vSalt = new VPlot({ title: 'Salzgehalt', colors: [colorGulf,colorNorthSea,colorDiff], minValue: 0, maxValue: 2 });
+			var vSalt = new VPlot({ title: 'Salzgehalt', colors: [colorGulf,colorNorthSea,colorDiff], minValue: 0, maxValue: 1.5 , helpLinesCount: 4 });
 			vSalt.listenTo(self.mSimulation, 'simulationend', function(){
-				vSalt.update([self.mSimulation.get('S1'), self.mSimulation.get('S2'), self.mSimulation.get('S')]);
+				vSalt.update([self.mSimulation.get('S1'), self.mSimulation.get('S2'), self.mSimulation.get('S')], self.mSimulation.get('time'));
 			});
 			newVSlide.$el.find('.salt').append(vSalt.$el);
 			vSalt.render();
@@ -235,7 +239,7 @@ module.exports = Backbone.View.extend({
 			// Fluss
 			var vFlow = new VPlot({ title: 'Fluss', colors: [colorFlow], minValue: -1, maxValue: 1 });
 			vFlow.listenTo(self.mSimulation, 'simulationend', function(){
-				vFlow.update([self.mSimulation.get('Q')]);
+				vFlow.update([self.mSimulation.get('Q')], self.mSimulation.get('time'));
 			});
 			newVSlide.$el.find('.flow').append(vFlow.$el);
 			vFlow.render();
@@ -340,6 +344,15 @@ module.exports = Backbone.View.extend({
 		}));
 	},
 
+	goForward: function(){
+		var self = this;
+		self.router.navigate(self.$el.find('#navigation .go-forward').attr('href'), {trigger: true});
+	},
+
+	goBack: function(){
+		var self = this;
+		self.router.navigate(self.$el.find('#navigation .go-back').attr('href'), {trigger: true});
+	},
 
 	linkClick: function(e){
 		var self = this;
