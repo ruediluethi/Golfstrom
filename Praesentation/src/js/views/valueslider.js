@@ -11,8 +11,8 @@ module.exports = Backbone.View.extend({
 
 	title: 'untitled',
 	color: '#444444',
-	minValue: 0,
-	maxValue: 2,
+	minValue: 0.1,
+	maxValue: 5,
 	value: 1,
 
 	initialize: function(options) {
@@ -46,10 +46,13 @@ module.exports = Backbone.View.extend({
 			containment: 'parent',
 			drag: function(e, ui) {
 
-				self.value = self.getValue();
+				if (self.value != self.getValue()){
 
-				self.$el.find('.v-slider-value').html(Math.round(self.value*10)/10);
-				self.trigger('valueHasChanged');
+					self.value = self.getValue();
+
+					self.$el.find('.v-slider-value').html(Math.round(self.value*10)/10);
+					self.trigger('valueHasChanged');
+				}
 			},
 		});
 	},
@@ -66,7 +69,7 @@ module.exports = Backbone.View.extend({
 		pos = pos/(self.$el.find('.v-slider-container').width()-self.$el.find('.v-slider-dot').width());
 		pos = pos*Math.abs(self.maxValue - self.minValue)+self.minValue;
 		
-		return pos;
+		return Math.round(pos*10)/10;
 	},
 
 

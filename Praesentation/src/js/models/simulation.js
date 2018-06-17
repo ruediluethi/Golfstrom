@@ -6,10 +6,10 @@ Backbone.$ = $;
 module.exports = Backbone.Model.extend({
 
 	defaults: {
-		T01: 1.2,
-		T02: 0.8,
-		S01: 0.8,
-		S02: 1.2,
+		T01: 1,
+		T02: 1,
+		S01: 1,
+		S02: 1,
 
 		kT: 1,
 		kS: 1,
@@ -27,6 +27,7 @@ module.exports = Backbone.Model.extend({
 	},
 
 	simulate: function(){
+		console.log("simulate");
 
 		// function values
 		var T1 = [this.get('T01')];
@@ -50,10 +51,6 @@ module.exports = Backbone.Model.extend({
     	var QnoDim = [alpha - beta];
 
     	var Stest = [S0/S0];
-
-    	this.set('alpha', Math.round(alpha*100)/100);
-    	this.set('beta', Math.round(beta*100)/100);
-    	this.set('gamma', Math.round(gamma*100)/100);
 
     	// timesteps
 		var dt = 0.01;
@@ -123,16 +120,23 @@ module.exports = Backbone.Model.extend({
 		var alpha = 2*(this.get('a')*this.get('b')/this.get('kT'))*T0;
     	var beta  = 2*(this.get('a')*this.get('c')/this.get('kT'))*S0;
     	var gamma = this.get('kS')/this.get('kT');
+    	this.set('alpha', Math.round(alpha*100)/100);
+    	this.set('beta', Math.round(beta*100)/100);
+    	this.set('gamma', Math.round(gamma*100)/100);
+    	this.set('alpha-beta', Math.round((alpha-beta)*100)/100);
 
+    	var qOnX = [];
 		var G = [];
 		var Z = [];
-		var K = [];
-		var resolution = 100;
+		var Kp = [];
+		var Kn = [];
+		var resolution = 300;
 		var zeroPoints = [];
 		var stableQs = [];
 		for(var i = 0; i < resolution; i++){
 			//var q = i/resolution*6-3;
 			var q = (i/resolution*2-1)*2;
+			qOnX[i] = q;
 			var g = alpha*(1/(1+Math.abs(q))) - beta*(gamma/(gamma+Math.abs(q)) );
 			G[i] = g;
 
@@ -145,17 +149,33 @@ module.exports = Backbone.Model.extend({
 				}
 			}
 
-			var g = alpha*(1/(1+q)) - beta*(gamma/(gamma+q) );
-			var k = (q - g)*(1 + q)*(gamma + q);
+			var g = alpha*(1/(1+Math.abs(q))) - beta*(gamma/(gamma+Math.abs(q)) );
+			// var k = (Math.abs(q) - Math.abs(g)) *(1 + Math.abs(q))*(gamma + Math.abs(q));
+			var k = (q - g) *(1 + q)*(gamma + q);
 			if (q >= 0){
-				K[K.length] = k;
+				Kp[Kp.length] = k;
+				Kn[Kn.length] = null;
 			}else{
-				K[K.length] = null;
+				Kp[Kp.length] = null;
+				//g = alpha*(1/(1 - q)) - beta*(gamma/(gamma - q) );
+				//k = (- q + g)*(1 - q)*(gamma - q);
+				k = -(q*q*q) + q*q*(1 + gamma) + q*(gamma*(beta-1)-alpha) + gamma*(alpha - beta);
+				Kn[Kn.length] = k;
 			}
 		}
 
+		var q1 = 0.5*(-Math.sqrt(4*alpha - 4*beta + 1) - 1);
+		var q2 = 0.5*(+Math.sqrt(4*alpha - 4*beta + 1) - 1);
+		var q3 = 0.5*(-Math.sqrt(4*beta - 4*alpha + 1) + 1);
+		var q4 = 0.5*(+Math.sqrt(4*beta - 4*alpha + 1) + 1);
+
+		console.log(q1+' / '+q2+' / '+q3+' / '+q4);
+		console.log(stableQs);
+
+		this.set('qOnX',qOnX);
 		this.set('G',G);
-		this.set('K',K);
+		this.set('Kp',Kp);
+		this.set('Kn',Kn);
 		this.set('Z',Z);
 		this.set('zeroPoints', zeroPoints);
 		this.set('stableQs', stableQs);
