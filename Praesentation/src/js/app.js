@@ -57,7 +57,12 @@ module.exports = Backbone.View.extend({
 
 	mSimulation: undef,
 
+	tempSaltParamsShown: false,
+	flowParamsShown: false,
+	noDimParamsShown: false,
+
 	events: {
+		'click .param-selection .selection': 'selectParams',
 		'click a.route': 'linkClick'
 	},
 
@@ -151,18 +156,10 @@ module.exports = Backbone.View.extend({
 		}
 
 
-		if (slideNr >= 2){
+		if (slideNr >= 2 && !self.tempSaltParamsShown){
 			self.$el.find('#parameters .gulf').show();
-			self.$el.find('#parameters .gulf').append(self.vT01slider.render().$el);
-			self.$el.find('#parameters .gulf').append(self.vS01slider.render().$el);
-
 			self.$el.find('#parameters .northsea').show();
-			self.$el.find('#parameters .northsea').append(self.vT02slider.render().$el);
-			self.$el.find('#parameters .northsea').append(self.vS02slider.render().$el);
-
 			self.$el.find('#parameters .influence').show();
-			self.$el.find('#parameters .influence').append(self.vKTslider.render().$el);
-			self.$el.find('#parameters .influence').append(self.vKSslider.render().$el);
 
 			self.vT01slider.setValue(self.mSimulation.get('T01'));
 			self.vS01slider.setValue(self.mSimulation.get('S01'));
@@ -189,13 +186,12 @@ module.exports = Backbone.View.extend({
 			self.vKSslider.bind('valueHasChanged', function(){
 				self.mSimulation.setAndSimulate('kS', self.vKSslider.value);
 			});
+
+			self.tempSaltParamsShown = true;
 		}
 
-		if (slideNr >= 3){
+		if (slideNr >= 3 && !self.flowParamsShown){
 			self.$el.find('#parameters .flow').show();
-			self.$el.find('#parameters .flow').append(self.vAslider.render().$el);
-			self.$el.find('#parameters .flow').append(self.vBslider.render().$el);
-			self.$el.find('#parameters .flow').append(self.vCslider.render().$el);
 
 			self.vAslider.setValue(self.mSimulation.get('a'));
 			self.vBslider.setValue(self.mSimulation.get('b'));
@@ -210,6 +206,8 @@ module.exports = Backbone.View.extend({
 			self.vCslider.bind('valueHasChanged', function(){
 				self.mSimulation.setAndSimulate('c', self.vCslider.value);
 			});
+
+			self.flowParamsShown = true;
 		}
 
 		if (template == 'ersterplot'){
@@ -248,21 +246,23 @@ module.exports = Backbone.View.extend({
 			self.mSimulation.simulate();
 		}
 
-		if (slideNr >= 6){
+		if (slideNr >= 6 && !self.noDimParamsShown){
 			self.$el.find('#parameters .nodim').show();
-			self.listenTo(self.mSimulation, 'simulationend', function(){
+			self.listenTo(self.mSimulation, 'analyseend', function(){
 				self.$el.find('#parameters .nodim .alpha').html(self.mSimulation.get('alpha'));
 				self.$el.find('#parameters .nodim .beta').html(self.mSimulation.get('beta'));
 				self.$el.find('#parameters .nodim .gamma').html(self.mSimulation.get('gamma'));	
+				self.$el.find('#parameters .nodim .alpha-beta').html(self.mSimulation.get('alpha-beta'));	
 			});
 			self.mSimulation.simulate();
+			self.noDimParamsShown = true;
 		}
 
 		if (template == 'stabilplot'){
 			// Temperatur
 			var vTempSalt = new VPlot({ title: 'Temperatur / Salzgehalt', colors: [colorPurple,colorOrange,colorPurple,colorOrange], alpha: [0.2,0.2,0.7,0.7], minValue: 0, maxValue: 1 });
 			vTempSalt.listenTo(self.mSimulation, 'simulationend', function(){
-				vTempSalt.update([self.mSimulation.get('T'), self.mSimulation.get('S'), self.mSimulation.get('TnoDim'), self.mSimulation.get('SnoDim')]);
+				vTempSalt.update([self.mSimulation.get('T'), self.mSimulation.get('S'), self.mSimulation.get('TnoDim'), self.mSimulation.get('SnoDim')], self.mSimulation.get('time'));
 			});
 			newVSlide.$el.find('.tempsalt').append(vTempSalt.$el);
 			vTempSalt.render();
@@ -273,16 +273,16 @@ module.exports = Backbone.View.extend({
 
 			var vFlow = new VPlot({ title: 'Fluss', colors: [colorFlow,colorFlow], alpha: [1.0,0.2], minValue: -2, maxValue: 2 });
 			vFlow.listenTo(self.mSimulation, 'simulationend', function(){
-				vFlow.update([self.mSimulation.get('QnoDim'), self.mSimulation.get('Q')]);
+				vFlow.update([self.mSimulation.get('QnoDim'), self.mSimulation.get('Q')], self.mSimulation.get('time'));
 			});
 			newVSlide.$el.find('.flow').append(vFlow.$el);
 			vFlow.render();
 			vFlow.addLegend(0,'Q: Dimensionslos');
 			vFlow.addLegend(1,'Q: Absolut');
 
-			var vAnalyse = new VPlot({ title: 'Stabilitätspunkte', colors: [colorFlow,colorFlow,colorYellow], alpha: [1.0,0.2,0.3], minValue: -2, maxValue: 2, startT: -2, endT: 2, showHalfHalf: true });
+			var vAnalyse = new VPlot({ title: 'Stabilitätspunkte', colors: [colorFlow,colorFlow,colorYellow,colorYellow], alpha: [1.0,0.2,0.6,0.6], minValue: -2, maxValue: 2, startT: -2, endT: 2, showHalfHalf: true });
 			vAnalyse.listenTo(self.mSimulation, 'analyseend', function(){
-				vAnalyse.update([self.mSimulation.get('G'), self.mSimulation.get('Z'), self.mSimulation.get('K')]);
+				vAnalyse.update([self.mSimulation.get('G'), self.mSimulation.get('Z'), self.mSimulation.get('Kp'), self.mSimulation.get('Kn')], self.mSimulation.get('qOnX'));
 				var zeroPoints = self.mSimulation.get('zeroPoints');
 				var stableQs = self.mSimulation.get('stableQs');
 				for (var i = 0; i < zeroPoints.length; i++){
@@ -342,6 +342,104 @@ module.exports = Backbone.View.extend({
 			colorNorthSea: colorNorthSea,
 			colorFlow: colorFlow
 		}));
+
+		self.$el.find('#parameters .gulf').append(self.vT01slider.render().$el);
+		self.$el.find('#parameters .gulf').append(self.vS01slider.render().$el);
+		self.$el.find('#parameters .northsea').append(self.vT02slider.render().$el);
+		self.$el.find('#parameters .northsea').append(self.vS02slider.render().$el);
+		self.$el.find('#parameters .influence').append(self.vKTslider.render().$el);
+		self.$el.find('#parameters .influence').append(self.vKSslider.render().$el);
+		self.$el.find('#parameters .flow').append(self.vAslider.render().$el);
+		self.$el.find('#parameters .flow').append(self.vBslider.render().$el);
+		self.$el.find('#parameters .flow').append(self.vCslider.render().$el);
+
+		self.vT01slider.bind('valueHasChanged', function(){
+			self.$el.find('.param-selection .selection').removeClass('selected');
+		});
+		self.vT02slider.bind('valueHasChanged', function(){
+			self.$el.find('.param-selection .selection').removeClass('selected');
+		});
+		self.vS01slider.bind('valueHasChanged', function(){
+			self.$el.find('.param-selection .selection').removeClass('selected');
+		});
+		self.vS02slider.bind('valueHasChanged', function(){
+			self.$el.find('.param-selection .selection').removeClass('selected');
+		});
+		self.vKTslider.bind('valueHasChanged', function(){
+			self.$el.find('.param-selection .selection').removeClass('selected');
+		});
+		self.vKSslider.bind('valueHasChanged', function(){
+			self.$el.find('.param-selection .selection').removeClass('selected');
+		});
+
+		self.vAslider.bind('valueHasChanged', function(){
+			self.$el.find('.param-selection .selection').removeClass('selected');
+		});
+		self.vBslider.bind('valueHasChanged', function(){
+			self.$el.find('.param-selection .selection').removeClass('selected');
+		});
+		self.vCslider.bind('valueHasChanged', function(){
+			self.$el.find('.param-selection .selection').removeClass('selected');
+		});
+	},
+
+	selectParams: function(e){
+		var self = this;
+
+		var $btn = $(e.currentTarget);
+		var params = $btn.data('params');
+
+		var oldT01 = self.mSimulation.get('T01');
+		var oldT02 = self.mSimulation.get('T02');
+		var oldS01 = self.mSimulation.get('S01');
+		var oldS02 = self.mSimulation.get('S02');
+		var oldKT = self.mSimulation.get('kT');
+		var oldKS = self.mSimulation.get('kS');
+
+		self.$el.find('.param-selection .selection').removeClass('selected');
+		$btn.addClass('selected');
+
+		var animationSteps = 50;
+		var counter = 0;
+		var valueStep = setInterval(function(){
+			counter++;
+			if (counter > animationSteps){
+				clearInterval(valueStep);
+				return;
+			}
+
+			var s = -Math.sin((counter/animationSteps)*Math.PI+Math.PI/2)/2+0.5;
+
+			var T01 = oldT01 + (params.T01 - oldT01)*s;
+			self.vT01slider.setValue(T01);
+			self.mSimulation.set('T01',T01);
+
+			var T02 = oldT02 + (params.T02 - oldT02)*s;
+			self.vT02slider.setValue(T02);
+			self.mSimulation.set('T02',T02);
+
+			var S01 = oldS01 + (params.S01 - oldS01)*s;
+			self.vS01slider.setValue(S01);
+			self.mSimulation.set('S01',S01);
+
+			var S02 = oldS02 + (params.S02 - oldS02)*s;
+			self.vS02slider.setValue(S02);
+			self.mSimulation.set('S02',S02);
+
+			if (params.kT != undef){
+				var kT = oldKT + (params.kT - oldKT)*s;
+				self.vKTslider.setValue(kT);
+				self.mSimulation.set('kT',kT);
+			}
+			if (params.kS != undef){
+				var kS = oldKS + (params.kS - oldKS)*s;
+				self.vKSslider.setValue(kS);
+				self.mSimulation.set('kS',kS);
+			}
+
+			self.mSimulation.simulate();
+
+		},1/20);
 	},
 
 	goForward: function(){

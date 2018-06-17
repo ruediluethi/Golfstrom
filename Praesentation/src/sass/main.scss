@@ -404,6 +404,35 @@ span.quad {
     line-height: 1;
 }
 
+.param-selection {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 18px;
+    line-height: 20px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.param-selection .selection {
+    float: left;
+    padding: 5px 10px;
+    border-left: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+    border-top: 1px solid #FFFFFF;
+    margin-bottom: -1px;
+    cursor: pointer;
+    color: #b9b9b9;
+}
+.param-selection .selection:last-child {
+    border-right: 1px solid #DDDDDD;
+}
+.param-selection .selection.selected {
+    border-bottom: 1px solid #FFFFFF;
+    border-top: 1px solid #DDDDDD;
+    color: #222222;
+}
+.param-selection .selection.selected span {
+    border-bottom: 2px solid #222222;
+}
+
 .plot {
     float: left;
     width: 100%;

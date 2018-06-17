@@ -118,7 +118,8 @@
 		T_1 > T_2 \quad \textrm{und} \quad S_1 < S_2
 	\end{align*}
 	
-	Mit diesen Bedingungen ergibt sich in einer ersten Simulation folgendes Bild:
+	Diese Bedingungen sind in einer ersten Simulation in Abbildung \ref{fig:modell_q_pos} dargestellt. Klar zu erkennen ist, dass sich bereits nach nur kurzer Zeit für den Fluss einen stabilen Zustand einstellt. Der Fluss stellt sich zum Ende bei \(0.45\), also fließt Wasser vom Golf von Mexiko über die Oberfläche in die Nordsee und im Untergrund wieder zurück.
+	
 	\begin{figure}[!h]
   		\centering
  		\includegraphics[width=7cm]{../Diagramme/temp-salt-flow_q-pos.png}
@@ -126,21 +127,143 @@
   		\label{fig:modell_q_pos}
 	\end{figure}
 	
-	Klar zu erkennen ist, dass sich bereits nach nur kurzer Zeit für den Fluss einen stabilen Zustand einstellt. Der Fluss stellt sich zum Ende bei \(0.45\), also fließt Wasser vom Golf von Mexiko über die Oberfläche in die Nordsee und im Untergrund wieder zurück.
-	
-	Sinkt der Salzgehalt in der Nordsee durch äußere Einflüsse drastisch so ergibt sich ein verändertes Bild:
+	Sinkt der Salzgehalt in der Nordsee durch äußere Einflüsse, so ergibt sich ein verändertes Bild. In Abbildung \ref{fig:modell_q_neg} hat der Fluss ein negatives Vorzeichen, er hat sich also umgedreht. Das Wasser fließt neu in entgegengesetzter Richtung von der Nordsee in den Golf von Mexiko.
 	\begin{figure}[!h]
   		\centering
  		\includegraphics[width=7cm]{../Diagramme/temp-salt-flow_q-neg.png}
   		\caption{Erneute Simulation mit tiefem Salzgehalt \(S_2 = 0.2\) in der Nordsee (die anderen Parameter wurden wie in Abbildung \ref{fig:modell_q_pos} beibehalten)}
-  		\label{fig:modell}
+  		\label{fig:modell_q_neg}
 	\end{figure}
 	
-	In Abbildung \ref{fig:modell_q_pos} hat der Fluss ein negatives Vorzeichen, er hat sich also umgedreht. Das Wasser fließt in dieser Situation in entgegengesetzter Richtung von der Nordsee in den Golf von Mexiko.
-	
 	\subsection{Entdimensionalisierung}
+	Da die Dimensionen (oder Maßeinheiten) für das Verhalten des Modells keine Rolle spielen, werden diese in einem nächsten Schritt rausgekürzt. Dies geschieht durch die Wahl einer geeigneten Skalierung. Diese ergibt sich, indem wir das Modell nur von dem Verhältnis zu den jeweiligen Startwerten \(T_0, S_0\) abhängig machen. Sei also:
+	\begin{align*}
+		\tilde{T} = \frac{T}{T_0} \Rightarrow T = \tilde{T} T_0 \quad \textrm{und} \quad \tilde{S} = \frac{S}{S_0} \Rightarrow S = \tilde{S} S_0
+	\end{align*}
+	
+	Eingesetzt in die Gleichung für die Temperaturdifferenz ergibt sich folgendes:
+	\begin{align*}
+		\frac{d\tilde{T} T_0}{dt} &= k_T\left(T_{0} - \tilde{T} T_0 \right) - 2\left|q(\tilde{T} T_0,\tilde{S} S_0)\right| \tilde{T} T_0 \\
+		\stackrel{
+			\substack{
+				\textrm{da } T_0 > 0\\
+				\textrm{ist } T_0 \neq 0
+			}
+		}{\Rightarrow}
+		\frac{d\tilde{T}}{dt} &= k_T\left(1 - \tilde{T}\right) - 2\left|q(\tilde{T} T_0,\tilde{S} S_0)\right| \tilde{T}
+	\end{align*}
+	Analog gilt für den Salzgehalt:
+	\begin{align*}
+		\frac{d\tilde{S}}{dt} &= k_S\left(1 - \tilde{S}\right) - 2\left|q(\tilde{T} T_0,\tilde{S} S_0)\right| \tilde{S}
+	\end{align*}
+	Gilt zusätzlich für den Fluss:
+	\begin{align*}
+		q = \frac{\tilde{q} k_T}{2} &= a \left( b\tilde{T}T_0 - c\tilde{S}S_0 \right) \\
+		\Rightarrow \tilde{q} &= \underbrace{2\frac{ab}{k_T}T_0}_{= \alpha} \cdot \tilde{T} - \underbrace{2\frac{ac}{k_T}S_0}_{=\beta} \cdot \tilde{S} \\
+		\Rightarrow \tilde{q} &= \alpha\tilde{T} - \beta\tilde{S}
+	\end{align*}
+	Skalieren wir zusätzlich noch die Zeit \(t = \tilde{t} k_T\) und setzen \(q = \frac{\tilde{q}k_T}{2}\) ein, so gilt für die Temperatur:
+	\begin{align*}
+		\frac{d\tilde{T}}{d\tilde{t} k_T} &= k_T\left(1 - \tilde{T}\right) - 2\left|\frac{\tilde{q}(\tilde{T},\tilde{S})k_T}{2}\right| \tilde{T} \\
+		\Rightarrow \frac{d\tilde{T}}{d\tilde{t}} &= (1 - \tilde{T}) - \left| \tilde{q}(\tilde{T},\tilde{S})\right|\tilde{T}
+	\end{align*}
+	Wiederum analog für den Salzgehalt gilt:
+	\begin{align*}
+		\Rightarrow \frac{d\tilde{S}}{d\tilde{t}} &= \underbrace{\frac{k_S}{k_T}}_{=\gamma}(1 - \tilde{S}) - \left| \tilde{q}(\tilde{T},\tilde{S})\right|\tilde{S}
+	\end{align*}
+	
+	Für die nachfolgende Gleichgewichtsuntersuchung wird nur das dimensionslose Modell betrachtet. Um dafür die Bezeichnungen der Variablen einfach zu halten, wird auf die zusätzliche Notation mit dem \textasciitilde\ verzichtet. Also lauten die dimensionslosen Gleichungen nun:
+	\begin{align*}
+		\frac{dT}{dt} &= (1 - T) - \left| q(T,S)\right|T \\
+		\frac{dS}{dt} &= \gamma (1 - S) - \left| q(T,S)\right|S \\
+		q(T,S) &= \alpha T - \beta S
+	\end{align*}
+	Dafür wurden folgenden Parameter definiert:
+	\begin{align*}
+		\alpha = 2\frac{ab}{k_T}T_0 \qquad
+		\beta = 2\frac{ac}{k_T}S_0 \qquad
+		\gamma = \frac{k_S}{k_T}
+	\end{align*}
 	
 	\subsection{Gleichgewichtsuntersuchung}
+	Das System ist im Gleichgewicht, wenn sich Temperatur und Salzgehalt nicht mehr ändert:
+	\begin{align*}
+		\frac{dT}{dt} = (1 - T) - \left| q(T,S)\right|T &\stackrel{!}{=} 0 \\
+		\Rightarrow 1 - T(1 + |q|) &\stackrel{!}{=} 0 \\
+		\Rightarrow T &= \frac{1}{1 + |q|} \\
+		\stackrel{
+			\substack{
+				\textrm{analog für den}\\
+				\textrm{Salzgehalt}
+			}
+		}{\Rightarrow} S &= \frac{\gamma}{\gamma + |q|}
+	\end{align*}
+	Damit ist der Fluss:
+	\begin{align*}
+		q = \alpha \frac{1}{1 + |q|} - \beta \frac{\gamma}{\gamma + |q|} = g(q)
+	\end{align*}
+	Diesen Zusammenhang bezeichnen wir für die weiteren Untersuchungen als Funktion \(g(q)\).
+	
+	Wenn sich der Fluss nicht mehr ändert, also stabil ist, muss für \(g(q)\) folgendes gelten:
+	\begin{align*}
+		g(q) \stackrel{!}{=} q \Rightarrow q - g(q) \stackrel{!}{=} 0
+	\end{align*}
+	Um also den Fluss im stabilen Zustand zu bestimmen, müssen entsprechende Nullstellen gefunden werden. Im Fall \(\gamma = 1\) und \(q \neq 0\) können die Nullstellen direkt ausgerechnet werden:
+	\begin{align*}
+		g(q) = q - \frac{1}{1 + |q|}  \left(\alpha - \beta\ \right) &\stackrel{!}{=} 0 \\
+		\Rightarrow \frac{q \left( 1 + |q| \right)}{1 + |q|} + \frac{\beta - \alpha}{1 + |q|}  &\stackrel{!}{=} 0 \\
+		\stackrel{\textrm{da } 1 + |q| > 0}{\Rightarrow} \left. \begin{array}{ll}
+			q > 0: & q^2 + q + \beta - \alpha \\
+			q < 0: & -q^2 - q + \beta - \alpha
+		\end{array} \right\} &\stackrel{!}{=} 0 \\
+		\Rightarrow \begin{array}{l}
+			q > 0 \left\{ \begin{array}{l}
+				q_1 = \frac{1}{2}\left( -\sqrt{4a - 4b + 1} -1 \right)	\\			
+				q_2 = \frac{1}{2}\left( +\sqrt{4a - 4b + 1} -1 \right)				
+			\end{array}\right. \\
+			q < 0 \left\{ \begin{array}{l}
+				q_3 = \frac{1}{2}\left( -\sqrt{4b - 4a + 1} + 1 \right) \\
+				q_4 = \frac{1}{2}\left( +\sqrt{4b - 4a + 1} + 1 \right)
+			\end{array}\right.
+		\end{array}
+	\end{align*}
+	Da \(q_1\) für reelle Werte die Bedingung \(q > 0\) nicht erfüllt, kann es keine Nullstelle sein. Auch \(q_4\) kann für reelle Werte die Bedingung \(q < 0\) nicht erfüllen. Also verbleiben für den Fall \(\gamma = 1\) die Nullstellen \(q_2\) und \(q_3\).
+	
+	\begin{figure}[!h]
+  		\centering
+ 		\includegraphics[width=6cm]{../Diagramme/g_von_q_gamma_1.png}
+  		\caption{Die Funktion \(g(q)\) mit den Nullstellen \(q_2\) und \(q_3\) für die bereits beschriebenen Werte im realitätsnahen Zustand (siehe Abbildung \ref{fig:modell_q_pos}) und im Fall einer abgeschmolzenen Arktis (siehe Abbildung \ref{fig:modell_q_neg}).}
+  		\label{fig:g_von_q_gamma_1}
+	\end{figure}	
+
+	
+	Um auch den Fall \(\gamma \neq 1\) betrachten zu können, wird die Funktion \(g(q)\) so erweitert, dass die Brüche wegfallen aber die Nullstellen erhalten bleiben:
+	\begin{align*}
+		k(q) = \left\{ \begin{array}{ll}
+			\left( q - g\left(q\right) \right)(1 + q)(\gamma + q) &\textrm{ für } q > 0  \\
+			\left( g\left(q\right) - q \right)(1 - q)(\gamma - q) &\textrm{ für } q < 0
+		\end{array} \right.
+	\end{align*}
+	Aufgrund der Betragsfunktion für \(q\) in der Funktion \(g(q)\) müssen wir die Fälle \(q > 0\) und \(q < 0\) getrennt betrachten. Im weiteren wird der Fall \(q > 0\) besprochen, der Fall \(q < 0\) folgt analog.
+	
+	Eingesetzt und ausmultipliziert ergibt sich folgendes Polynom:
+	\begin{align*}
+		k(q) &= q^3 + q^2(1 + \gamma) + q\left(\gamma \left(1 + \beta\right) - \alpha \right) + \gamma \left( \beta - \alpha \right)
+	\end{align*}
+	Die Funktion \(k(q)\) ist ein Polynom 3ten Grades und hat höchstens drei Nullstellen. Diese drei Nullstellen müssen wiederum zwei Wendepunkte einschließen. Die Wendepunkte werden wie folgt gefunden:
+	\begin{align*}
+		k'(q) &= 3q^2 + 2q(1+\gamma) + \gamma(1+\beta) - \alpha \stackrel{!}{=} 0 \\
+		\Rightarrow& \left\{ \begin{array}{l}
+			q_{w1} = -\frac{1}{3}\left( \sqrt{3\alpha - 3\beta\gamma + \gamma^2 - \gamma + 1} +\gamma + 1 \right) \\
+			q_{w2} = \frac{1}{3}\left( \sqrt{3\alpha - 3\beta\gamma + \gamma^2 - \gamma + 1} -\gamma - 1 \right)
+		\end{array} \right.
+	\end{align*}
+	Der Wendepunkt \(q_{w1}\) kann für reelle Punkte nicht größer Null sein, also hat \(k(q)\) für \(q > 0\) nur den Wendepunkt \(q_{w2}\) und kann somit auch nur zwei Nullstellen im Bereich \(q > 0\) haben.
+	
+	Gilt \(k(q_{w2}) = 0\) so ist gerade der Wendepunkt ein Nullpunkt und die Funktion \(k(q)\) hat eine Nullstelle für \(q > 0\).
+	
+	Ist \(k(0) > 0\) und \(k(q_{w2}) > 0\) so existiert für \(q > 0\) keine Nullstelle, so beispielsweise im Fall der abgeschmolzenen Arktis.
+	
 	
 	\section{\uppercase{Anwendung}}\label{sec:Anwendung}
 	

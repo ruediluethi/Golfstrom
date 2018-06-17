@@ -134,13 +134,13 @@ module.exports = Backbone.View.extend({
 		var self = this;
 
 		var zeroXpos = self.diagramWidth/Math.abs(self.endT - self.starT)*Math.abs(self.starT);
-		/*self.gAxis.append('line')
+		self.gAxis.append('line')
 			.attr('x1', zeroXpos)
 			.attr('y1', 0)
 			.attr('x2', zeroXpos)
 			.attr('y2', self.diagramHeight)
 			.attr('stroke-width', 1)
-			.attr('stroke','#777777');*/
+			.attr('stroke','#777777');
 
 		for (var i = 0; i < self.helpLinesCount; i++){
 			var value = self.minValue + Math.abs(self.maxValue - self.minValue)*i/(self.helpLinesCount-1);
@@ -190,33 +190,35 @@ module.exports = Backbone.View.extend({
 	renderTimeLine: function(time){
 		var self = this;
 
-		var timeRange = Math.abs(time[time.length-1] - time[0]);
-		var timeStep = self.diagramWidth/timeRange;
+		var zeroXpos = self.diagramWidth/Math.abs(self.endT - self.starT)*Math.abs(self.starT);
 
 		var minTime = Math.round(time[0]);
 		var maxTime = Math.round(time[time.length-1]);
 
+		var timeRange = Math.abs(minTime - maxTime);
+		var timeStep = self.diagramWidth/timeRange;
+
 		self.gAxis.selectAll('line.timeline').remove();
-		self.gAxis.selectAll('text.timeline').remove();
+		self.gLabels.selectAll('text.timeline').remove();
 
 		for (var t = minTime; t < maxTime+0.1; t = t+0.1){
-			var xPos = Math.round(timeStep*t);
+			var xPos = Math.round(timeStep*t) + zeroXpos;
 			var lineSize = 2;
 			if(Math.abs(Math.round(t)-t) < 0.01){
 				lineSize = 3;
-				self.gAxis.append('text')
+				self.gLabels.append('text')
 					.attr('class', 'small timeline')
 					.attr('x', xPos)
 					.attr('y', self.valueToY(0)+15)
-					.attr('text-anchor',Math.round(t) == Math.floor(time[time.length-1]) ? 'end' : 'start')
+					.attr('text-anchor',Math.round(t) == maxTime ? 'end' : 'start')
 					.text(Math.round(t));
 			}
 			
 			self.gAxis.append('line')
 				.attr('class', 'timeline')
-				.attr('x1', timeStep*t)
+				.attr('x1', xPos)
 				.attr('y1', self.valueToY(0)-lineSize)
-				.attr('x2', timeStep*t)
+				.attr('x2', xPos)
 				.attr('y2', self.valueToY(0)+lineSize)
 				.attr('stroke-width', 1)
 				.attr('stroke','#777777');
