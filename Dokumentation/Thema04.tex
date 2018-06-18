@@ -2,7 +2,8 @@
 
 \usepackage[utf8]{inputenc}
 \usepackage[ngerman]{babel}
-
+\usepackage{url} %Bib
+\usepackage[sort&compress,numbers]{natbib} %Bib
 \usepackage{epsfig}
 \usepackage{subfigure}
 \usepackage{calc}
@@ -42,7 +43,7 @@
 
 Der Südost-Passat treibt dieses wärmere Wasser dann in Richtung Golf von Mexiko. Dort vereinigt sich der Strom vom Äquator mit dem Floridastrom. Ab dort Sprechen wir vom Golfstrom, den wir auch in unserem Modell betrachten. Im Golf vor Mexiko erwärmt sich das Wasser weiter bis es dann entlang der Küste Amerikas in Richtung Norden zieht. Dort spaltet sich dich Strömung und ein Teil wird von den Nordost-Passat Winden wieder Richtung Äquator gezogen und bildet einen Kreislauf. Dieser wird in unserem Modell jedoch nicht beachtet. Wir untersuchen den Teil der von der Westwindzone erfasst wird und auf dem 45 Breitengrad Richtung Europa gezogen wird.
 
-Dort Strömt er dann an der Norwegischen /Schwedischen Küste weiter nach Norden. Auf dem Weg kühlt sich das warme Wasser vom Süden wieder ab und erwärmt die Luft, die dann durch die Westwinde zu uns kommt und damit unsere Temperatur stark beeinflusst. Aufgrund des Golfstromes ist unsere durchschnittliche Jahrestemperatur rund 5-10 Grad Celsius wärmer als z.B im Kanada auf dem selben Breitengrad. 
+Dort Strömt er dann an der Norwegischen Küste weiter nach Norden. Auf dem Weg kühlt sich das warme Wasser vom Süden wieder ab und erwärmt die Luft, die dann durch die Westwinde zu uns kommt und damit unsere Temperatur stark beeinflusst. Aufgrund des Golfstromes ist unsere durchschnittliche Jahrestemperatur rund 5-10 Grad Celsius wärmer als z.B im Kanada auf dem selben Breitengrad. 
 
 Weiter im Norden kühlt sich das Wasser weiter ab, bis es dann anfängt zu gefrieren. Dabei wird das Salz aus dem Wasser gelöst, da dieses nicht gefriert. Deshalb steigt der Salzgehalt im nicht gefrorenen Wasser. Dies führt dazu, dass sich die Dichte des Wassers erhöht und sich deshalb absenkt. Das gesunkene Wasser fließt dann entlang der amerikanischen Küste wieder zurück zum Golf von Mexiko.
 
@@ -279,33 +280,22 @@ Im Nordmeer fallen ??? Kubikmeter Wasser in einer Minute in die Tiefe
 	
 	
 	\section{\uppercase{Anwendung}}\label{sec:Anwendung}
+	\noindent Nach der theoretischen Analyse wollen wir unser Modell welches noch nicht enddimensioniert wurde betrachten. Dazu haben wir recherchiert und die tatsächlichen Temperaturen des Golfstrom genommen. Da sich die Quellen jedoch unterscheiden, da in verschieden Tiefen gemessen wurde oder zu verschieden Jahreszeiten oder die Genauigkeit der Messung variiert haben wir uns dazu entschieden ein Mittel der Werte zu nehmen.
 	
 	\subsection{Datenabschätzung}
-	\noindent Für Temperatur:
-	% da sollte es noch was besseres geben um Links einbetten zu können?
-	\begin{verbatim}
-		https://www.seatemperature.org/north-sea
-		https://www.seatemperature.org/mexico-sea
-	\end{verbatim}
-	Aber bei dieser Quelle leider keine Monatsdaten... \\
-	\\
-	Etwas zum Salzgehalt:
-	\begin{verbatim}
-		https://en.wikipedia.org/wiki/North_Sea#Temperature_and_salinity
-	\end{verbatim}
-	aber halt leider nur zur Nordsee \\	
-	\\
-	Sowas wär halt toll als Quelle:
-	\begin{verbatim}
-		https://data.giss.nasa.gov/
-	\end{verbatim}
-	Aber habe da bisher nur Daten zur Oberfächentemperatur gefunden... \\
-	\\
-	Vielleicht findet man da auch noch was, wenn man die Quellen durchgeht?
-	\begin{verbatim}
-		https://en.wikipedia.org/wiki/Sea_surface_temperature
-	\end{verbatim}
+	\noindent Betrachten wir nun zuerst die Temperaturen des Golfstromes im Golf von Mexiko. 
 	
+	Der Golf von Mexiko hat eine durchschnittliche Temperatur von ungefähr 27 Grad Celsius. An manchen Küstenabschnitten etwas wärmer an anderen etwas kühler. An der Küste wird der Golfstrom in seinem Fluss gestört, da dort der Meeresgrund nicht überall gleich tief ist. So kommt es dazu, dass der Fluss an mancher Stelle durch eine enge muss und sich somit die Fließgeschwindigkeit erhöht und an andere Stelle wird er wieder gebremst. Dadurch verweilt die Wassermenge an einer Stelle länger und wird stärker von der Sonne erwärmt. 
+	
+	Die Temperatur vom Nordmeer haben wir mit rund 10 Grad Celsius angenommen. Hierbei ist es schwer, da das Nordmeer relativ groß ist und sich über circa 15 Breitengrade erstreckt. Das ist eine Länge von über 2000 Kilometern. Auf dieser enormen Länge schwankt die Temperatur erwartungsgemäß stark. Das südliche Ende liegt westlich von Norwegen ungefähr auf dem 60. Breitengrad. Das nördliche Ende ist ungefähr bei dem 75. Breitengrad. Das ist deutlich oberhalb des Polarkreises(66.5 Breitengrad; Island liegt ungefähr auf dem Polarkreis)
+	
+	
+	\textbf{???} Erstaunlicher weiße haben wir sehr gute Wetterdiagramme auf Reiseseiten gefunden. Dort wird oft aufgelistet, wann die beste Reisezeit ist und es werden einem erstaunlich gute Graphiken gezeigt die sowohl die Umgebungstemperatur als auch die Wassertemperatur liefen. Da diese Diagramme meist kein Quellenverzeichnis aufweisen, haben wir die Werte mit anderen Messdaten "validiert". Die Abweichungen waren vernachlässigbar gering. Aus diesen Diagrammen kann man sich nun ein sehr detailliertes Bild machen, wie sich die Wassertemperatur entlang der Küste verändert, da es zu jedem größeren Küstenort ein solches Diagramm gibt. \textbf{???}
+	
+	
+	Beim Salzgehalt gestaltet sich die Suche nach brauchbaren Werten jedoch deutlich schwerer. Zum Nordmeer findet man mehr Messerwerte über den Salzgehalt, da dort das Wasser aufgrund der Kombination von Salz und Frost dichter wird und nach unten sinkt. Der Durchschnittswert der Salinität beträgt hier um die 34 Promille. 
+	
+	Im Golf von Mexiko findet man so gut wie keine Werte. Deshalb können wir hier nicht sonderlich vergleichen. Die Salinität liegt hier bei 31 bis 32 Promille.
 	
 	\subsection{Temperaturschwankungen durch Jahreszeiten}
 	
@@ -315,18 +305,54 @@ Im Nordmeer fallen ??? Kubikmeter Wasser in einer Minute in die Tiefe
 	
 	
  	\section{\uppercase{Quellen}}\label{sec: Quellen}
-	Golfstrom: 
+	\noindent Über den Golfstrom: 
 	\begin{verbatim}
 		https://www.t-online.de/leben/familie/id_73374590/golfstrom-wird-immer-schwaecher-droht-eine-neue-eiszeit-.html
+		https://www.wetter.com/news/golfstrom-die-heizung-europas_aid_55c36ad3cebfc0cc4d8b464b.html
 	\end{verbatim}
-		
 	Wetterdaten: 
+	
+	\noindent Golf:
 	\begin{verbatim}
-		 	https://www.wetter.com/news/golfstrom-die-heizung-europas_aid_55c36ad3cebfc0cc4d8b464b.html
-	 	http://www.naplesgolf.org/napl20_2.htm
-	 	https://meteo.plus/wassertemperaturen-norwegen-west.php
-	 	http://www.travelklima.de/nordmeer-kreuzfahrten/
+		https://www.wetter.com/news/golfstrom-die-heizung-europas_aid_55c36ad3cebfc0cc4d8b464b.html
+		http://www.naplesgolf.org/napl20_2.htm
+		https://www.seatemperature.org/mexico-sea
+		https://www.holidaycheck.de/dc/wetter-jacksonville/4a61c954-b96b-34ad-bd20-3361f6308c30  
+		http://www.klima.org/usa/klima-jekyll-island/
 	\end{verbatim}
+	Nordmeer:
+	\begin{verbatim}
+		https://de.wikipedia.org/wiki/Europ%C3%A4isches_Nordmeer
+		http://www.travelklima.de/nordmeer-kreuzfahrten/
+		https://meteo.plus/wassertemperaturen-norwegen-west.php
+		https://www.seatemperature.org/north-sea
+	\end{verbatim}
+	Salzgehalt:
+	
+	\noindent Nordmeer
+	\begin{verbatim}
+		https://en.wikipedia.org/wiki/North_Sea#Temperature_and_salinity
+	\end{verbatim}
+	Golf von Mexiko
+	\begin{verbatim}
+	https://de.wikipedia.org/wiki/Salinit%C3%A4t#/media/File:WOA09_sea-surf_SAL_AYool.png
+	\end{verbatim}		
+	
+	Dokumentationen über dem Golfstrom: 
+	\begin{verbatim}
+		https://www.youtube.com/watch?v=cV4tC9plmZs&feature=youtu.be
+		https://www.youtube.com/watch?v=kuUgHZXkLNU&t=9s
+		https://www.youtube.com/watch?v=yKXiNJ4mQ3M
+  	\end{verbatim}		
+	Sonstiges: 
+	\begin{verbatim}
+		https://data.giss.nasa.gov/
+		https://en.wikipedia.org/wiki/Sea_surface_temperature
+	\end{verbatim}
+	
+	\nocite{*}
+	\bibliographystyle{acm}
+	\bibliography{Quellen}
 
 \end{document}	
 
