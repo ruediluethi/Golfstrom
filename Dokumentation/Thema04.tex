@@ -4,6 +4,7 @@
 \usepackage[ngerman]{babel}
 \usepackage{url} %Bib
 \usepackage[sort&compress,numbers]{natbib} %Bib
+\usepackage{cuted}
 \usepackage{epsfig}
 \usepackage{subfigure}
 \usepackage{calc}
@@ -15,6 +16,9 @@
 \usepackage{pslatex}
 \usepackage{apalike}
 \usepackage{enumitem}
+%\usepackage{etoolbox}
+%\usepackage{hyperref}
+%\apptocmd{\UrlBreaks}{\do\f\do\m}{}{}
 \usepackage{MOSI}     % Please add other packages that you may need BEFORE the MOSI.sty package.
 
 \newcommand{\team}{Patrick Neher, Ruedi Lüthi}
@@ -33,7 +37,7 @@
 	
 	\keywords{Golfstorm, Stabilitätsanalyse}
 
-	\abstract{Bla bla bla}
+	\abstract{Der Golfstrom strömt. Schnell!!!!!!}
 	
 	\onecolumn \maketitle \normalsize \vfill
 
@@ -41,15 +45,22 @@
 
 	\noindent Der Golfstrom ist ein Naturphänomen, welches für einen Wasseraustausch zwischen dem Golf von Mexiko und dem Nordmeer verantwortlich ist. Die Strömung beginnt jedoch nicht erst im Golf vom Mexiko sondern schon davor. Auf der Höhe des Äquator westlich von Afrika wird das Oberflächenwasser stark erwärmt, da dort die Sonne nahezu senkrecht über dem Wasser steht. Dies trägt dazu bei, dass der Albedo-Wert (Wie viel Prozent der auftreffenden Strahlung reflektiert wird) klein wird und somit viel Energie in das Wasser über geht.
 
-Der Südost-Passat treibt dieses wärmere Wasser dann in Richtung Golf von Mexiko. Dort vereinigt sich der Strom vom Äquator mit dem Floridastrom. Ab dort Sprechen wir vom Golfstrom, den wir auch in unserem Modell betrachten. Im Golf vor Mexiko erwärmt sich das Wasser weiter bis es dann entlang der Küste Amerikas in Richtung Norden zieht. Dort spaltet sich dich Strömung und ein Teil wird von den Nordost-Passat Winden wieder Richtung Äquator gezogen und bildet einen Kreislauf. Dieser wird in unserem Modell jedoch nicht beachtet. Wir untersuchen den Teil der von der Westwindzone erfasst wird und auf dem 45 Breitengrad Richtung Europa gezogen wird.
+	Der Südost-Passat treibt dieses wärmere Wasser dann in Richtung Golf von Mexiko. Dort vereinigt sich der Strom vom Äquator mit dem Floridastrom. Ab dort Sprechen wir vom Golfstrom, den wir auch in unserem Modell betrachten. Im Golf vor Mexiko erwärmt sich das Wasser weiter bis es dann entlang der Küste Amerikas in Richtung Norden zieht. Dort spaltet sich dich Strömung und ein Teil wird von den Nordost-Passat Winden wieder Richtung Äquator gezogen und bildet einen Kreislauf. Dieser wird in unserem Modell jedoch nicht beachtet. Wir untersuchen den Teil der von der Westwindzone erfasst wird und auf dem 45 Breitengrad Richtung Europa gezogen wird.
 
-Dort Strömt er dann an der Norwegischen Küste weiter nach Norden. Auf dem Weg kühlt sich das warme Wasser vom Süden wieder ab und erwärmt die Luft, die dann durch die Westwinde zu uns kommt und damit unsere Temperatur stark beeinflusst. Aufgrund des Golfstromes ist unsere durchschnittliche Jahrestemperatur rund 5-10 Grad Celsius wärmer als z.B im Kanada auf dem selben Breitengrad. 
+	Dort Strömt er dann an der Norwegischen Küste weiter nach Norden. Auf dem Weg kühlt sich das warme Wasser vom Süden wieder ab und erwärmt die Luft, die dann durch die Westwinde zu uns kommt und damit unsere Temperatur stark beeinflusst. Aufgrund des Golfstromes ist unsere durchschnittliche Jahrestemperatur rund 5-10 Grad Celsius wärmer als z.B im Kanada auf dem selben Breitengrad. 
 
-Weiter im Norden kühlt sich das Wasser weiter ab, bis es dann anfängt zu gefrieren. Dabei wird das Salz aus dem Wasser gelöst, da dieses nicht gefriert. Deshalb steigt der Salzgehalt im nicht gefrorenen Wasser. Dies führt dazu, dass sich die Dichte des Wassers erhöht und sich deshalb absenkt. Das gesunkene Wasser fließt dann entlang der amerikanischen Küste wieder zurück zum Golf von Mexiko.
+	Weiter im Norden kühlt sich das Wasser weiter ab, bis es dann anfängt zu gefrieren. Dabei wird das Salz aus dem Wasser gelöst, da dieses nicht gefriert. Deshalb steigt der Salzgehalt im nicht gefrorenen Wasser. Dies führt dazu, dass sich die Dichte des Wassers erhöht und sich deshalb absenkt. Das gesunkene Wasser fließt dann entlang der amerikanischen Küste wieder zurück zum Golf von Mexiko.
 
-Durch den Golfstrom werden ??? Kubikmeter Wasser in Bewegung gesetzt. 
-Die Erwärmung der Luft ist vergleichbar mit der Leistung von ??? Atomkraftwerken.
-Im Nordmeer fallen ??? Kubikmeter Wasser in einer Minute in die Tiefe
+	\begin{figure}[!h]
+  		\centering
+ 		\includegraphics[width=7cm]{../Diagramme/Golfstrom.jpg}
+  		\caption{Darstellung vom Fluss des Golfstromes}
+  		\label{fig:modell}
+	\end{figure}
+
+Durch den Golfstrom werden maximal 150 Millionen Kubikmeter Wasser in Bewegung gesetzt. 
+Die Erwärmung der Luft ist vergleichbar mit der Leistung von Zwei Millionen modernen Atomkraftwerken. (~1.5 Petawatt)
+Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
  
 	
 
@@ -283,40 +294,56 @@ Im Nordmeer fallen ??? Kubikmeter Wasser in einer Minute in die Tiefe
 	\noindent Nach der theoretischen Analyse wollen wir unser Modell welches noch nicht enddimensioniert wurde betrachten. Dazu haben wir recherchiert und die tatsächlichen Temperaturen des Golfstrom genommen. Da sich die Quellen jedoch unterscheiden, da in verschieden Tiefen gemessen wurde oder zu verschieden Jahreszeiten oder die Genauigkeit der Messung variiert haben wir uns dazu entschieden ein Mittel der Werte zu nehmen.
 	
 	\subsection{Datenabschätzung}
-	\noindent Betrachten wir nun zuerst die Temperaturen des Golfstromes im Golf von Mexiko. 
+	\noindent Betrachten wir nun zuerst die Temperaturen des Golfstromes im Golf von Mexiko. Der Golf von Mexiko hat eine durchschnittliche Temperatur von ungefähr 27 Grad Celsius. An manchen Küstenabschnitten etwas wärmer an anderen etwas kühler. An der Küste wird der Golfstrom in seinem Fluss gestört, da dort der Meeresgrund nicht überall gleich tief ist. So kommt es dazu, dass der Fluss an mancher Stelle durch eine enge muss und sich somit die Fließgeschwindigkeit erhöht und an andere Stelle wird er wieder gebremst. Dadurch verweilt die Wassermenge an einer Stelle länger und wird stärker von der Sonne erwärmt. 
 	
-	Der Golf von Mexiko hat eine durchschnittliche Temperatur von ungefähr 27 Grad Celsius. An manchen Küstenabschnitten etwas wärmer an anderen etwas kühler. An der Küste wird der Golfstrom in seinem Fluss gestört, da dort der Meeresgrund nicht überall gleich tief ist. So kommt es dazu, dass der Fluss an mancher Stelle durch eine enge muss und sich somit die Fließgeschwindigkeit erhöht und an andere Stelle wird er wieder gebremst. Dadurch verweilt die Wassermenge an einer Stelle länger und wird stärker von der Sonne erwärmt. 
-	
-	Die Temperatur vom Nordmeer haben wir mit rund 10 Grad Celsius angenommen. Hierbei ist es schwer, da das Nordmeer relativ groß ist und sich über circa 15 Breitengrade erstreckt. Das ist eine Länge von über 2000 Kilometern. Auf dieser enormen Länge schwankt die Temperatur erwartungsgemäß stark. Das südliche Ende liegt westlich von Norwegen ungefähr auf dem 60. Breitengrad. Das nördliche Ende ist ungefähr bei dem 75. Breitengrad. Das ist deutlich oberhalb des Polarkreises(66.5 Breitengrad; Island liegt ungefähr auf dem Polarkreis)
-	
-	
-	\textbf{???} Erstaunlicher weiße haben wir sehr gute Wetterdiagramme auf Reiseseiten gefunden. Dort wird oft aufgelistet, wann die beste Reisezeit ist und es werden einem erstaunlich gute Graphiken gezeigt die sowohl die Umgebungstemperatur als auch die Wassertemperatur liefen. Da diese Diagramme meist kein Quellenverzeichnis aufweisen, haben wir die Werte mit anderen Messdaten "validiert". Die Abweichungen waren vernachlässigbar gering. Aus diesen Diagrammen kann man sich nun ein sehr detailliertes Bild machen, wie sich die Wassertemperatur entlang der Küste verändert, da es zu jedem größeren Küstenort ein solches Diagramm gibt. \textbf{???}
-	
-	
+	Die Temperatur vom Nordmeer haben wir mit rund 10 Grad Celsius angenommen. Hierbei ist es schwer, da das Nordmeer relativ groß ist und sich über circa 15 Breitengrade erstreckt. Das ist eine Länge von über 2000 Kilometern. Auf dieser enormen Länge schwankt die Temperatur erwartungsgemäß stark. Das südliche Ende liegt westlich von Norwegen ungefähr auf dem 60. Breitengrad. Das nördliche Ende ist ungefähr bei dem 75. Breitengrad. Das ist deutlich oberhalb des Polarkreises (66.5 Breitengrad; Island liegt ungefähr auf dem Polarkreis).
+
+	Erstaunlicher weiße haben wir sehr gute Wetterdiagramme auf Reiseseiten gefunden. Dort wird oft aufgelistet, wann die beste Reisezeit ist und es werden einem erstaunlich gute Graphiken gezeigt die sowohl die Umgebungstemperatur als auch die Wassertemperatur liefen. Da diese Diagramme meist kein Quellenverzeichnis aufweisen, haben wir die Werte mit anderen Messdaten "validiert". Die Abweichungen waren vernachlässigbar gering. Aus diesen Diagrammen kann man sich nun ein sehr detailliertes Bild machen, wie sich die Wassertemperatur entlang der Küste verändert, da es zu jedem größeren Küstenort ein solches Diagramm gibt.
+
 	Beim Salzgehalt gestaltet sich die Suche nach brauchbaren Werten jedoch deutlich schwerer. Zum Nordmeer findet man mehr Messerwerte über den Salzgehalt, da dort das Wasser aufgrund der Kombination von Salz und Frost dichter wird und nach unten sinkt. Der Durchschnittswert der Salinität beträgt hier um die 34 Promille. 
-	
+
 	Im Golf von Mexiko findet man so gut wie keine Werte. Deshalb können wir hier nicht sonderlich vergleichen. Die Salinität liegt hier bei 31 bis 32 Promille.
+
+	Diese Werte haben wir in unser Simulink Modell des Golfstromes eingefügt. Es stellt sich jedoch die Frage, ob wir die gemessenen Werte nun tatsächlich die Umgebungstemperaturen sind, oder ob die Werte die Temperaturen vom Golfstrom sind. Schaut man sich die Auswirkungen des Golfstrom an wird deutlich, das er im Norden das Wasser erwärmt und im Süden kühlt. Also müssen die Umgebungstemperaturen im Norden niedriger und im Süden größer sein, als die Temperatur des Golfstroms. Da wir nicht wissen wie stark die Temperatur des Golfstromes von der Umgebung beeinflusst wird und anders herum gestaltet sich die Wahl der richtigen Werte sehr schwer. Wir haben deshalb die Temperatur des Golfstrom auf eine Wert gebracht der im Süden niedriger ist als die tatsächliche Temperatur und die Umgebungstemperatur wärmer als die tatsächliche Temperatur. Im Norden haben wir dies genau anders herum gemacht, da dort der Golfstrom erwärmt und somit wärmer sein muss als die Umgebung.
 	
-	\subsection{Temperaturschwankungen durch Jahreszeiten}
+	In unserem Modell wird nur die Auswirkung der Umgebungstemperatur betrachtet, da eine Rückwirkung noch mehr Messwerte benötigen würde, welche uns nicht zugänglich sind.  
 	
+
 	\subsection{Die Arktis schmilzt}
 	
+	Aufgrund des Klimawandels erhöht sich die Temperatur weltweit. So auch Nördlich des Polarkreises. Wir haben diese Temperaturerhöhung in unserem Modell umgesetzt. Dazu haben wir die Umgebungstemperatur T02 von der Zeit abhängig gemacht. Das heißt wir haben die Temperatur doch ein logistisches Wachstum beschrieben. Wir starten mit der Umgebungstemperatur für die Wir wissen, dass wir eine Gleichgewichtsbedingung haben und erhöhen diesen Wert dann gegen eine obere Grenze. Wenn sich die Temperatur erhöht beginnt natürlich auch das Eis zu schmelzen.
+		
+	Beim Schmelzen der Arktis wird viel Wasser, welches in gefrorenem Zustand als Süßwasser vorliegt zusätzlich in das Nordmeer gelangen. Dadurch wird der Salzgehalt im Nordmeer abnehmen, da sich das Salz auf mehr Wassermenge verteilen wird. Dies haben wie umgesetzt, indem wir den Umgebungssalzgehalt S02 durch einen logarithmischen Zerfall beschrieben haben. Das heißt der Salzgehalt sinkt mit der Zeit auf einen niedrigeren Wert. 
+	
+%%%%%%%
+%%Plot mit Änderung des Salzgehaltes und Temperatur
+%%%%%%%
+
+
+	\subsection{Temperaturschwankungen durch Jahreszeiten}
+	
+	Als nächstes stellt sich die Frage ob und wie Stark sich die Schwankung der Temperatur über ein Jahr auf den Fluss des Golfstroms auswirkt. Dazu haben wir Klimadiagramme vom Nordmeer und vom Golf von Mexiko heran gezogen und diese durch einen Sinus nachgeahmt. 
+	
+	Im Golf von Mexiko schwingt die Temperatur über ein Jahr um circa 13 Grad Celsius. Das Maximum liegt hier bei rund 30 Grad Celsius Wassertemperatur welche im Juli erreicht wird. Im Januar ist die Wassertemperatur mit rund 15 Grad am niedrigsten.
+	
+	Die Temperatur schwingt im Nordmeer nur um circa 3 Grad Celsius. Auch hier werden die kältesten Temperaturen im Januar und Februar gemessen. Diese betragen 4 bis 6 Grad Celsius. Die wärmste Temperatur wird im Juli und August gemessen. 
+	
+	Aufgrund von diesen Werten haben wir eine Anregung der Umgebungstemperatur vom Golf von Mexiko T01 und vom Nordmeer T02 in Abhängigkeit von der Zeit entworfen. Da an beiden Orten die Temperaturextreme etwas zur gleichen Zeit auftreten arbeiten wir jeweils mit der selben Phasenverschiebung. 
+	
+%%%%%%%
+%%Plot mit Änderung des Salzgehaltes und Temperatur
+%%%%%%%
+
+
 	\section{\uppercase{Fazit}}\label{sec:Fazit}
 	
 	
  	\section{\uppercase{Quellen}}\label{sec: Quellen}
-	\noindent Über den Golfstrom: 
-	\begin{verbatim}
-		https://www.t-online.de/leben/familie/id_73374590/golfstrom-wird-immer-schwaecher-droht-eine-neue-eiszeit-.html
-		https://www.wetter.com/news/golfstrom-die-heizung-europas_aid_55c36ad3cebfc0cc4d8b464b.html
-	\end{verbatim}
 	Wetterdaten: 
 	
 	\noindent Golf:
 	\begin{verbatim}
-		https://www.wetter.com/news/golfstrom-die-heizung-europas_aid_55c36ad3cebfc0cc4d8b464b.html
-		http://www.naplesgolf.org/napl20_2.htm
-		https://www.seatemperature.org/mexico-sea
+		
 		https://www.holidaycheck.de/dc/wetter-jacksonville/4a61c954-b96b-34ad-bd20-3361f6308c30  
 		http://www.klima.org/usa/klima-jekyll-island/
 	\end{verbatim}
@@ -350,6 +377,7 @@ Im Nordmeer fallen ??? Kubikmeter Wasser in einer Minute in die Tiefe
 		https://en.wikipedia.org/wiki/Sea_surface_temperature
 	\end{verbatim}
 	
+	\newpage
 	\nocite{*}
 	\bibliographystyle{acm}
 	\bibliography{Quellen}
