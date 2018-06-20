@@ -146,8 +146,88 @@
 	\newpage
 	\begin{align*}
 		\tilde{q} &= \alpha \frac{1}{1+ |\tilde{q}| } - \beta \frac{\gamma}{\gamma + |\tilde{q}| } = \alpha \tilde{T} - \beta \tilde{S} \\
-		\frac{dT}{dt} &= (1 - T) - |q(T,S)|T \\
+		\frac{dT}{dt} &= (1 - T) - |q(T,S)|T = 1 - T - |\alpha T - \beta S|T \\
 		\frac{dS}{dt} &= \gamma(1 - S) - |q(T,S)|S \\
+		f &= \left(\begin{array}{c}
+			1 - T - |\alpha T - \beta S|T \\
+			\gamma - \gamma S - |\alpha T - \beta S|S
+		\end{array}\right) \\
+		Df &= \left(\begin{array}{cc}
+			\frac{\partial f_T}{\partial T} & \frac{\partial f_T}{\partial S} \\
+			\frac{\partial f_S}{\partial T} & \frac{\partial f_S}{\partial S} \\
+		\end{array}\right) = \left(\begin{array}{cc}
+			-1 - \frac{\alpha T - \beta S}{|\alpha T - \beta S|}\alpha T - |\alpha T - \beta S| &
+			-\frac{\alpha T - \beta S}{|\alpha T - \beta S|}(-\beta) T \\
+			-\frac{\alpha T - \beta S}{|\alpha T - \beta S|}\alpha S &
+			-\gamma -\frac{\alpha T - \beta S}{|\alpha T - \beta S|}(-\beta) S - |\alpha T - \beta S|
+		\end{array}\right) \\
+		&= \left(-1 - \frac{q}{|q|}\alpha T - |q| - \lambda\right)\cdot \left( -\gamma - \frac{q}{|q|}(-\beta) S - |q|- \lambda \right) - -\frac{q}{|q|}\alpha S \cdot  -\frac{q}{|q|}(-\beta) T \\
+		&= \gamma - \frac{q}{|q|}\beta S + |q| + \lambda 
+		+ \frac{q}{|q|}\alpha T\gamma - \frac{q^2}{|q|^2}\alpha T \beta S + \frac{q}{|q|} \alpha T |q| + \frac{q}{|q|}\alpha T\lambda \\
+		&+ |q|\gamma - |q|\frac{q}{|q|} \beta S + |q|^2 + |q|\lambda
+		+ \lambda \gamma - \lambda\frac{q}{|q|}\beta S + \lambda|q| + \lambda^2
+		+ \frac{q^2}{|q|^2}\alpha S \beta T \\
+		&= \lambda^2 + \lambda\left( 1 + \frac{q}{|q|}\alpha T + |q| + \gamma - \frac{q}{|q|}\beta S + |q| \right) 
+		+ \gamma - \frac{q}{|q|}\beta S + |q| + \frac{q}{|q|}\alpha T \gamma + q\alpha T + |q|\gamma - q\beta S + |q|^2 \\
+		&= \lambda^2 
+		+ \lambda\left( 1  + \gamma + 2|q| + \frac{q}{|q|}(\alpha T - \beta S) \right) 
+		+ \frac{q}{|q|}(\alpha T \gamma - \beta S) + q(\alpha T - \beta S) + \gamma + |q| + |q|\gamma + |q|^2 \\
+		&= \lambda^2 
+		+ \lambda \underbrace{\left( 1  + \gamma + 2|q| + \frac{q^2}{|q|} \right)}_{>0, := b}
+		+ \underbrace{\frac{q}{|q|}(\alpha T \gamma - \beta S) + \underbrace{q^2 + \gamma + |q| + |q|\gamma + |q|^2}_{> 0}}_{:= c}
 	\end{align*}		
+	
+
+	\begin{align*}
+		&= (-1 -{|q|}_TT-|q| - \lambda)(-\gamma - {|q|}_S S- |q| - \lambda) - -{|q|}_T S \cdot -{|q|}_S T \\
+		&= \gamma + {|q|}_S S + |q| + \lambda 
+		+ {|q|}_T T \gamma + {|q|}_T T {|q|}_S S +{|q|}_T T |q| + {|q|}_T T \lambda\\
+		&+ |q|\gamma + |q|{|q|}_S S + |q|^2 + |q|\lambda 
+		+ \lambda\gamma + \lambda{|q|}_S S + \lambda|q| + \lambda^2 \\
+		&= \lambda^2 + \lambda\left(
+		1 + {|q|}_T T + |q| + \gamma + {|q|}_S S + |q| \right) \\
+		& + \gamma + {|q|}_S S + |q| + {|q|}_T T \gamma + {|q|}_T T |q| + |q|\gamma + |q| {|q|}_S S + |q|^2 \\
+		&= \gamma + |q| + |q|\gamma + |q|^2 + {|q|}_T T \gamma + {|q|}_S S + |q|({|q|}_T T + {|q|}_S S) \\
+		&= (1 + |q|)(\gamma + |q|) + ... \\
+		&= (1 + |q|)(\gamma + |q|)\left(1 + \underbrace{\frac{{|q|}_T T \gamma + {|q|}_S S + |q|({|q|}_T T + {|q|}_S S)}{(1 + |q|)(\gamma + |q|)}}_{-g'(q)???}\right) \\
+		&\Rightarrow \frac{q}{|q|} \alpha T \gamma - \frac{q}{|q|} \beta S + |q|\left( \frac{q}{|q|}\alpha T - \frac{q}{|q|} \beta S \right) = \frac{q}{|q|}(\alpha T \gamma - \beta S) + q^2
+	\end{align*}
+	
+	\begin{align*}
+		\alpha \frac{1}{1+q} - \beta \frac{\gamma}{\gamma + q} = \frac{\alpha (\gamma + q) - \beta(1+q)}{(1+q)(\gamma+q)} = \frac{\alpha \gamma + \alpha q - \beta - \beta q}{•} = \frac{\alpha \gamma - \beta + q(\alpha - \beta)}{•}
+	\end{align*}
+	
+	\begin{align*}
+		\frac{\frac{q}{|q|}\alpha T \gamma - \frac{q}{|q|}\beta S + |q|\frac{q}{|q|}(\alpha T - \beta S)}
+		{(1+|q|)(\gamma + |q|} = 
+		\frac{q}{|q|}
+		\frac{\frac{\alpha \gamma}{1 + |q|} - \frac{\beta \gamma}{\gamma + |q|} + 
+		\frac{|q| \alpha}{1+|q|} - \frac{|q| \beta\gamma}{\gamma + |q|}}
+		{(1+|q|)(\gamma + |q|)} \\
+		= \frac{q}{|q|}
+		\frac{\frac{\alpha}{1+|q|}(\gamma + |q|) - \frac{\beta \gamma}{\gamma + |q|}(1 + \gamma)}
+		{(1+|q|)(\gamma + |q|)}
+		= \frac{q}{|q|} \left(
+			\frac{\frac{\alpha}{1+|q|}}{1+|q|} - \frac{\frac{\beta \gamma}{\gamma + |q|}}{\gamma+|q|}
+		\right) \\
+		= \frac{q}{|q|}
+		\left(
+			\frac{\alpha}{(1 + |q|)^2} - \frac{\beta \gamma}{(\gamma + |q|)^2}
+		\right)
+		= -g'(q)
+	\end{align*}
+	
+	\begin{align*}
+		\lambda_1 = \frac{1}{2}\left( - \sqrt{b^2 - 4c} -b \right) \\
+		\lambda_2 = \frac{1}{2}\left( \sqrt{b^2 - 4c} -b \right) \\
+	\end{align*}
+	
+	
+	\begin{align*}
+		(1+|q|)(\gamma + |q|)(1-g'(q)) &= (\gamma + |q| + |q|\gamma + |q|^2)(1-g'(q)) \\
+		&= \gamma + |q| + |q|\gamma + |q|^2 - g \gamma - g|q| - g |q|\gamma - g |q|^2
+	\end{align*}
+	
+	
 	
 \end{document}

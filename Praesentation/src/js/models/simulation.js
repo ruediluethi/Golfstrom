@@ -27,7 +27,6 @@ module.exports = Backbone.Model.extend({
 	},
 
 	simulate: function(){
-		console.log("simulate");
 
 		// function values
 		var T1 = [this.get('T01')];
@@ -43,8 +42,8 @@ module.exports = Backbone.Model.extend({
 		var Q = [];
 
 		// without dimensions
-		var TnoDim = [1];
-		var SnoDim = [1];
+		var TnoDim = [0];
+		var SnoDim = [0];
 		var alpha = 2*(this.get('a')*this.get('b')/this.get('kT'))*T0; 
     	var beta  = 2*(this.get('a')*this.get('c')/this.get('kT'))*S0;
     	var gamma = this.get('kS')/this.get('kT');
@@ -57,7 +56,7 @@ module.exports = Backbone.Model.extend({
 		var dtNoDim = dt * this.get('kT');
 		var time = [dt];
 
-		for(var t = 0; t < 3/dt; t++){
+		for(var t = 0; t < 10/dt; t++){
 
 			var dT = T1[t] - T2[t];
 	        var dS = S1[t] - S2[t];
@@ -130,7 +129,7 @@ module.exports = Backbone.Model.extend({
 		var Z = [];
 		var Kp = [];
 		var Kn = [];
-		var resolution = 300;
+		var resolution = 500;
 		var zeroPoints = [];
 		var stableQs = [];
 		for(var i = 0; i < resolution; i++){
@@ -169,8 +168,36 @@ module.exports = Backbone.Model.extend({
 		var q3 = 0.5*(-Math.sqrt(4*beta - 4*alpha + 1) + 1);
 		var q4 = 0.5*(+Math.sqrt(4*beta - 4*alpha + 1) + 1);
 
-		console.log(q1+' / '+q2+' / '+q3+' / '+q4);
-		console.log(stableQs);
+		//console.log(q1+' / '+q2+' / '+q3+' / '+q4);
+		//console.log(stableQs);
+
+		for (var i = 0; i < stableQs.length; i++){
+			var stableQ = stableQs[i];
+			var ddqg = -stableQ/Math.abs(stableQ) * ( alpha/((1+Math.abs(stableQ))*(1+Math.abs(stableQ))) - (beta*gamma)/((gamma+Math.abs(stableQ))*(gamma+Math.abs(stableQ))) );
+			console.log('q = '+stableQ+'; k\' = '+ddqg);
+		}
+
+		var T = this.get('TnoDim');
+		var S = this.get('SnoDim');
+		var stableT = T[T.length-1];
+		var stableS = S[S.length-1];
+		var stableQ = alpha*stableT - beta*stableS;
+
+		var dTdT = -1 -stableQ/Math.abs(stableQ)*alpha*stableT - Math.abs(stableQ);
+		var dTdS = -stableQ/Math.abs(stableQ)*(-beta)*stableT;
+		var dSdT = -stableQ/Math.abs(stableQ)*alpha*stableS;
+		var dSdS = -gamma -stableQ/Math.abs(stableQ)*(-beta)*stableS - Math.abs(stableQ);
+
+		//console.log(dTdT+" "+dTdS+";"+dSdT+" "+dSdS);
+
+		var det = dTdT*dSdS - dSdT*dTdS;
+		//console.log(det);
+
+		var det2 = stableQ/Math.abs(stableQ)*(alpha*stableT*gamma - beta*stableS) + stableQ*stableQ + gamma + Math.abs(stableQ) + Math.abs(stableQ)*gamma + Math.abs(stableQ)*Math.abs(stableQ);
+		//console.log(det2);
+
+		var trace = 1 + gamma + 2*Math.abs(stableQ) + (stableQ*stableQ)/Math.abs(stableQ);
+		//console.log(trace);
 
 		this.set('qOnX',qOnX);
 		this.set('G',G);

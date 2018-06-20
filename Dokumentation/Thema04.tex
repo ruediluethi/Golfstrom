@@ -17,8 +17,9 @@
 \usepackage{pslatex}
 \usepackage{apalike}
 \usepackage{enumitem}
+\usepackage{bbm}
 \usepackage{etoolbox}
-\usepackage{hyperref}
+%\usepackage{hyperref}
 \apptocmd{\UrlBreaks}{\do\f\do\m}{}{}
 \usepackage{MOSI}     % Please add other packages that you may need BEFORE the MOSI.sty package.
 
@@ -44,7 +45,7 @@
 
 	\section{\uppercase{Der Golfstrom}}\label{sec:Golfstrom}
 
-	\noindent Der Golfstrom ist ein Naturphänomen, welches für einen Wasseraustausch zwischen dem Golf von Mexiko und dem Nordmeer verantwortlich ist. Die Strömung beginnt jedoch nicht erst im Golf vom Mexiko sondern schon davor. Auf der Höhe des Äquator westlich von Afrika wird das Oberflächenwasser stark erwärmt, da dort die Sonne nahezu senkrecht über dem Wasser steht. Dies trägt dazu bei, dass der Albedo-Wert (Wie viel Prozent der auftreffenden Strahlung reflektiert wird) klein wird und somit viel Energie in das Wasser über geht.
+	\noindent Der Golfstrom ist ein Naturphänomen, welches für einen Wasseraustausch zwischen dem Golf von Mexiko und dem Nordmeer verantwortlich ist. Die Strömung beginnt jedoch nicht erst im Golf vom Mexiko sondern schon davor. Auf der Höhe des Äquator westlich von Afrika wird das Oberflächenwasser stark erwärmt, da dort die Sonne nahezu senkrecht über dem Wasser steht. Dies trägt dazu bei, dass der Albedo-Wert (wie viel Prozent der auftreffenden Strahlung reflektiert wird) klein wird und somit viel Energie in das Wasser über geht.
 
 	Der Südost-Passat treibt dieses wärmere Wasser dann in Richtung Golf von Mexiko. Dort vereinigt sich der Strom vom Äquator mit dem Floridastrom. Ab dort Sprechen wir vom Golfstrom, den wir auch in unserem Modell betrachten. Im Golf vor Mexiko erwärmt sich das Wasser weiter bis es dann entlang der Küste Amerikas in Richtung Norden zieht. Dort spaltet sich dich Strömung und ein Teil wird von den Nordost-Passat Winden wieder Richtung Äquator gezogen und bildet einen Kreislauf. Dieser wird in unserem Modell jedoch nicht beachtet. Wir untersuchen den Teil der von der Westwindzone erfasst wird und auf dem 45 Breitengrad Richtung Europa gezogen wird.
 
@@ -53,7 +54,7 @@
 	Weiter im Norden kühlt sich das Wasser weiter ab, bis es dann anfängt zu gefrieren. Dabei wird das Salz aus dem Wasser gelöst, da dieses nicht gefriert. Deshalb steigt der Salzgehalt im nicht gefrorenen Wasser. Dies führt dazu, dass sich die Dichte des Wassers erhöht und sich deshalb absenkt. Das gesunkene Wasser fließt dann entlang der amerikanischen Küste wieder zurück zum Golf von Mexiko.
 	\begin{figure}[!h]
   		\centering
- 		\includegraphics[width=7cm]{../Diagramme/Golfstrom.jpg}
+ 		\includegraphics[width=7cm]{../Diagramme/golfstrom_fluss.png}
   		\caption{Darstellung vom Fluss des Golfstromes}
   		\label{fig:flussGolfstrom}
 	\end{figure}
@@ -81,7 +82,7 @@ Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
 	Für die Indexbezeichnung der Variablen gilt in Abbildung \ref{fig:modell} sowie für das ganze nachfolgende Dokument:
 	\begin{align*}
 		1 &: \textrm{Golf von Mexiko} \\
-		2 &: \textrm{Nordsee}
+		2 &: \textrm{Nordmeer}
 	\end{align*}
 
 	Jeder Behälter \(i\) hat jeweils zwei sich verändernde Variablen:
@@ -138,12 +139,12 @@ Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
 	 	q(T,S) &= a\left(bT - cS\right)
 	 \end{align*}
 	  
-	Aus der Realität \textbf{???} ist bekannt, dass die Umgebungstemperatur \(T_1\) im Golf von Mexiko höher ist als in der Nordsee \(T_2\). Auch bekannt ist, dass der Salzgehalt \(S_1\) im Golf tiefer ist als in der Nordsee \(S_2\). Es gilt also:
+	Aus der Realität \textbf{???} ist bekannt, dass die Umgebungstemperatur \(T_1\) im Golf von Mexiko höher ist als im Nordmeer \(T_2\). Auch bekannt ist, dass der Salzgehalt \(S_1\) im Golf tiefer ist als im Nordmeer \(S_2\). Es gilt also:
 	\begin{align*}
 		T_1 > T_2 \quad \textrm{und} \quad S_1 < S_2
 	\end{align*}
 	
-	Diese Bedingungen sind in einer ersten Simulation in Abbildung \ref{fig:modell_q_pos} dargestellt. Klar zu erkennen ist, dass sich bereits nach nur kurzer Zeit für den Fluss einen stabilen Zustand einstellt. Der Fluss stellt sich zum Ende bei \(0.45\), also fließt Wasser vom Golf von Mexiko über die Oberfläche in die Nordsee und im Untergrund wieder zurück.
+	Diese Bedingungen sind in einer ersten Simulation in Abbildung \ref{fig:modell_q_pos}  dargestellt. Klar zu erkennen ist, dass sich bereits nach nur kurzer Zeit für den Fluss einen stabilen Zustand einstellt. Der Fluss stellt sich zum Ende bei \(0.45\), also fließt Wasser vom Golf von Mexiko über die Oberfläche in das Nordmeer und im Untergrund wieder zurück.
 	
 	\begin{figure}[!h]
   		\centering
@@ -152,11 +153,11 @@ Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
   		\label{fig:modell_q_pos}
 	\end{figure}
 	
-	Sinkt der Salzgehalt in der Nordsee durch äußere Einflüsse, so ergibt sich ein verändertes Bild. In Abbildung \ref{fig:modell_q_neg} hat der Fluss ein negatives Vorzeichen, er hat sich also umgedreht. Das Wasser fließt neu in entgegengesetzter Richtung von der Nordsee in den Golf von Mexiko.
+	Sinkt der Salzgehalt im Nordmeer durch äußere Einflüsse, so ergibt sich ein verändertes Bild. In Abbildung \ref{fig:modell_q_neg} hat der Fluss ein negatives Vorzeichen, er hat sich also umgedreht. Das Wasser fließt neu in entgegengesetzter Richtung vom Nordmeer in den Golf von Mexiko.
 	\begin{figure}[!h]
   		\centering
  		\includegraphics[width=7cm]{../Diagramme/temp-salt-flow_q-neg.png}
-  		\caption{Erneute Simulation mit tiefem Salzgehalt \(S_2 = 0.2\) in der Nordsee (die anderen Parameter wurden wie in Abbildung \ref{fig:modell_q_pos} beibehalten)}
+  		\caption{Erneute Simulation mit tiefem Salzgehalt \(S_2 = 0.2\) im Nordmeer (die anderen Parameter wurden wie in Abbildung \ref{fig:modell_q_pos} beibehalten)}
   		\label{fig:modell_q_neg}
 	\end{figure}
 	
@@ -269,26 +270,127 @@ Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
 			\left( g\left(q\right) - q \right)(1 - q)(\gamma - q) &\textrm{ für } q < 0
 		\end{array} \right.
 	\end{align*}
-	Aufgrund der Betragsfunktion für \(q\) in der Funktion \(g(q)\) müssen wir die Fälle \(q > 0\) und \(q < 0\) getrennt betrachten. Im weiteren wird der Fall \(q > 0\) besprochen, der Fall \(q < 0\) folgt analog.
+	Aufgrund der Betragsfunktion für \(q\) in der Funktion \(g(q)\) müssen wir die Fälle \(q > 0\) und \(q < 0\) getrennt betrachten. 
 	
-	Eingesetzt und ausmultipliziert ergibt sich folgendes Polynom:
+	\noindent\underline{Fall 1} \((q > 0):\)
+	\noindent Eingesetzt und ausmultipliziert ergibt sich folgendes Polynom:
 	\begin{align*}
-		k(q) &= q^3 + q^2(1 + \gamma) + q\left(\gamma \left(1 + \beta\right) - \alpha \right) + \gamma \left( \beta - \alpha \right)
+		k_{q>0}(q) &= q^3 + q^2(1 + \gamma) + q\left(\gamma \left(1 + \beta\right) - \alpha \right) + \gamma \left( \beta - \alpha \right)
 	\end{align*}
 	Die Funktion \(k(q)\) ist ein Polynom 3ten Grades und hat höchstens drei Nullstellen. Diese drei Nullstellen müssen wiederum zwei Wendepunkte einschließen. Die Wendepunkte werden wie folgt gefunden:
 	\begin{align*}
-		k'(q) &= 3q^2 + 2q(1+\gamma) + \gamma(1+\beta) - \alpha \stackrel{!}{=} 0 \\
-		\Rightarrow& \left\{ \begin{array}{l}
+		&k_{q>0}'(q) = 3q^2 + 2q(1+\gamma) + \gamma(1+\beta) - \alpha \stackrel{!}{=} 0 \\
+		&\Rightarrow \left\{ \begin{array}{l}
 			q_{w1} = -\frac{1}{3}\left( \sqrt{3\alpha - 3\beta\gamma + \gamma^2 - \gamma + 1} +\gamma + 1 \right) \\
 			q_{w2} = \frac{1}{3}\left( \sqrt{3\alpha - 3\beta\gamma + \gamma^2 - \gamma + 1} -\gamma - 1 \right)
 		\end{array} \right.
 	\end{align*}
-	Der Wendepunkt \(q_{w1}\) kann für reelle Punkte nicht größer Null sein, also hat \(k(q)\) für \(q > 0\) nur den Wendepunkt \(q_{w2}\) und kann somit auch nur zwei Nullstellen im Bereich \(q > 0\) haben.
+	Der Wendepunkt \(q_{w1}\) kann für reelle Werte nicht größer Null sein und ist für den Fall \(q > 0\) also nicht relevant. Somit hat \(k(q)\) für \(q > 0\) nur den Wendepunkt \(q_{w2}\) und kann damit auch nur zwei Nullstellen im Bereich \(q > 0\) haben.
 	
 	Gilt \(k(q_{w2}) = 0\) so ist gerade der Wendepunkt ein Nullpunkt und die Funktion \(k(q)\) hat eine Nullstelle für \(q > 0\).
 	
-	Ist \(k(0) > 0\) und \(k(q_{w2}) > 0\) so existiert für \(q > 0\) keine Nullstelle, so beispielsweise im Fall der abgeschmolzenen Arktis.
+	Ist \(q_{w2} < 0\) oder ist \(k(0) > 0\) und \(k(q_{w2}) > 0\) so existiert für \(q > 0\) keine Nullstelle, so beispielsweise im Fall der abgeschmolzenen Arktis.
 	
+	\noindent\underline{Fall 2} \((q < 0):\) Analog zum Fall 1 kann auch in diesem Bereich jeweils nur ein Wendepunkt sein. Dies bedeutet, dass auch hier nur höchstens zwei Nullstellen liegen.
+	
+	\begin{figure}[!h]
+  		\centering
+ 		\includegraphics[width=6cm]{../Diagramme/q_von_q_falluntersuchung_anderes_layout.png}
+  		\caption{Gleichgewichtsbestimmung mittels der Funktion \(k(q)\) für 3 verschiedene Beispiele. Das Beispiel i. ist durch die Parameter \(T_{01} = S_{01} = 2, T_{02} = 0.8, S_{02} = 0.2, k_T = 1, k_S = 0.2, a = b = c = 1 \) bestimmt und hat die Nullstellen \(q_1 \approx -0.1, q_2 \approx 0.2, q_3 \approx 0.6\). }
+  		\label{fig:q_von_q_falluntersuchung}
+	\end{figure}	
+	
+	\subsection{Stabilitätsanalyse}
+	Sei
+	\begin{align*}
+		\nabla f = \left(\begin{array}{c}
+			f_T \\
+			f_S
+		\end{array}\right) = \left(\begin{array}{c}
+			1 - T - |\alpha T - \beta S|T \\
+			\gamma - \gamma S - |\alpha T - \beta S|S
+		\end{array}\right)
+	\end{align*}
+	der Gradient unseres dimensionslosen Modells. Linearisieren wir nun diesen um unsere Gleichgewichtspunkte und es entsteht folgende Jacobi-Matrix:
+	\begin{align*}
+		Df &= \left(\begin{array}{cc}
+			\frac{\partial f_T}{\partial T} & \frac{\partial f_T}{\partial S} \\
+			\frac{\partial f_S}{\partial T} & \frac{\partial f_S}{\partial S} \\
+		\end{array}\right)
+	\end{align*}
+	mit
+	\begin{align*}
+		\frac{\partial f_T}{\partial T} &= -1 - \frac{\alpha T - \beta S}{|\alpha T - \beta S|}\alpha T - |\alpha T - \beta S| \\
+		 \frac{\partial f_T}{\partial S} &= -\frac{\alpha T - \beta S}{|\alpha T - \beta S|}(-\beta) T \\
+		 \frac{\partial f_S}{\partial T} &= -\frac{\alpha T - \beta S}{|\alpha T - \beta S|}\alpha S \\
+		 \frac{\partial f_S}{\partial S} &= -\gamma -\frac{\alpha T - \beta S}{|\alpha T - \beta S|}(-\beta) S - |\alpha T - \beta S|
+	\end{align*}
+	Setzen wir für \(\alpha T - \beta S = q\) ein und betrachten das charakteristische Polynom:
+	\begin{align*}
+		&P_{Df}(\lambda) = \textrm{det}\left( Df - \lambda  \mathbbm{1} \right) = \\
+		&\left(-1 - \frac{q}{|q|}\alpha T - |q| - \lambda\right) \cdot \left( -\gamma - \frac{q}{|q|}(-\beta) S - |q|- \lambda \right)\\
+		& - \frac{q}{|q|}\alpha S \cdot  \frac{q}{|q|}(-\beta) T = 
+		\lambda^2 + \lambda \underbrace{\left( 1  + \gamma + 2|q| + \frac{q^2}{|q|} \right)}_{-\textrm{spur}(Df) > 0 ~\Rightarrow~ \textrm{spur}(Df) < 0} + \\
+		& \underbrace{
+			\underbrace{\frac{q}{|q|}\left(\alpha T \gamma - \beta S + \alpha T |q| - |q|\beta S\right)}_{:=h(q)}
+			 + \underbrace{\gamma + |q| + |q|\gamma + |q|^2}_{=(1 + |q|)(\gamma + |q|)}
+		}_{\textrm{det}(Df)}
+	\end{align*}
+	Untersuchen wir die Determinante \(\textrm{det}(Df)\) weiter:
+	\begin{align*}
+		\textrm{det}(Df) = (1 + |q|)(\gamma + |q|)\left( 1 + \underbrace{\frac{h(q)}{(1 + |q|)(\gamma + |q|)}}_{:=h^*(q)} \right)
+	\end{align*}
+	Betrachten wir die Funktion \(h(q)\) etwas genauer und setzen für \(T = \frac{1}{1+|q|}, S = \frac{\gamma}{\gamma + |q|}\) ein:
+	\begin{align*}
+		h(q) &= \frac{q}{|q|}\left(
+			\frac{\alpha \gamma}{1 + |q|} - \frac{\beta \gamma}{\gamma + |q|} + 
+			\frac{|q| \alpha}{1+|q|} - \frac{|q| \beta\gamma}{\gamma + |q|}
+		\right) \\
+		&=\frac{q}{|q|}\left(
+			\frac{\alpha}{1 + |q|}(\gamma + |q|) -
+			 \frac{\beta \gamma}{\gamma + |q|}(1+|q|)
+		\right)
+	\end{align*}
+	Setzen wir nun dieses Resultat in die Funktion \(h^*(q)\) ein:
+	\begin{align*}
+		h^*(q) &= \frac{q}{|q|}\left(
+			\frac{\frac{\alpha}{1 + |q|}(\gamma + |q|) -
+			 \frac{\beta \gamma}{\gamma + |q|}(1+|q|)}
+			{(1 + |q|)(\gamma + |q|)}
+		\right) \\
+		&= \frac{q}{|q|} \left(
+			\frac{\alpha}{(1+|q|)^2} - \frac{\beta \gamma}{(\gamma + |q|)^2}
+		\right)
+	\end{align*}
+	Dies entspricht gerade bis auf das Vorzeichen der folgender Ableitung:
+	\begin{align*}
+		g'(q) &= \frac{d}{dq} \left(\alpha\frac{1}{1+|q|} - \beta\frac{\gamma}{\gamma+|q|}\right) \\
+		&= -\frac{q}{|q|} \frac{\alpha}{(1+|q|)^2} + \frac{q}{|q|} \frac{\beta \gamma}{(\gamma + |q|)^2}
+	\end{align*}
+	Also gilt für die Determinante \(\textrm{det}(Df)\):
+	\begin{align*}
+		\textrm{det}(Df) = \underbrace{(1+|q|)(\gamma+|q|)}_{> 0}(1-g'(q))
+	\end{align*}
+	Über die Eigenschaften der Spur lassen sich nun folgende Aussagen über die Eigenwerte \(\lambda_1, \lambda_2\) treffen:
+	\begin{align*}
+		\textrm{spur}(Df) < 0 \quad &\Rightarrow \quad  \lambda_1 + \lambda_2 < 0 \\
+	\end{align*}
+	Also dürfen nicht beide Eigenwerte \(\lambda_1, \lambda_2\) positiv sein und somit ist mindestens einer oder beide negativ. \\
+	Über die Determinante wissen wir:
+	\begin{align*}
+		\textrm{det}(Df) = \lambda_1 \cdot \lambda_2 \left\{ \begin{array}{l}
+			> 0 \textrm{ wenn } g'(q) < 1 \\
+			< 0 \textrm{ wenn } g'(q) > 1
+		\end{array} \right.
+	\end{align*}
+	Also ist ein Gleichgewichtspunkt \(q_i\) stabil wenn \(g'(q_i) < 1\), denn dann müssen ja beide Eigenwerte \(\lambda_1, \lambda_2\) negativ sein. Ansonsten wären die Bedingungen für die \(\textrm{spur}(Df)\) und \(\textrm{det}(Df)\) verletzt. Gilt hingegen\(g'(q_i) > 1\) ist der Gleichgewichtspunkt instabil.
+	
+	\begin{figure}[!h]
+  		\centering
+ 		\includegraphics[width=7cm]{../Diagramme/zustandsdiagram.png}
+  		\caption{Zustandsraumdiagram für das Beispiel i. aus Abbildung \ref{fig:q_von_q_falluntersuchung}. Für den Plot wurden zufällige Startwerte für \(T\) und \(S\) gewählt. Aus der Ableitung \(g'\) wissen wir ob es sich um stabile oder instabile Punkte handelt: \(g'(q_1) \approx -5.4 < 1 \Rightarrow \textrm{stabil}, g'(q_2) \approx 2.8 > 1 \Rightarrow \textrm{instabil}, g'(q_3) \approx 0.2 \Rightarrow < 1 \Rightarrow \textrm{stabil} \). }
+  		\label{fig:Zustandsraumdiagram}
+	\end{figure}	
 	
 	\section{\uppercase{Anwendung}}\label{sec:Anwendung}
 	\noindent Nach der theoretischen Analyse wollen wir unser Modell welches noch nicht enddimensioniert wurde betrachten. Dazu haben wir recherchiert und die tatsächlichen Temperaturen des Golfstrom genommen. Da sich die Quellen jedoch unterscheiden, da in verschieden Tiefen gemessen wurde oder zu verschieden Jahreszeiten oder die Genauigkeit der Messung variiert haben wir uns dazu entschieden ein Mittel der Werte zu nehmen.

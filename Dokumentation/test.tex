@@ -1,0 +1,357 @@
+\documentclass[a4paper,twoside]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+
+\usepackage{epsfig}
+\usepackage{subfigure}
+\usepackage{calc}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{multicol}
+\usepackage{pslatex}
+\usepackage{apalike}
+\usepackage{enumitem}
+\usepackage{bbm}
+\usepackage{MOSI}     % Please add other packages that you may need BEFORE the MOSI.sty package.
+
+\newcommand{\team}{Patrick Neher, Ruedi Lüthi}
+\newcommand{\theme}{Golfstrom}
+\setcounter{page}{1}
+
+\subfigtopskip=0pt
+\subfigcapskip=0pt
+\subfigbottomskip=0pt
+
+\begin{document}
+
+	\title{Der Golfstrom\subtitle{ein einfaches mathematisches Modell} }
+	
+	\author{\authorname{Patrick Neher und Ruedi Lüthi}}
+	
+	\keywords{Golfstorm, Stabilitätsanalyse}
+
+	\abstract{Bla bla bla}
+	
+	\onecolumn \maketitle \normalsize \vfill
+
+	\section{\uppercase{Der Golfstrom}}\label{sec:Golfstrom}
+
+	\noindent Der Golfstrom ist ein Naturphänomen, welches bla bla bla....
+	\begin{verbatim}
+	 	https://www.wetter.com/news/golfstrom-die-heizung-europas_aid_55c36ad3cebfc0cc4d8b464b.html
+	 	http://www.naplesgolf.org/napl20_2.htm
+	 	https://meteo.plus/wassertemperaturen-norwegen-west.php
+	 	http://www.travelklima.de/nordmeer-kreuzfahrten/
+	\end{verbatim}
+	
+	\section{\uppercase{Das Modell}}\label{sec:Modell}
+	
+	%\noindent In dem mathematischen Modell wird von zwei Behälter ausgegangen, welche sich durch einen Fluss gegenseitig beeinflussen. Dieser Fluss beschreibt den Golfstrom: 	
+	
+	\noindent Das mathematische Modell besteht aus zwei Behälter \(1,2\). Diese beeinflussen sich jeweils durch den Fluss gegenseitig, gleichzeitig werden sie aber auch von konstanten Umgebungsgrößen der jeweiligen Behälter beeinflusst.
+	
+	\begin{figure}[!h]
+  		\centering
+ 		\includegraphics[width=7cm]{../Diagramme/skizze_modell.png}
+  		\caption{Schematische Darstellung der zwei Behälter und des Flusses (Golfstrom) dazwischen.}
+  		\label{fig:modell}
+	\end{figure}
+	
+	Für die Indexbezeichnung der Variablen gilt in Abbildung \ref{fig:modell} sowie für das ganze nachfolgende Dokument:
+	\begin{align*}
+		1 &: \textrm{Golf von Mexiko} \\
+		2 &: \textrm{Nordsee}
+	\end{align*}
+
+	Jeder Behälter \(i\) hat jeweils zwei sich verändernde Variablen:
+	\begin{align*}
+		T_i &: \textrm{Temperatur} \\
+		S_i &: \textrm{Salzgehalt}
+	\end{align*}
+	
+	Die Umgebung der Behälter wird durch folgende Konstanten beschrieben:
+	\begin{align*}
+		T_{0i} &: \textrm{Temperatur der Umgebung} \\
+		S_{0i} &: \textrm{Salzgehalt der Umgebung}
+	\end{align*}
+	
+	Durch das zugrunde liegende physikalische Modell \textbf{???} wird davon ausgegangen, dass sich die Behälter langsam an die Umgebungstemperatur anpassen. Also kann die Veränderung durch die Umgebungsgrößen folgendermaßen mathematisch beschrieben werden:
+	\begin{align*}
+		\frac{dX_i}{dt} = k_X \left( X_{0i} - X_i \right)
+	\end{align*}
+	Dabei ist \(X\) die zu verändernde Größe (in unserem Modell entweder \(T\) oder \(S\)).
+	Die Veränderung ist also eine Zunahme der Differenz zwischen aktuellem Wert und dem Wert der Umgebung multipliziert mit einer Austauschkonstante \(k_X\).
+	
+	Wiederum aus dem physikalische Modell ist bekannt, dass die Veränderung durch den Fluss \(q\) sich proportional zur Differenz der Dichte der beiden Behälter beschreiben lässt:
+	\begin{align*}
+		q = a \left( \rho_2 - \rho_1 \right)
+	\end{align*}
+	Wie viel Meereswasser nun zwischen den zwei Behälter hin und her fließt, unterliegt sicherlich noch weiteren Umwelteinflüssen. Diese werden in der Konstante \(a\) zusammengefasst.
+	
+	Die Dichte ist abhängig von Temperatur und Salzgehalt des Meereswasser. Dieser Zusammenhang wird hier vereinfacht als linear angenommen:
+	\begin{align*}
+		\rho_i = \rho_0 - bT_i + cS_i
+	\end{align*}
+	
+	Die Konstanten \(b\) und \(c\) sind also unveränderliche Naturkonstanten.
+	
+	Setzt man den Zusammenhang für die Dichte in die Gleichung für den Fluss ein:
+	\begin{align*}
+		q &= a \left( \rho_0 - bT_2 + cS_2 - \left( \rho_0 - bT_1 + cS_1 \right) \right) \\
+		&= a \left( b\left( T_1 - T_2 \right) - c \left( S_1 - S_2 \right) \right)
+	\end{align*}
+	So wird ersichtlich, dass für den Fluss die Referenzdichte \(\rho_0\) keinen Einfluss hat.
+	
+	Alles zusammengesetzt ergibt für die vier veränderlichen Größen folgendes Gleichungssystem:
+	\begin{align*}
+		\frac{dT_1}{dt} &= k_T\left(T_{01} - T_1\right) + \left|q(T_1 - T_2,S_1 - T_2)\right|\left(T_2 - T_1\right) \\
+		\frac{dT_2}{dt} &= k_T\left(T_{02} - T_2\right) + \left|q(T_1 - T_2,S_1 - T_2)\right|\left(T_1 - T_2\right) \\
+		\frac{dS_1}{dt} &= k_S\left(S_{01} - S_1\right) + \left|q(T_1 - T_2,S_1 - T_2)\right|\left(S_2 - S_1\right) \\
+		\frac{dS_2}{dt} &= k_S\left(S_{02} - S_2\right) + \left|q(T_1 - T_2,S_1 - T_2)\right|\left(S_1 - S_2\right)
+	\end{align*}
+	 
+	 In den Gleichungen treten die abhängigen Größen jeweils immer als Differenz der beiden Behälter auf. Also kann das Modell so umgeschrieben werden, dass es nur noch von den Differenzen abhängt. Sei \(T = T_1 - T_2, T_0 = T_{01} - T_{02}\) und \(S = S_1 - S_2, S_0 = S_{01} - S_{02}\)  so ist:
+	 \begin{align*}
+	 	\frac{dT}{dt} = \frac{dT_1}{dt} - \frac{dT_2}{dt} &= k_T\left(T_{0} - T\right) - 2\left|q(T,S)\right|T \\
+	 	\frac{dS}{dt} = \frac{dS_1}{dt} - \frac{dS_2}{dt} &= k_S\left(S_{0} - S\right) - 2\left|q(T,S)\right|S \\
+	 	q(T,S) &= a\left(bT - cS\right)
+	 \end{align*}
+	  
+	Aus der Realität \textbf{???} ist bekannt, dass die Umgebungstemperatur \(T_1\) im Golf von Mexiko höher ist als in der Nordsee \(T_2\). Auch bekannt ist, dass der Salzgehalt \(S_1\) im Golf tiefer ist als in der Nordsee \(S_2\). Es gilt also:
+	\begin{align*}
+		T_1 > T_2 \quad \textrm{und} \quad S_1 < S_2
+	\end{align*}
+	
+	Diese Bedingungen sind in einer ersten Simulation in Abbildung \ref{fig:modell_q_pos} dargestellt. Klar zu erkennen ist, dass sich bereits nach nur kurzer Zeit für den Fluss einen stabilen Zustand einstellt. Der Fluss stellt sich zum Ende bei \(0.45\), also fließt Wasser vom Golf von Mexiko über die Oberfläche in die Nordsee und im Untergrund wieder zurück.
+	
+	\begin{figure}[!h]
+  		\centering
+ 		\includegraphics[width=7cm]{../Diagramme/temp-salt-flow_q-pos.png}
+  		\caption{Simulation mit folgenden theoretischen Werten \(T_{01} = S_{02} = 1.2, T_{02} = S_{01} = 0.8, k_T = k_S = 1, a = b = c = 1\)}
+  		\label{fig:modell_q_pos}
+	\end{figure}
+	
+	Sinkt der Salzgehalt in der Nordsee durch äußere Einflüsse, so ergibt sich ein verändertes Bild. In Abbildung \ref{fig:modell_q_neg} hat der Fluss ein negatives Vorzeichen, er hat sich also umgedreht. Das Wasser fließt neu in entgegengesetzter Richtung von der Nordsee in den Golf von Mexiko.
+	\begin{figure}[!h]
+  		\centering
+ 		\includegraphics[width=7cm]{../Diagramme/temp-salt-flow_q-neg.png}
+  		\caption{Erneute Simulation mit tiefem Salzgehalt \(S_2 = 0.2\) in der Nordsee (die anderen Parameter wurden wie in Abbildung \ref{fig:modell_q_pos} beibehalten)}
+  		\label{fig:modell_q_neg}
+	\end{figure}
+	
+	\subsection{Entdimensionalisierung}
+	Da die Dimensionen (oder Maßeinheiten) für das Verhalten des Modells keine Rolle spielen, werden diese in einem nächsten Schritt rausgekürzt. Dies geschieht durch die Wahl einer geeigneten Skalierung. Diese ergibt sich, indem wir das Modell nur von dem Verhältnis zu den jeweiligen Startwerten \(T_0, S_0\) abhängig machen. Sei also:
+	\begin{align*}
+		\tilde{T} = \frac{T}{T_0} \Rightarrow T = \tilde{T} T_0 \quad \textrm{und} \quad \tilde{S} = \frac{S}{S_0} \Rightarrow S = \tilde{S} S_0
+	\end{align*}
+	
+	Eingesetzt in die Gleichung für die Temperaturdifferenz ergibt sich folgendes:
+	\begin{align*}
+		\frac{d\tilde{T} T_0}{dt} &= k_T\left(T_{0} - \tilde{T} T_0 \right) - 2\left|q(\tilde{T} T_0,\tilde{S} S_0)\right| \tilde{T} T_0 \\
+		\stackrel{
+			\substack{
+				\textrm{da } T_0 > 0\\
+				\textrm{ist } T_0 \neq 0
+			}
+		}{\Rightarrow}
+		\frac{d\tilde{T}}{dt} &= k_T\left(1 - \tilde{T}\right) - 2\left|q(\tilde{T} T_0,\tilde{S} S_0)\right| \tilde{T}
+	\end{align*}
+	Analog gilt für den Salzgehalt:
+	\begin{align*}
+		\frac{d\tilde{S}}{dt} &= k_S\left(1 - \tilde{S}\right) - 2\left|q(\tilde{T} T_0,\tilde{S} S_0)\right| \tilde{S}
+	\end{align*}
+	Gilt zusätzlich für den Fluss:
+	\begin{align*}
+		q = \frac{\tilde{q} k_T}{2} &= a \left( b\tilde{T}T_0 - c\tilde{S}S_0 \right) \\
+		\Rightarrow \tilde{q} &= \underbrace{2\frac{ab}{k_T}T_0}_{= \alpha} \cdot \tilde{T} - \underbrace{2\frac{ac}{k_T}S_0}_{=\beta} \cdot \tilde{S} \\
+		\Rightarrow \tilde{q} &= \alpha\tilde{T} - \beta\tilde{S}
+	\end{align*}
+	Skalieren wir zusätzlich noch die Zeit \(t = \tilde{t} k_T\) und setzen \(q = \frac{\tilde{q}k_T}{2}\) ein, so gilt für die Temperatur:
+	\begin{align*}
+		\frac{d\tilde{T}}{d\tilde{t} k_T} &= k_T\left(1 - \tilde{T}\right) - 2\left|\frac{\tilde{q}(\tilde{T},\tilde{S})k_T}{2}\right| \tilde{T} \\
+		\Rightarrow \frac{d\tilde{T}}{d\tilde{t}} &= (1 - \tilde{T}) - \left| \tilde{q}(\tilde{T},\tilde{S})\right|\tilde{T}
+	\end{align*}
+	Wiederum analog für den Salzgehalt gilt:
+	\begin{align*}
+		\Rightarrow \frac{d\tilde{S}}{d\tilde{t}} &= \underbrace{\frac{k_S}{k_T}}_{=\gamma}(1 - \tilde{S}) - \left| \tilde{q}(\tilde{T},\tilde{S})\right|\tilde{S}
+	\end{align*}
+	
+	Für die nachfolgende Gleichgewichtsuntersuchung wird nur das dimensionslose Modell betrachtet. Um dafür die Bezeichnungen der Variablen einfach zu halten, wird auf die zusätzliche Notation mit dem \textasciitilde\ verzichtet. Also lauten die dimensionslosen Gleichungen nun:
+	\begin{align*}
+		\frac{dT}{dt} &= (1 - T) - \left| q(T,S)\right|T \\
+		\frac{dS}{dt} &= \gamma (1 - S) - \left| q(T,S)\right|S \\
+		q(T,S) &= \alpha T - \beta S
+	\end{align*}
+	Dafür wurden folgenden Parameter definiert:
+	\begin{align*}
+		\alpha = 2\frac{ab}{k_T}T_0 \qquad
+		\beta = 2\frac{ac}{k_T}S_0 \qquad
+		\gamma = \frac{k_S}{k_T}
+	\end{align*}
+	
+	\subsection{Gleichgewichtsuntersuchung}
+	Das System ist im Gleichgewicht, wenn sich Temperatur und Salzgehalt nicht mehr ändert:
+	\begin{align*}
+		\frac{dT}{dt} = (1 - T) - \left| q(T,S)\right|T &\stackrel{!}{=} 0 \\
+		\Rightarrow 1 - T(1 + |q|) &\stackrel{!}{=} 0 \\
+		\Rightarrow T &= \frac{1}{1 + |q|} \\
+		\stackrel{
+			\substack{
+				\textrm{analog für den}\\
+				\textrm{Salzgehalt}
+			}
+		}{\Rightarrow} S &= \frac{\gamma}{\gamma + |q|}
+	\end{align*}
+	Damit ist der Fluss:
+	\begin{align*}
+		q = \alpha \frac{1}{1 + |q|} - \beta \frac{\gamma}{\gamma + |q|} = g(q)
+	\end{align*}
+	Diesen Zusammenhang bezeichnen wir für die weiteren Untersuchungen als Funktion \(g(q)\).
+	
+	Wenn sich der Fluss nicht mehr ändert, also stabil ist, muss für \(g(q)\) folgendes gelten:
+	\begin{align*}
+		g(q) \stackrel{!}{=} q \Rightarrow q - g(q) \stackrel{!}{=} 0
+	\end{align*}
+	Um also den Fluss im stabilen Zustand zu bestimmen, müssen entsprechende Nullstellen gefunden werden. Im Fall \(\gamma = 1\) und \(q \neq 0\) können die Nullstellen direkt ausgerechnet werden:
+	\begin{align*}
+		g(q) = q - \frac{1}{1 + |q|}  \left(\alpha - \beta\ \right) &\stackrel{!}{=} 0 \\
+		\Rightarrow \frac{q \left( 1 + |q| \right)}{1 + |q|} + \frac{\beta - \alpha}{1 + |q|}  &\stackrel{!}{=} 0 \\
+		\stackrel{\textrm{da } 1 + |q| > 0}{\Rightarrow} \left. \begin{array}{ll}
+			q > 0: & q^2 + q + \beta - \alpha \\
+			q < 0: & -q^2 - q + \beta - \alpha
+		\end{array} \right\} &\stackrel{!}{=} 0 \\
+		\Rightarrow \begin{array}{l}
+			q > 0 \left\{ \begin{array}{l}
+				q_1 = \frac{1}{2}\left( -\sqrt{4a - 4b + 1} -1 \right)	\\			
+				q_2 = \frac{1}{2}\left( +\sqrt{4a - 4b + 1} -1 \right)				
+			\end{array}\right. \\
+			q < 0 \left\{ \begin{array}{l}
+				q_3 = \frac{1}{2}\left( -\sqrt{4b - 4a + 1} + 1 \right) \\
+				q_4 = \frac{1}{2}\left( +\sqrt{4b - 4a + 1} + 1 \right)
+			\end{array}\right.
+		\end{array}
+	\end{align*}
+	Da \(q_1\) für reelle Werte die Bedingung \(q > 0\) nicht erfüllt, kann es keine Nullstelle sein. Auch \(q_4\) kann für reelle Werte die Bedingung \(q < 0\) nicht erfüllen. Also verbleiben für den Fall \(\gamma = 1\) die Nullstellen \(q_2\) und \(q_3\).
+	
+	\begin{figure}[!h]
+  		\centering
+ 		\includegraphics[width=7cm]{../Diagramme/g_von_q_gamma_1.png}
+  		\caption{Die Funktion \(g(q)\) mit den Nullstellen \(q_2\) und \(q_3\) für die bereits beschriebenen Werte im realitätsnahen Zustand (siehe Abbildung \ref{fig:modell_q_pos}) und im Fall einer abgeschmolzenen Arktis (siehe Abbildung \ref{fig:modell_q_neg}).}
+  		\label{fig:g_von_q_gamma_1}
+	\end{figure}	
+
+	
+	Um auch den Fall \(\gamma \neq 1\) betrachten zu können, wird die Funktion \(g(q)\) so erweitert, dass die Brüche wegfallen aber die Nullstellen erhalten bleiben:
+	\begin{align*}
+		k(q) = \left\{ \begin{array}{ll}
+			\left( q - g\left(q\right) \right)(1 + q)(\gamma + q) &\textrm{ für } q > 0  \\
+			\left( g\left(q\right) - q \right)(1 - q)(\gamma - q) &\textrm{ für } q < 0
+		\end{array} \right.
+	\end{align*}
+	Aufgrund der Betragsfunktion für \(q\) in der Funktion \(g(q)\) müssen wir die Fälle \(q > 0\) und \(q < 0\) getrennt betrachten. 
+	
+	\noindent\underline{Fall 1} \((q > 0):\)
+	\noindent Eingesetzt und ausmultipliziert ergibt sich folgendes Polynom:
+	\begin{align*}
+		k_{q>0}(q) &= q^3 + q^2(1 + \gamma) + q\left(\gamma \left(1 + \beta\right) - \alpha \right) + \gamma \left( \beta - \alpha \right)
+	\end{align*}
+	Die Funktion \(k(q)\) ist ein Polynom 3ten Grades und hat höchstens drei Nullstellen. Diese drei Nullstellen müssen wiederum zwei Wendepunkte einschließen. Die Wendepunkte werden wie folgt gefunden:
+	\begin{align*}
+		&k_{q>0}'(q) = 3q^2 + 2q(1+\gamma) + \gamma(1+\beta) - \alpha \stackrel{!}{=} 0 \\
+		&\Rightarrow \left\{ \begin{array}{l}
+			q_{w1} = -\frac{1}{3}\left( \sqrt{3\alpha - 3\beta\gamma + \gamma^2 - \gamma + 1} +\gamma + 1 \right) \\
+			q_{w2} = \frac{1}{3}\left( \sqrt{3\alpha - 3\beta\gamma + \gamma^2 - \gamma + 1} -\gamma - 1 \right)
+		\end{array} \right.
+	\end{align*}
+	Der Wendepunkt \(q_{w1}\) kann für reelle Werte nicht größer Null sein und ist für den Fall \(q > 0\) also nicht relevant. Somit hat \(k(q)\) für \(q > 0\) nur den Wendepunkt \(q_{w2}\) und kann damit auch nur zwei Nullstellen im Bereich \(q > 0\) haben.
+	
+	Gilt \(k(q_{w2}) = 0\) so ist gerade der Wendepunkt ein Nullpunkt und die Funktion \(k(q)\) hat eine Nullstelle für \(q > 0\).
+	
+	Ist \(q_{w2} < 0\) oder ist \(k(0) > 0\) und \(k(q_{w2}) > 0\) so existiert für \(q > 0\) keine Nullstelle, so beispielsweise im Fall der abgeschmolzenen Arktis.
+	
+	\noindent\underline{Fall 2} \((q < 0):\) Analog zum Fall 1 kann auch in diesem Bereich jeweils nur ein Wendepunkt sein. Dies bedeutet, dass auch hier nur höchstens zwei Nullstellen liegen.
+	
+	
+	\subsection{Stabilitätsanalyse}
+	Sei
+	\begin{align*}
+		\nabla f = \left(\begin{array}{c}
+			f_T \\
+			f_S
+		\end{array}\right) = \left(\begin{array}{c}
+			1 - T - |\alpha T - \beta S|T \\
+			\gamma - \gamma S - |\alpha T - \beta S|S
+		\end{array}\right)
+	\end{align*}
+	der Gradient unseres dimensionslosen Modells. Linearisieren wir nun diesen um unsere Gleichgewichtspunkte und es entsteht folgende Jacobi-Matrix:
+	\begin{align*}
+		Df &= \left(\begin{array}{cc}
+			\frac{\partial f_T}{\partial T} & \frac{\partial f_T}{\partial S} \\
+			\frac{\partial f_S}{\partial T} & \frac{\partial f_S}{\partial S} \\
+		\end{array}\right)
+	\end{align*}
+	mit
+	\begin{align*}
+		\frac{\partial f_T}{\partial T} &= -1 - \frac{\alpha T - \beta S}{|\alpha T - \beta S|}\alpha T - |\alpha T - \beta S| \\
+		 \frac{\partial f_T}{\partial S} &= -\frac{\alpha T - \beta S}{|\alpha T - \beta S|}(-\beta) T \\
+		 \frac{\partial f_S}{\partial T} &= -\frac{\alpha T - \beta S}{|\alpha T - \beta S|}\alpha S \\
+		 \frac{\partial f_S}{\partial S} &= -\gamma -\frac{\alpha T - \beta S}{|\alpha T - \beta S|}(-\beta) S - |\alpha T - \beta S|
+	\end{align*}
+	Setzen wir für \(\alpha T - \beta S = q\) ein und betrachten das charakteristische Polynom:
+	\begin{align*}
+		&P_{Df}(\lambda) = \textrm{det}\left( Df - \lambda  \mathbbm{1} \right) = \\
+		&\left(-1 - \frac{q}{|q|}\alpha T - |q| - \lambda\right) \cdot \left( -\gamma - \frac{q}{|q|}(-\beta) S - |q|- \lambda \right)\\
+		& - \frac{q}{|q|}\alpha S \cdot  \frac{q}{|q|}(-\beta) T = 
+		\lambda^2 + \lambda \underbrace{\left( 1  + \gamma + 2|q| + \frac{q^2}{|q|} \right)}_{-\textrm{Spur}(Df) > 0 ~\Rightarrow~ \textrm{Spur}(Df) < 0} + \\
+		& \underbrace{
+			\underbrace{\frac{q}{|q|}\left(\alpha T \gamma - \beta S + \alpha T |q| - |q|\beta S\right)}_{:=h(q)}
+			 + \underbrace{\gamma + |q| + |q|\gamma + |q|^2}_{=(1 + |q|)(\gamma + |q|)}
+		}_{\textrm{det}(Df)}
+	\end{align*}
+	Untersuchen wir die Determinante \(\textrm{det}(Df)\) weiter:
+	\begin{align*}
+		\textrm{det}(Df) = (1 + |q|)(\gamma + |q|)\left( 1 + \underbrace{\frac{h(q)}{(1 + |q|)(\gamma + |q|)}}_{:=h^*(q)} \right)
+	\end{align*}
+	Betrachten wir die Funktion \(h(q)\) etwas genauer und setzen für \(T = \frac{1}{1+|q|}, S = \frac{\gamma}{\gamma + |q|}\) ein:
+	\begin{align*}
+		h(q) &= \frac{q}{|q|}\left(
+			\frac{\alpha \gamma}{1 + |q|} - \frac{\beta \gamma}{\gamma + |q|} + 
+			\frac{|q| \alpha}{1+|q|} - \frac{|q| \beta\gamma}{\gamma + |q|}
+		\right) \\
+		&=\frac{q}{|q|}\left(
+			\frac{\alpha}{1 + |q|}(\gamma + |q|) -
+			 \frac{\beta \gamma}{\gamma + |q|}(1+|q|)
+		\right)
+	\end{align*}
+	Setzen wir nun dieses Resultat in die Funktion \(h^*(q)\) ein:
+	\begin{align*}
+		h^*(q) &= \frac{q}{|q|}\left(
+			\frac{\frac{\alpha}{1 + |q|}(\gamma + |q|) -
+			 \frac{\beta \gamma}{\gamma + |q|}(1+|q|)}
+			{(1 + |q|)(\gamma + |q|)}
+		\right) \\
+		&= \frac{q}{|q|} \left(
+			\frac{\alpha}{(1+|q|)^2} - \frac{\beta \gamma}{(\gamma + |q|)^2}
+		\right)
+	\end{align*}
+	Dies entspricht gerade bis auf das Vorzeichen der folgender Ableitung:
+	\begin{align*}
+		g'(q) &= \frac{d}{dq} \left(\alpha\frac{1}{1+|q|} - \beta\frac{\gamma}{\gamma+|q|}\right) \\
+		&= -\frac{q}{|q|} \frac{\alpha}{(1+|q|)^2} + \frac{q}{|q|} \frac{\beta \gamma}{(\gamma + |q|)^2}
+	\end{align*}
+	Also gilt für die Determinante \(\textrm{det}(Df)\):
+	\begin{align*}
+		\textrm{det}(Df) = \underbrace{(1+|q|)(\gamma+|q|)}_{> 0}(1-g'(q))
+	\end{align*}
+	
+	Über die Eigenschaften der Spur lassen sich nun folgende Aussagen über die Eigenwerte \(\lambda_1, \lambda_2\) treffen:
+	\begin{align*}
+		\textrm{Spur}(Df) < 0 \quad &\Rightarrow \quad  \lambda_1 + \lambda_2 < 0 \\
+	\end{align*}
+	Also dürfen nicht beide Eigenwerte \(\lambda_1, \lambda_2\) positiv sein und somit ist mindestens einer oder beide negativ.
+	
+
+\end{document}	
