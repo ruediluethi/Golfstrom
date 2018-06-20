@@ -34,9 +34,11 @@ gamma = k_S/k_T;
 disp(['alpha = ',num2str(alpha)]);
 disp(['beta = ',num2str(beta)]);
 
-for i = 1:10
+rng(4);
 
-    random_range = 3;
+for i = 1:1
+
+    random_range = 2;
     
     % T^*_i(t): Temperatur zum Zeitpunkt t
     Tstar_1 = [Tstar_01+rand()*random_range-random_range/2];
@@ -51,7 +53,7 @@ for i = 1:10
     S       = [Sstar(end)/Sstar_0]; % dimensionslose Differenz
 
     % Zeitschritt dt^*
-    dtstar = 0.02;
+    dtstar = 0.1;
     dt     = k_T*dtstar; % dimensionslos
     %dt = dtstar;
 
@@ -103,35 +105,42 @@ for i = 1:10
     end
     
     
-    subplot(2,3,1);
-    plot(t,T);
+    subplot(1,3,1);
+    
+    q_plot = plot(t,T, 'LineWidth',1);
+    q_plot.Color = [137/256 91/256 170/256];
     hold on;
-    plot(t,S);
-    legend('T','S');
+    q_plot = plot(t,S, 'LineWidth',1);
+    q_plot.Color = [232/256 178/256 45/256];
+    %legend('Temperatur','Salzgehalt');
+    axis([0 20 0 1.5]);
     
-    
-    subplot(2,3,2);
+    subplot(1,3,2);
     %plot(tstar, Tstar_1 - Tstar_2);
     %plot(tstar, Tstar);
     
     %plot(tstar, Sstar_1 - Sstar_2);
     %plot(tstar, Sstar);
     
+    
     t = t(1:end-1);
-    plot(t, Q);
+    q_plot = plot(t, Q, 'LineWidth',1);
+    q_plot.Color = [73/256 226/256 163/256];
     hold on;
-    legend('Q');
+    %legend('Fluss');
+    axis([0 20 -2 2]);
     
     
-    subplot(2,3,3);
+    subplot(1,3,3);
     
     
     %plot(Tstar_1 - Tstar_2, Sstar_1 - Sstar_2);
     
-    plot(T, S);
-    xlabel('T');
-    ylabel('S');
+    plot(T, S,'k', 'LineWidth',1);
+    xlabel('Temperatur');
+    ylabel('Salzgehalt');
     hold on;
+    
     
 end
     
@@ -140,16 +149,19 @@ borderScale = 0.3;
 
 %[T,S] = meshgrid(linspace(min(Tstar)*(1-borderScale),max(Tstar)*(1+borderScale),resolution),linspace(min(Sstar)*(1-borderScale),max(Sstar)*(1+borderScale),resolution));
 [T,S] = meshgrid(linspace(0,1,resolution),linspace(0,1,resolution));
-axis([0 1 0 1]);
+%axis([0 1 0 1]);
 dT = @(T,S)       (1 - T) - abs(alpha.*T - beta.*S).*T;
 dS = @(T,S) gamma.*(1 - S) - abs(alpha.*T - beta.*S).*S;
 %dT = @(T,S) k_T.*(Tstar_0 - T) - 2.*abs(a.*(b.*T - c.*S)).*T;
 %dS = @(T,S) k_S.*(Sstar_0 - S) - 2.*abs(a.*(b.*T - c.*S)).*S;
 n = sqrt( dT(T,S).^2 + dS(T,S).^2 ); % norm
 
-quiver(T,S,dT(T,S)./n,dS(T,S)./n,0.5);
+q_plot = quiver(T,S,dT(T,S)./n,dS(T,S)./n,0.5);
+q_plot.Color = [0.5 0.5 0.5];
 
-J = [-1 - (alpha.*T - beta.*S)
-
-
-    
+%{
+fig = gcf;
+fig.PaperUnits = 'centimeters';
+fig.PaperPosition = [0 0 5 5];
+print(['../Diagramme/zustandsdiagram_TS.png'],'-dpng','-r300');
+%}

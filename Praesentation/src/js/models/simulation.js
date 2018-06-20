@@ -168,12 +168,13 @@ module.exports = Backbone.Model.extend({
 		var q3 = 0.5*(-Math.sqrt(4*beta - 4*alpha + 1) + 1);
 		var q4 = 0.5*(+Math.sqrt(4*beta - 4*alpha + 1) + 1);
 
-		console.log(q1+' / '+q2+' / '+q3+' / '+q4);
-		console.log(stableQs);
+		//console.log(q1+' / '+q2+' / '+q3+' / '+q4);
+		//console.log(stableQs);
 
 		for (var i = 0; i < stableQs.length; i++){
 			var stableQ = stableQs[i];
-			
+			var ddqg = -stableQ/Math.abs(stableQ) * ( alpha/((1+Math.abs(stableQ))*(1+Math.abs(stableQ))) - (beta*gamma)/((gamma+Math.abs(stableQ))*(gamma+Math.abs(stableQ))) );
+			console.log('q = '+stableQ+'; k\' = '+ddqg);
 		}
 
 		var T = this.get('TnoDim');
@@ -187,16 +188,16 @@ module.exports = Backbone.Model.extend({
 		var dSdT = -stableQ/Math.abs(stableQ)*alpha*stableS;
 		var dSdS = -gamma -stableQ/Math.abs(stableQ)*(-beta)*stableS - Math.abs(stableQ);
 
-		console.log(dTdT+" "+dTdS+";"+dSdT+" "+dSdS);
+		//console.log(dTdT+" "+dTdS+";"+dSdT+" "+dSdS);
 
 		var det = dTdT*dSdS - dSdT*dTdS;
-		console.log(det);
+		//console.log(det);
 
 		var det2 = stableQ/Math.abs(stableQ)*(alpha*stableT*gamma - beta*stableS) + stableQ*stableQ + gamma + Math.abs(stableQ) + Math.abs(stableQ)*gamma + Math.abs(stableQ)*Math.abs(stableQ);
-		console.log(det2);
+		//console.log(det2);
 
 		var trace = 1 + gamma + 2*Math.abs(stableQ) + (stableQ*stableQ)/Math.abs(stableQ);
-		console.log(trace);
+		//console.log(trace);
 
 		this.set('qOnX',qOnX);
 		this.set('G',G);
