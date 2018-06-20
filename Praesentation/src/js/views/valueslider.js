@@ -12,7 +12,7 @@ module.exports = Backbone.View.extend({
 	title: 'untitled',
 	color: '#444444',
 	minValue: 0.1,
-	maxValue: 5,
+	maxValue: 3,
 	value: 1,
 
 	initialize: function(options) {
@@ -69,7 +69,8 @@ module.exports = Backbone.View.extend({
 		pos = pos/(self.$el.find('.v-slider-container').width()-self.$el.find('.v-slider-dot').width());
 		pos = pos*Math.abs(self.maxValue - self.minValue)+self.minValue;
 		
-		return Math.round(pos*10)/10;
+		//return Math.round(pos*10)/10;
+		return pos;
 	},
 
 

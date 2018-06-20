@@ -22,6 +22,7 @@ var colorGray = '#DDDDDD';
 var colorYellow = '#f4c237';
 var colorOrange = '#d87600';
 var colorPurple = '#6c1eaf';
+var colorCyan = '#4be0d8';
 
 module.exports = Backbone.View.extend({
 
@@ -40,8 +41,8 @@ module.exports = Backbone.View.extend({
 		'ersterplot',
 		'dimensionslos',
 		'gleichgewicht',
-		'stabil',
-		'stabilplot'
+		'flussimgleichgewicht',
+		'gleichgewichtplot'
 	],
 	vCrntSlide: undef,
 
@@ -258,29 +259,29 @@ module.exports = Backbone.View.extend({
 			self.noDimParamsShown = true;
 		}
 
-		if (template == 'stabilplot'){
+		if (template == 'gleichgewichtplot'){
 			// Temperatur
-			var vTempSalt = new VPlot({ title: 'Temperatur / Salzgehalt', colors: [colorPurple,colorOrange,colorPurple,colorOrange], alpha: [0.2,0.2,0.7,0.7], minValue: 0, maxValue: 1 });
+			var vTempSalt = new VPlot({ title: 'Temperatur / Salzgehalt', colors: [/*colorPurple,colorOrange,*/colorPurple,colorOrange], alpha: [/*0.2,0.2,*/0.7,0.7], minValue: 0, maxValue: 2 });
 			vTempSalt.listenTo(self.mSimulation, 'simulationend', function(){
-				vTempSalt.update([self.mSimulation.get('T'), self.mSimulation.get('S'), self.mSimulation.get('TnoDim'), self.mSimulation.get('SnoDim')], self.mSimulation.get('time'));
+				vTempSalt.update([/*self.mSimulation.get('T'), self.mSimulation.get('S'), */self.mSimulation.get('TnoDim'), self.mSimulation.get('SnoDim')], self.mSimulation.get('time'));
 			});
 			newVSlide.$el.find('.tempsalt').append(vTempSalt.$el);
 			vTempSalt.render();
-			vTempSalt.addLegend(2,'T: Dimensionslos');
-			vTempSalt.addLegend(3,'S: Dimensionslos');
-			vTempSalt.addLegend(0,'T: Absolut');
-			vTempSalt.addLegend(1,'S: Absolut');
+			vTempSalt.addLegend(0,'T: Dimensionslos');
+			vTempSalt.addLegend(1,'S: Dimensionslos');
+			// vTempSalt.addLegend(0,'T: Absolut');
+			// vTempSalt.addLegend(1,'S: Absolut');
 
-			var vFlow = new VPlot({ title: 'Fluss', colors: [colorFlow,colorFlow], alpha: [1.0,0.2], minValue: -2, maxValue: 2 });
+			var vFlow = new VPlot({ title: 'Fluss', colors: [colorFlow/*,colorFlow*/], alpha: [1.0/*,0.2*/], minValue: -2, maxValue: 2 });
 			vFlow.listenTo(self.mSimulation, 'simulationend', function(){
-				vFlow.update([self.mSimulation.get('QnoDim'), self.mSimulation.get('Q')], self.mSimulation.get('time'));
+				vFlow.update([self.mSimulation.get('QnoDim')/*, self.mSimulation.get('Q')*/], self.mSimulation.get('time'));
 			});
 			newVSlide.$el.find('.flow').append(vFlow.$el);
 			vFlow.render();
 			vFlow.addLegend(0,'Q: Dimensionslos');
-			vFlow.addLegend(1,'Q: Absolut');
+			// vFlow.addLegend(1,'Q: Absolut');
 
-			var vAnalyse = new VPlot({ title: 'Stabilitätspunkte', colors: [colorFlow,colorFlow,colorYellow,colorYellow], alpha: [1.0,0.2,0.6,0.6], minValue: -2, maxValue: 2, startT: -2, endT: 2, showHalfHalf: true });
+			var vAnalyse = new VPlot({ title: 'Stabilitätspunkte', colors: [colorFlow,colorCyan,colorYellow,colorYellow], alpha: [1.0,0.4,0.7,0.7], minValue: -2, maxValue: 2, startT: -2, endT: 2, showHalfHalf: true });
 			vAnalyse.listenTo(self.mSimulation, 'analyseend', function(){
 				vAnalyse.update([self.mSimulation.get('G'), self.mSimulation.get('Z'), self.mSimulation.get('Kp'), self.mSimulation.get('Kn')], self.mSimulation.get('qOnX'));
 				var zeroPoints = self.mSimulation.get('zeroPoints');
@@ -399,7 +400,7 @@ module.exports = Backbone.View.extend({
 		self.$el.find('.param-selection .selection').removeClass('selected');
 		$btn.addClass('selected');
 
-		var animationSteps = 50;
+		var animationSteps = 1;
 		var counter = 0;
 		var valueStep = setInterval(function(){
 			counter++;

@@ -238,7 +238,7 @@
 	
 	\begin{figure}[!h]
   		\centering
- 		\includegraphics[width=6cm]{../Diagramme/g_von_q_gamma_1.png}
+ 		\includegraphics[width=7cm]{../Diagramme/g_von_q_gamma_1.png}
   		\caption{Die Funktion \(g(q)\) mit den Nullstellen \(q_2\) und \(q_3\) für die bereits beschriebenen Werte im realitätsnahen Zustand (siehe Abbildung \ref{fig:modell_q_pos}) und im Fall einer abgeschmolzenen Arktis (siehe Abbildung \ref{fig:modell_q_neg}).}
   		\label{fig:g_von_q_gamma_1}
 	\end{figure}	
@@ -274,12 +274,6 @@
 	
 	\noindent\underline{Fall 2} \((q < 0):\) Analog zum Fall 1 kann auch in diesem Bereich jeweils nur ein Wendepunkt sein. Dies bedeutet, dass auch hier nur höchstens zwei Nullstellen liegen.
 	
-	\begin{figure}[!h]
-  		\centering
- 		\includegraphics[width=6cm]{../Diagramme/q_von_q_falluntersuchung_anderes_layout.png}
-  		\caption{Gleichgewichtsbestimmung mittels der Funktion \(k(q)\) für 3 verschiedene Fälle.}
-  		\label{fig:q_von_q_falluntersuchung}
-	\end{figure}	
 	
 	\subsection{Stabilitätsanalyse}
 	Sei
@@ -311,7 +305,7 @@
 		&P_{Df}(\lambda) = \textrm{det}\left( Df - \lambda  \mathbbm{1} \right) = \\
 		&\left(-1 - \frac{q}{|q|}\alpha T - |q| - \lambda\right) \cdot \left( -\gamma - \frac{q}{|q|}(-\beta) S - |q|- \lambda \right)\\
 		& - \frac{q}{|q|}\alpha S \cdot  \frac{q}{|q|}(-\beta) T = 
-		\lambda^2 + \lambda \underbrace{\left( 1  + \gamma + 2|q| + \frac{q^2}{|q|} \right)}_{-\textrm{spur}(Df) > 0 ~\Rightarrow~ \textrm{spur}(Df) < 0} + \\
+		\lambda^2 + \lambda \underbrace{\left( 1  + \gamma + 2|q| + \frac{q^2}{|q|} \right)}_{-\textrm{Spur}(Df) > 0 ~\Rightarrow~ \textrm{Spur}(Df) < 0} + \\
 		& \underbrace{
 			\underbrace{\frac{q}{|q|}\left(\alpha T \gamma - \beta S + \alpha T |q| - |q|\beta S\right)}_{:=h(q)}
 			 + \underbrace{\gamma + |q| + |q|\gamma + |q|^2}_{=(1 + |q|)(\gamma + |q|)}
@@ -352,54 +346,12 @@
 	\begin{align*}
 		\textrm{det}(Df) = \underbrace{(1+|q|)(\gamma+|q|)}_{> 0}(1-g'(q))
 	\end{align*}
+	
 	Über die Eigenschaften der Spur lassen sich nun folgende Aussagen über die Eigenwerte \(\lambda_1, \lambda_2\) treffen:
 	\begin{align*}
-		\textrm{spur}(Df) < 0 \quad &\Rightarrow \quad  \lambda_1 + \lambda_2 < 0 \\
+		\textrm{Spur}(Df) < 0 \quad &\Rightarrow \quad  \lambda_1 + \lambda_2 < 0 \\
 	\end{align*}
-	Also dürfen nicht beide Eigenwerte \(\lambda_1, \lambda_2\) positiv sein und somit ist mindestens einer oder beide negativ. \\
-	Über die Determinante wissen wir:
-	\begin{align*}
-		\textrm{det}(Df) = \lambda_1 \cdot \lambda_2 \left\{ \begin{array}{l}
-			> 0 \textrm{ wenn } g'(q) < 1 \\
-			< 0 \textrm{ wenn } g'(q) > 1
-		\end{array} \right.
-	\end{align*}
-	Also ist ein Gleichgewichtspunkt \(q_i\) stabil wenn \(g'(q_i) < 1\), denn dann müssen ja beide Eigenwerte \(\lambda_1, \lambda_2\) negativ sein. Ansonsten wären die Bedingungen für die \(\textrm{spur}(Df)\) und \(\textrm{det}(Df)\) verletzt. Gilt hingegen\(g'(q_i) > 1\) ist der Gleichgewichtspunkt instabil.
+	Also dürfen nicht beide Eigenwerte \(\lambda_1, \lambda_2\) positiv sein und somit ist mindestens einer oder beide negativ.
 	
-	\section{\uppercase{Anwendung}}\label{sec:Anwendung}
-	
-	\subsection{Datenabschätzung}
-	\noindent Für Temperatur:
-	% da sollte es noch was besseres geben um Links einbetten zu können?
-	\begin{verbatim}
-		https://www.seatemperature.org/north-sea
-		https://www.seatemperature.org/mexico-sea
-	\end{verbatim}
-	Aber bei dieser Quelle leider keine Monatsdaten... \\
-	\\
-	Etwas zum Salzgehalt:
-	\begin{verbatim}
-		https://en.wikipedia.org/wiki/North_Sea#Temperature_and_salinity
-	\end{verbatim}
-	aber halt leider nur zur Nordsee \\	
-	\\
-	Sowas wär halt toll als Quelle:
-	\begin{verbatim}
-		https://data.giss.nasa.gov/
-	\end{verbatim}
-	Aber habe da bisher nur Daten zur Oberfächentemperatur gefunden... \\
-	\\
-	Vielleicht findet man da auch noch was, wenn man die Quellen durchgeht?
-	\begin{verbatim}
-		https://en.wikipedia.org/wiki/Sea_surface_temperature
-	\end{verbatim}
-	
-	
-	\subsection{Temperaturschwankungen durch Jahreszeiten}
-	
-	\subsection{Die Arktis schmilzt}
-	
-	\section{\uppercase{Fazit}}\label{sec:Fazit}
 
 \end{document}	
-
