@@ -69,8 +69,8 @@ module.exports = Backbone.View.extend({
 		pos = pos/(self.$el.find('.v-slider-container').width()-self.$el.find('.v-slider-dot').width());
 		pos = pos*Math.abs(self.maxValue - self.minValue)+self.minValue;
 		
-		//return Math.round(pos*10)/10;
-		return pos;
+		return Math.round(pos*100)/100;
+		//return pos;
 	},
 
 

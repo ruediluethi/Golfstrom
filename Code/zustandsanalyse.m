@@ -36,7 +36,7 @@ disp(['beta = ',num2str(beta)]);
 
 rng(4);
 
-for i = 1:1
+for i = 1:2
 
     random_range = 2;
     
@@ -149,12 +149,14 @@ borderScale = 0.3;
 
 %[T,S] = meshgrid(linspace(min(Tstar)*(1-borderScale),max(Tstar)*(1+borderScale),resolution),linspace(min(Sstar)*(1-borderScale),max(Sstar)*(1+borderScale),resolution));
 [T,S] = meshgrid(linspace(0,1,resolution),linspace(0,1,resolution));
-%axis([0 1 0 1]);
+axis([0 1 0 1]);
 dT = @(T,S)       (1 - T) - abs(alpha.*T - beta.*S).*T;
 dS = @(T,S) gamma.*(1 - S) - abs(alpha.*T - beta.*S).*S;
 %dT = @(T,S) k_T.*(Tstar_0 - T) - 2.*abs(a.*(b.*T - c.*S)).*T;
 %dS = @(T,S) k_S.*(Sstar_0 - S) - 2.*abs(a.*(b.*T - c.*S)).*S;
 n = sqrt( dT(T,S).^2 + dS(T,S).^2 ); % norm
+
+dT(T,S) 
 
 q_plot = quiver(T,S,dT(T,S)./n,dS(T,S)./n,0.5);
 q_plot.Color = [0.5 0.5 0.5];

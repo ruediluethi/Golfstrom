@@ -42,12 +42,12 @@ module.exports = Backbone.Model.extend({
 		var Q = [];
 
 		// without dimensions
-		var TnoDim = [0];
-		var SnoDim = [0];
+		var TnoDim = [1];
+		var SnoDim = [1];
 		var alpha = 2*(this.get('a')*this.get('b')/this.get('kT'))*T0; 
     	var beta  = 2*(this.get('a')*this.get('c')/this.get('kT'))*S0;
     	var gamma = this.get('kS')/this.get('kT');
-    	var QnoDim = [alpha - beta];
+    	var QnoDim = [alpha * TnoDim[0] - beta * SnoDim[0]];
 
     	var Stest = [S0/S0];
 
@@ -174,7 +174,7 @@ module.exports = Backbone.Model.extend({
 		for (var i = 0; i < stableQs.length; i++){
 			var stableQ = stableQs[i];
 			var ddqg = -stableQ/Math.abs(stableQ) * ( alpha/((1+Math.abs(stableQ))*(1+Math.abs(stableQ))) - (beta*gamma)/((gamma+Math.abs(stableQ))*(gamma+Math.abs(stableQ))) );
-			console.log('q = '+stableQ+'; k\' = '+ddqg);
+			//console.log('q = '+stableQ+'; k\' = '+ddqg);
 		}
 
 		var T = this.get('TnoDim');
@@ -208,6 +208,70 @@ module.exports = Backbone.Model.extend({
 		this.set('stableQs', stableQs);
 
 		this.trigger('analyseend');
+		this.generateTrajektorien(10,20);
+	},
+
+	generateTrajektorien: function(amount, fieldResolution){
+
+		// environoment params
+		var T0 = this.get('T01') - this.get('T02');
+		var S0 = this.get('S01') - this.get('S02');
+
+		// without dimensions
+		var alpha = 2*(this.get('a')*this.get('b')/this.get('kT'))*T0; 
+    	var beta  = 2*(this.get('a')*this.get('c')/this.get('kT'))*S0;
+    	var gamma = this.get('kS')/this.get('kT');
+    	var QnoDim = [alpha - beta];
+
+    	// timesteps
+		var dt = 0.01 * this.get('kT');
+		var time = [dt];
+
+		var Tstack = [];
+		var Sstack = [];
+		var Qstack = [];
+		var timeStack = [];
+
+		for (var i = 0; i < amount; i++){
+			var T = [Math.random()*2];
+			var S = [Math.random()*2];
+			var Q = [alpha*T[0] - beta*S[0]];
+			var time = [];
+			for(var t = 0; t < 10/dt; t++){
+				var q = alpha * T[t] - beta * S[t];
+		        var dT = ( (1 - T[t]) - Math.abs(q)*T[t] )*dt;
+		        var dS = ( gamma*(1 - S[t]) - Math.abs(q)*S[t] )*dt;
+		        T[T.length] = T[t] + dT;
+		        S[S.length] = S[t] + dS;
+		        Q[Q.length] = q;
+		        time[time.length] = time[t] + dt;
+			}
+			Tstack.push(T);
+			Sstack.push(S);
+			Qstack.push(Q);
+			timeStack.push(time);
+		}
+
+		var vectorField = [];
+		for (var x = 0; x < fieldResolution; x++){
+			vectorField.push([]);
+			for (var y = 0; y < fieldResolution; y++){
+				var T = x/fieldResolution;
+				var S = y/fieldResolution;
+				var q = alpha * T - beta * S;
+		        var dT = (1 - T) - Math.abs(q)*T;
+		        var dS = gamma*(1 - S) - Math.abs(q)*S;
+		        vectorField[x][y] = {"dx":dT,"dy":dS};
+			}
+		}
+
+		this.set('Tstack', Tstack);
+		this.set('Sstack', Sstack);
+		this.set('Qstack', Qstack);
+		this.set('timeStack', timeStack);
+		this.set('vectorField', vectorField);
+
+		this.trigger('trajektorienend');
 	},
 
 	setAndSimulate: function(key, val){

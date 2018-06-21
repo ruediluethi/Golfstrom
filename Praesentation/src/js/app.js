@@ -10,6 +10,7 @@ var Router = require('./router');
 
 var VValueSlider = require('./views/valueslider');
 var VPlot = require('./views/plot');
+var VTrajektorienPlot = require('./views/trajektorienplot.js');
 var VSlide = require('./views/slide');
 
 var MSimulation = require('./models/simulation');
@@ -42,7 +43,8 @@ module.exports = Backbone.View.extend({
 		'dimensionslos',
 		'gleichgewicht',
 		'flussimgleichgewicht',
-		'gleichgewichtplot'
+		'gleichgewichtplot',
+		'trajektorien'
 	],
 	vCrntSlide: undef,
 
@@ -261,7 +263,7 @@ module.exports = Backbone.View.extend({
 
 		if (template == 'gleichgewichtplot'){
 			// Temperatur
-			var vTempSalt = new VPlot({ title: 'Temperatur / Salzgehalt', colors: [/*colorPurple,colorOrange,*/colorPurple,colorOrange], alpha: [/*0.2,0.2,*/0.7,0.7], minValue: 0, maxValue: 2 });
+			var vTempSalt = new VPlot({ title: 'Temperatur / Salzgehalt', colors: [/*colorPurple,colorOrange,*/colorPurple,colorOrange], alpha: [/*0.2,0.2,*/0.7,0.7], minValue: 0, maxValue: 1 });
 			vTempSalt.listenTo(self.mSimulation, 'simulationend', function(){
 				vTempSalt.update([/*self.mSimulation.get('T'), self.mSimulation.get('S'), */self.mSimulation.get('TnoDim'), self.mSimulation.get('SnoDim')], self.mSimulation.get('time'));
 			});
@@ -297,6 +299,33 @@ module.exports = Backbone.View.extend({
 			vAnalyse.addLegend(1,'q - g(q)');
 			vAnalyse.addLegend(2,'k(q)');
 			
+			self.mSimulation.simulate();
+		}
+
+		if (template == 'trajektorien'){
+			var amount = 10;
+			var flowColors = [];
+			var trajektorienColors = [];
+			var alpha = [];
+			for (var i = 0; i < amount; i++){
+				flowColors.push(colorFlow);
+				trajektorienColors.push(colorDiff);
+				alpha.push(0.3);
+			}
+			var vFlow = new VPlot({ title: 'Fluss', colors: flowColors, alpha: alpha, minValue: -2, maxValue: 2 });
+			vFlow.listenTo(self.mSimulation, 'trajektorienend', function(){
+				vFlow.update(self.mSimulation.get('Qstack'), self.mSimulation.get('timeStack')[0]);
+			});
+			newVSlide.$el.find('.flow').append(vFlow.$el);
+			vFlow.render();
+
+			var vTrajektorienPlot = new VTrajektorienPlot({ title: 'Zustandstrajektorien', colors: trajektorienColors});
+			vTrajektorienPlot.listenTo(self.mSimulation, 'trajektorienend', function(){
+				vTrajektorienPlot.update(self.mSimulation.get('vectorField'),self.mSimulation.get('Tstack'),self.mSimulation.get('Sstack'));
+			});
+			newVSlide.$el.find('.analysis').append(vTrajektorienPlot.$el);
+			vTrajektorienPlot.render();			
+
 			self.mSimulation.simulate();
 		}
 
@@ -396,6 +425,7 @@ module.exports = Backbone.View.extend({
 		var oldS02 = self.mSimulation.get('S02');
 		var oldKT = self.mSimulation.get('kT');
 		var oldKS = self.mSimulation.get('kS');
+		var oldA = self.mSimulation.get('a');
 
 		self.$el.find('.param-selection .selection').removeClass('selected');
 		$btn.addClass('selected');
@@ -438,7 +468,17 @@ module.exports = Backbone.View.extend({
 				self.mSimulation.set('kS',kS);
 			}
 
+			if (params.a != undef){
+				var a = oldA + (params.a - oldA)*s;
+				self.vAslider.setValue(a);
+				self.mSimulation.set('a',a);
+			}
+
 			self.mSimulation.simulate();
+
+			// if (params.doTrajektorien){
+			// 	self.mSimulation.generateTrajektorien(10);
+			// }
 
 		},1/20);
 	},
