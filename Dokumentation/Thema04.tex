@@ -19,6 +19,7 @@
 \usepackage{enumitem}
 \usepackage{bbm}
 \usepackage{etoolbox}
+\usepackage{textcomp}
 %\usepackage{hyperref}
 \apptocmd{\UrlBreaks}{\do\f\do\m}{}{}
 \usepackage{MOSI}     % Please add other packages that you may need BEFORE the MOSI.sty package.
@@ -39,28 +40,28 @@
 	
 	\keywords{Golfstorm, Stabilitätsanalyse}
 
-	\abstract{In diesem Bericht wird der Golfstrom als mathematisches Modell dargestellt. Mit diesem Modell werden Gleichgewichtsuntersuchen und Stabilitätsanalysen durchgeführt. Abschließend untersuchen wir des Verhalten des Golfstroms anhand von realen Werten und analysieren was passiert, wenn es zu einer Klimaerwärmung kommt und die Arktis zu schmelzen beginnt oder in wie fern sich die Jahreszeiten auf den Golfstrom auswirken.}
+	\abstract{In diesem Bericht wird der Golfstrom als mathematisches Modell dargestellt. Anhand dieses Modells werden Gleichgewichtsuntersuchen und Stabilitätsanalysen durchgeführt. Abschließend wird das Verhalten des Golfstroms anhand von realen Werten untersucht und analysiert was passiert, wenn es zu einer Klimaerwärmung kommt und die Arktis zu schmelzen beginnt. Außerdem wird untersucht, in wie fern sich die Jahreszeiten auf den Golfstrom auswirken.}
 	
 	\onecolumn \maketitle \normalsize \vfill
 
 	\section{\uppercase{Der Golfstrom}}\label{sec:Golfstrom}
 
-	\noindent Der Golfstrom ist ein Naturphänomen, welches für einen Wasseraustausch zwischen dem Golf von Mexiko und dem Nordmeer verantwortlich ist. Die Strömung beginnt jedoch nicht erst im Golf vom Mexiko sondern schon davor. Auf der Höhe des Äquator westlich von Afrika wird das Oberflächenwasser stark erwärmt, da dort die Sonne nahezu senkrecht über dem Wasser steht. Dies trägt dazu bei, dass der Albedo-Wert (wie viel Prozent der auftreffenden Strahlung reflektiert wird) klein wird und somit viel Energie in das Wasser über geht.
+	\noindent Der Golfstrom ist ein Naturphänomen, welches für einen Wasseraustausch zwischen dem Golf von Mexiko und dem Nordmeer verantwortlich ist. Die Strömung beginnt jedoch nicht erst im Golf vom Mexiko sondern schon davor. Auf der Höhe des Äquator westlich von Afrika wird das Oberflächenwasser stark erwärmt, da dort die Sonne nahezu senkrecht über dem Wasser steht. Dies trägt dazu bei, dass der Albedo-Wert (wie viel Prozent der auftreffenden Strahlung reflektiert wird) klein wird und somit viel Energie in das Wasser übergeht.
 
-	Der Südost-Passat treibt dieses wärmere Wasser dann in Richtung Golf von Mexiko. Dort vereinigt sich der Strom vom Äquator mit dem Floridastrom. Ab dort Sprechen wir vom Golfstrom, welchen wir auch in unserem Modell betrachten. Im Golf vor Mexiko erwärmt sich das Wasser weiter bis es dann entlang der Küste Amerikas in Richtung Norden zieht. Dort spaltet sich die Strömung und ein Teil wird von den Nordost-Passat Winden wieder in Richtung Äquator gezogen und bildet einen Kreislauf. Dieser wird in unserem Modell jedoch nicht beachtet. Wir untersuchen den Teil der von der Westwindzone erfasst wird und auf dem 45 Breitengrad in Richtung Europa gezogen wird.
+	Der Südost-Passat treibt dieses wärmere Wasser dann in Richtung Golf von Mexiko. Dort vereinigt sich der Strom vom Äquator mit dem Floridastrom. Ab dort Sprechen wir vom Golfstrom, welchen wir auch in unserem Modell betrachten. Im Golf vor Mexiko erwärmt sich das Wasser weiter bis es dann entlang der Küste Amerikas in Richtung Norden zieht. Dort spaltet sich die Strömung und ein Teil wird von den Nordost-Passat-Winden wieder in Richtung Äquator gezogen und bildet einen Kreislauf. Dieser wird in unserem Modell jedoch nicht beachtet. Wir untersuchen den Teil der von der Westwindzone erfasst wird und auf dem 45. Breitengrad in Richtung Europa gezogen wird.
 
 	Dort Strömt er dann an der Norwegischen Küste weiter nach Norden. Auf dem Weg kühlt sich das warme Wasser vom Süden wieder ab und erwärmt die Luft, die dann durch die Westwinde zu uns kommt und damit unsere Temperatur stark beeinflusst. Aufgrund des Golfstromes ist unsere durchschnittliche Jahrestemperatur rund 5-10 Grad Celsius wärmer als z.B in Kanada auf dem selben Breitengrad. 
 
 	Weiter im Norden kühlt sich das Wasser weiter ab, bis es dann anfängt zu gefrieren. Dabei wird das Salz aus dem Wasser gelöst, da dieses nicht gefriert. Deshalb steigt der Salzgehalt im nicht gefrorenen Wasser. Dies führt dazu, dass sich die Dichte des Wassers erhöht und sich deshalb absenkt. Das gesunkene Wasser fließt dann entlang der amerikanischen Küste wieder zurück zum Golf von Mexiko.
 	\begin{figure}[!h]
   		\centering
- 		\includegraphics[width=7cm]{../Diagramme/golfstrom_fluss.png}
+ 		\includegraphics[width=7cm]{Grafiken/golfstrom_fluss.png}
   		\caption{Darstellung vom Fluss des Golfstromes}
   		\label{fig:flussGolfstrom}
 	\end{figure}
 
 Durch den Golfstrom werden maximal 150 Millionen Kubikmeter Wasser in Bewegung gesetzt. 
-Die Erwärmung der Luft ist vergleichbar mit der Leistung von Zwei Millionen modernen Atomkraftwerken. (~1.5 Petawatt)
+Die Erwärmung der Luft ist vergleichbar mit der Leistung von zwei Millionen modernen Atomkraftwerken (\(\approx 1.5\) Petawatt).
 Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
  
 	
@@ -68,13 +69,11 @@ Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
 	
 	\section{\uppercase{Das Modell}}\label{sec:Modell}
 	
-	%\noindent In dem mathematischen Modell wird von zwei Behälter ausgegangen, welche sich durch einen Fluss gegenseitig beeinflussen. Dieser Fluss beschreibt den Golfstrom: 	
-	
-	\noindent Das mathematische Modell besteht aus zwei Behälter \(1,2\). Diese beeinflussen sich jeweils durch den Fluss gegenseitig, gleichzeitig werden sie aber auch von konstanten Umgebungsgrößen der jeweiligen Behälter beeinflusst.
+	\noindent Das mathematische Modell besteht aus zwei Behältern \(1,2\). Diese beeinflussen sich jeweils durch den Fluss gegenseitig, gleichzeitig werden sie aber auch von konstanten Umgebungsgrößen der jeweiligen Behälter beeinflusst.
 	
 	\begin{figure}[!h]
   		\centering
- 		\includegraphics[width=7cm]{../Diagramme/skizze_modell.png}
+ 		\includegraphics[width=7cm]{Grafiken/skizze_modell.png}
   		\caption{Schematische Darstellung der zwei Behälter und des Flusses (Golfstrom) dazwischen.}
   		\label{fig:modell}
 	\end{figure}
@@ -97,18 +96,18 @@ Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
 		S_{0i} &: \textrm{Salzgehalt der Umgebung}
 	\end{align*}
 	
-	Durch das zugrunde liegende physikalische Modell \textbf{???} wird davon ausgegangen, dass sich die Behälter langsam an die Umgebungstemperatur anpassen. Also kann die Veränderung durch die Umgebungsgrößen folgendermaßen mathematisch beschrieben werden:
+	Durch das zugrunde liegende physikalische Modell \cite{Skript} wird davon ausgegangen, dass sich die Behälter langsam an die Umgebungstemperatur anpassen. Also kann die Veränderung durch die Umgebungsgrößen folgendermaßen mathematisch beschrieben werden:
 	\begin{align*}
 		\frac{dX_i}{dt} = k_X \left( X_{0i} - X_i \right)
 	\end{align*}
 	Dabei ist \(X\) die zu verändernde Größe (in unserem Modell entweder \(T\) oder \(S\)).
 	Die Veränderung ist also eine Zunahme der Differenz zwischen aktuellem Wert und dem Wert der Umgebung multipliziert mit einer Austauschkonstante \(k_X\).
 	
-	Wiederum aus dem physikalische Modell ist bekannt, dass die Veränderung durch den Fluss \(q\) sich proportional zur Differenz der Dichte der beiden Behälter beschreiben lässt:
+	Wiederum aus dem physikalischen Modell ist bekannt, dass die Veränderung durch den Fluss \(q\) sich proportional zur Differenz der Dichte der beiden Behälter beschreiben lässt:
 	\begin{align*}
 		q = a \left( \rho_2 - \rho_1 \right)
 	\end{align*}
-	Wie viel Meereswasser nun zwischen den zwei Behälter hin und her fließt, unterliegt sicherlich noch weiteren Umwelteinflüssen. Diese werden in der Konstante \(a\) zusammengefasst.
+	Wie viel Meereswasser nun zwischen den zwei Behältern hin und her fließt, unterliegt sicherlich noch weiteren Umwelteinflüssen. Diese werden in der Konstante \(a\) zusammengefasst.
 	
 	Die Dichte ist abhängig von Temperatur und Salzgehalt des Meereswasser. Dieser Zusammenhang wird hier vereinfacht als linear angenommen:
 	\begin{align*}
@@ -117,12 +116,12 @@ Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
 	
 	Die Konstanten \(b\) und \(c\) sind also unveränderliche Naturkonstanten.
 	
-	Setzt man den Zusammenhang für die Dichte in die Gleichung für den Fluss ein:
+	Setzt man den Zusammenhang für die Dichte in die Gleichung für den Fluss ein
 	\begin{align*}
 		q &= a \left( \rho_0 - bT_2 + cS_2 - \left( \rho_0 - bT_1 + cS_1 \right) \right) \\
 		&= a \left( b\left( T_1 - T_2 \right) - c \left( S_1 - S_2 \right) \right)
 	\end{align*}
-	So wird ersichtlich, dass für den Fluss die Referenzdichte \(\rho_0\) keinen Einfluss hat.
+	so wird ersichtlich, dass für den Fluss die Referenzdichte \(\rho_0\) keinen Einfluss hat.
 	
 	Alles zusammengesetzt ergibt für die vier veränderlichen Größen folgendes Gleichungssystem:
 	\begin{align*}
@@ -132,23 +131,23 @@ Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
 		\frac{dS_2}{dt} &= k_S\left(S_{02} - S_2\right) + \left|q(T_1 - T_2,S_1 - T_2)\right|\left(S_1 - S_2\right)
 	\end{align*}
 	 
-	 In den Gleichungen treten die abhängigen Größen jeweils immer als Differenz der beiden Behälter auf. Also kann das Modell so umgeschrieben werden, dass es nur noch von den Differenzen abhängt. Sei \(T = T_1 - T_2, T_0 = T_{01} - T_{02}\) und \(S = S_1 - S_2, S_0 = S_{01} - S_{02}\)  so ist:
+	 In den Gleichungen treten die abhängigen Größen jeweils als Differenz der beiden Behälter auf. Also kann das Modell so umgeschrieben werden, dass es nur noch von den Differenzen abhängt. Sei \(T = T_1 - T_2, T_0 = T_{01} - T_{02}\) und \(S = S_1 - S_2, S_0 = S_{01} - S_{02}\)  so ist:
 	 \begin{align*}
 	 	\frac{dT}{dt} = \frac{dT_1}{dt} - \frac{dT_2}{dt} &= k_T\left(T_{0} - T\right) - 2\left|q(T,S)\right|T \\
 	 	\frac{dS}{dt} = \frac{dS_1}{dt} - \frac{dS_2}{dt} &= k_S\left(S_{0} - S\right) - 2\left|q(T,S)\right|S \\
 	 	q(T,S) &= a\left(bT - cS\right)
 	 \end{align*}
 	  
-	Aus der Realität \textbf{???} ist bekannt, dass die Umgebungstemperatur \(T_1\) im Golf von Mexiko höher ist als im Nordmeer \(T_2\). Auch bekannt ist, dass der Salzgehalt \(S_1\) im Golf tiefer ist als im Nordmeer \(S_2\). Es gilt also:
+	Aus der Realität \cite{Skript} ist bekannt, dass die Umgebungstemperatur \(T_1\) im Golf von Mexiko höher ist als im Nordmeer \(T_2\). Ebenfalls bekannt ist, dass der Salzgehalt \(S_1\) im Golf tiefer ist als im Nordmeer \(S_2\). Es gilt also:
 	\begin{align*}
 		T_1 > T_2 \quad \textrm{und} \quad S_1 < S_2
 	\end{align*}
 	
-	Diese Bedingungen sind in einer ersten Simulation in Abbildung \ref{fig:modell_q_pos}  dargestellt. Klar zu erkennen ist, dass sich bereits nach nur kurzer Zeit für den Fluss einen stabilen Zustand einstellt. Der Fluss stellt sich zum Ende bei \(0.45\), also fließt Wasser vom Golf von Mexiko über die Oberfläche in das Nordmeer und im Untergrund wieder zurück.
+	Diese Bedingungen sind in einer ersten Simulation in Abbildung \ref{fig:modell_q_pos}  dargestellt. Klar zu erkennen ist, dass sich bereits nach nur kurzer Zeit für den Fluss ein stabiler Zustand einstellt. Der Fluss stellt sich zum Ende bei \(0.45\) ein, also fließt Wasser vom Golf von Mexiko über die Oberfläche in das Nordmeer und im Untergrund wieder zurück.
 	
 	\begin{figure}[!h]
   		\centering
- 		\includegraphics[width=7cm]{../Diagramme/temp-salt-flow_q-pos.png}
+ 		\includegraphics[width=7cm]{Grafiken/temp-salt-flow_q-pos.png}
   		\caption{Simulation mit folgenden theoretischen Werten \(T_{01} = S_{02} = 1.2, T_{02} = S_{01} = 0.8, k_T = k_S = 1, a = b = c = 1\)}
   		\label{fig:modell_q_pos}
 	\end{figure}
@@ -156,7 +155,7 @@ Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
 	Sinkt der Salzgehalt im Nordmeer durch äußere Einflüsse, so ergibt sich ein verändertes Bild. In Abbildung \ref{fig:modell_q_neg} hat der Fluss ein negatives Vorzeichen, er hat sich also umgedreht. Das Wasser fließt neu in entgegengesetzter Richtung vom Nordmeer in den Golf von Mexiko.
 	\begin{figure}[!h]
   		\centering
- 		\includegraphics[width=7cm]{../Diagramme/temp-salt-flow_q-neg.png}
+ 		\includegraphics[width=7cm]{Grafiken/temp-salt-flow_q-neg.png}
   		\caption{Erneute Simulation mit tiefem Salzgehalt \(S_2 = 0.2\) im Nordmeer (die anderen Parameter wurden wie in Abbildung \ref{fig:modell_q_pos} beibehalten)}
   		\label{fig:modell_q_neg}
 	\end{figure}
@@ -204,7 +203,7 @@ Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
 		\frac{dS}{dt} &= \gamma (1 - S) - \left| q(T,S)\right|S \\
 		q(T,S) &= \alpha T - \beta S
 	\end{align*}
-	Dafür wurden folgenden Parameter definiert:
+	Dafür wurden folgende Parameter definiert:
 	\begin{align*}
 		\alpha = 2\frac{ab}{k_T}T_0 \qquad
 		\beta = 2\frac{ac}{k_T}S_0 \qquad
@@ -257,7 +256,7 @@ Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
 	
 	\begin{figure}[!h]
   		\centering
- 		\includegraphics[width=6cm]{../Diagramme/g_von_q_gamma_1.png}
+ 		\includegraphics[width=6cm]{Grafiken/g_von_q_gamma_1.png}
   		\caption{Die Funktion \(g(q)\) mit den Nullstellen \(q_2\) und \(q_3\) für die bereits beschriebenen Werte im realitätsnahen Zustand (siehe Abbildung \ref{fig:modell_q_pos}) und im Fall einer abgeschmolzenen Arktis (siehe Abbildung \ref{fig:modell_q_neg}).}
   		\label{fig:g_von_q_gamma_1}
 	\end{figure}	
@@ -289,13 +288,13 @@ Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
 	
 	Gilt \(k(q_{w2}) = 0\) so ist gerade der Wendepunkt ein Nullpunkt und die Funktion \(k(q)\) hat eine Nullstelle für \(q > 0\).
 	
-	Ist \(q_{w2} < 0\) oder ist \(k(0) > 0\) und \(k(q_{w2}) > 0\) so existiert für \(q > 0\) keine Nullstelle, so beispielsweise im Fall der abgeschmolzenen Arktis.
+	Ist \(q_{w2} < 0\) oder ist \(k(0) > 0\) und \(k(q_{w2}) > 0\) so existiert für \(q > 0\) keine Nullstelle, wie beispielsweise im Fall der abgeschmolzenen Arktis.
 	
 	\noindent\underline{Fall 2} \((q < 0):\) Analog zum Fall 1 kann auch in diesem Bereich jeweils nur ein Wendepunkt sein. Dies bedeutet, dass auch hier nur höchstens zwei Nullstellen liegen.
 	
 	\begin{figure}[!h]
   		\centering
- 		\includegraphics[width=6cm]{../Diagramme/q_von_q_falluntersuchung_anderes_layout.png}
+ 		\includegraphics[width=6cm]{Grafiken/q_von_q_falluntersuchung_anderes_layout.png}
   		\caption{Gleichgewichtsbestimmung mittels der Funktion \(k(q)\) für 3 verschiedene Beispiele. Das Beispiel i. ist durch die Parameter \(T_{01} = S_{01} = 2, T_{02} = 0.8, S_{02} = 0.2, k_T = 1, k_S = 0.2, a = b = c = 1 \) bestimmt und hat die Nullstellen \(q_1 \approx -0.1, q_2 \approx 0.2, q_3 \approx 0.6\). }
   		\label{fig:q_von_q_falluntersuchung}
 	\end{figure}	
@@ -332,13 +331,13 @@ Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
 		& - \frac{q}{|q|}\alpha S \cdot  \frac{q}{|q|}(-\beta) T = 
 		\lambda^2 + \lambda \underbrace{\left( 1  + \gamma + 2|q| + \frac{q^2}{|q|} \right)}_{-\textrm{spur}(Df) > 0 ~\Rightarrow~ \textrm{spur}(Df) < 0} + \\
 		& \underbrace{
-			\underbrace{\frac{q}{|q|}\left(\alpha T \gamma - \beta S + \alpha T |q| - |q|\beta S\right)}_{:=h(q)}
+			\underbrace{\frac{q}{|q|}\left(\alpha T \gamma - \beta S + \alpha T |q| - |q|\beta S\right)}_{=h(q)}
 			 + \underbrace{\gamma + |q| + |q|\gamma + |q|^2}_{=(1 + |q|)(\gamma + |q|)}
 		}_{\textrm{det}(Df)}
 	\end{align*}
 	Untersuchen wir die Determinante \(\textrm{det}(Df)\) weiter:
 	\begin{align*}
-		\textrm{det}(Df) = (1 + |q|)(\gamma + |q|)\left( 1 + \underbrace{\frac{h(q)}{(1 + |q|)(\gamma + |q|)}}_{:=h^*(q)} \right)
+		\textrm{det}(Df) = (1 + |q|)(\gamma + |q|)\left( 1 + \underbrace{\frac{h(q)}{(1 + |q|)(\gamma + |q|)}}_{=h^*(q)} \right)
 	\end{align*}
 	Betrachten wir die Funktion \(h(q)\) etwas genauer und setzen für \(T = \frac{1}{1+|q|}, S = \frac{\gamma}{\gamma + |q|}\) ein:
 	\begin{align*}
@@ -387,99 +386,99 @@ Im Nordmeer fällt das Wasser in eine Tiefe von über 2000 Metern.
 	
 	\begin{figure}[!h]
   		\centering
- 		\includegraphics[width=7cm]{../Diagramme/zustandsdiagram.png}
-  		\caption{Zustandstrajektorien für das Beispiel i. aus Abbildung \ref{fig:q_von_q_falluntersuchung}. Für den Plot wurden zufällige Startwerte für \(T\) und \(S\) gewählt. Aus der Ableitung \(g'\) wissen wir ob es sich um stabile oder instabile Punkte handelt: \(g'(q_1) \approx -5.4 < 1 \Rightarrow \textrm{stabil}, g'(q_2) \approx 2.8 > 1 \Rightarrow \textrm{instabil}, g'(q_3) \approx 0.2 \Rightarrow < 1 \Rightarrow \textrm{stabil} \). }
+ 		\includegraphics[width=7cm]{Grafiken/zustandsdiagram.png}
+  		\caption{Zustandstrajektorien für das Beispiel i. aus Abbildung \ref{fig:q_von_q_falluntersuchung}. Für den Plot wurden zufällige Startwerte für \(T\) und \(S\) gewählt. Aus der Ableitung \(g'\) wissen wir ob es sich um stabile oder instabile Punkte handelt: \(g'(q_1) \approx -5.4 < 1 \Rightarrow \textrm{stabil}, g'(q_2) \approx 2.8 > 1 \Rightarrow \textrm{instabil}, g'(q_3) \approx 0.2 < 1 \Rightarrow \textrm{stabil} \). }
   		\label{fig:Zustandsraumdiagram}
 	\end{figure}	
 	
 	\section{\uppercase{Anwendung}}\label{sec:Anwendung}
-	\noindent Nach der theoretischen Analyse wollen wir unser Modell welches noch nicht entdimensioniert wurde betrachten. Dazu haben wir recherchiert und die tatsächlichen Temperaturen des Golfstrom genommen. Da sich die Quellen jedoch unterscheiden, da in verschieden Tiefen gemessen wurde oder zu verschieden Jahreszeiten oder die Genauigkeit der Messung variiert haben wir uns dazu entschieden ein Mittel der Werte zu nehmen.
+	\noindent Nach der theoretischen Analyse wollen wir unser Modell, welches noch nicht entdimensionalisiert wurde, betrachten. Dazu haben wir recherchiert und die tatsächlichen Temperaturen des Golfstrom genommen. Die Quellen unterscheiden sich jedoch aufgrund von Messungen in verschieden Tiefen, Messungen zu verschiedenen Jahreszeiten oder Messungenauigkeiten. Darum haben wir uns entschieden ein Mittel der Werte anzunehmen.
 	
 	\subsection{Datenabschätzung} \label{Datenabschaetzung}
-	\noindent Betrachten wir nun zuerst die Temperaturen des Golfstromes im Golf von Mexiko. Der Golf von Mexiko hat eine durchschnittliche Temperatur von ungefähr 27 Grad Celsius. An manchen Küstenabschnitten etwas wärmer an anderen etwas kühler. An der Küste wird der Golfstrom in seinem Fluss gestört, da dort der Meeresgrund nicht überall gleich tief ist. So kommt es dazu, dass der Fluss an mancher Stelle durch eine enge muss und sich somit die Fließgeschwindigkeit erhöht und an andere Stelle wird er wieder gebremst. Dadurch verweilt die Wassermenge an einer Stelle länger und wird stärker von der Sonne erwärmt. 
+	\noindent Betrachten wir nun zuerst die Temperaturen des Golfstromes im Golf von Mexiko. Der Golf von Mexiko hat eine durchschnittliche Temperatur von ungefähr 27 Grad Celsius. An manchen Küstenabschnitten etwas wärmer an anderen etwas kühler. An der Küste wird der Golfstrom in seinem Fluss gestört, da dort der Meeresgrund nicht überall gleich tief ist. So kommt es dazu, dass der Fluss an mancher Stelle durch eine Enge muss und sich somit die Fließgeschwindigkeit erhöht und an anderer Stelle wird er wieder gebremst. Dadurch verweilt die Wassermenge an einer Stelle länger und wird stärker von der Sonne erwärmt. 
 	
-	Die Temperatur vom Nordmeer haben wir mit rund 10 Grad Celsius angenommen. Hierbei ist es schwer, da das Nordmeer relativ groß ist und sich über circa 15 Breitengrade erstreckt. Das ist eine Länge von über 1000 Kilometern. Auf dieser enormen Länge schwankt die Temperatur erwartungsgemäß stark. Das südliche Ende liegt westlich von Norwegen ungefähr auf dem 60. Breitengrad. Das nördliche Ende ist ungefähr bei dem 75. Breitengrad. Das ist deutlich oberhalb des Polarkreises (66.5 Breitengrad; Island liegt ungefähr auf dem Polarkreis).
+	Die Temperatur vom Nordmeer haben wir mit rund 10 Grad Celsius angenommen. Hierbei liegt die Schwierigkeit, dass das Nordmeer relativ groß ist und sich über circa 15 Breitengrade erstreckt. Dabei handelt es sich um eine Länge von über 1000 Kilometern. Auf dieser enormen Länge schwankt die Temperatur erwartungsgemäß stark. Das südliche Ende liegt westlich von Norwegen ungefähr auf dem 60. Breitengrad. Das nördliche Ende ist ungefähr beim 75. Breitengrad. Das ist deutlich oberhalb des Polarkreises (66.5 Breitengrad; Island liegt ungefähr auf dem Polarkreis).
 
-	Erstaunlicherweise haben wir sehr gute Wetterdiagramme auf Reiseseiten gefunden. Dort wird oft aufgelistet, wann die beste Reisezeit ist und es werden einem überraschend gute Graphiken gezeigt die sowohl die Umgebungstemperatur als auch die Wassertemperatur liefen. Da diese Diagramme meist kein Quellenverzeichnis aufweisen, haben wir die Werte mit anderen Messdaten "validiert". Die Abweichungen waren vernachlässigbar gering. Aus diesen Diagrammen kann man sich nun ein sehr detailliertes Bild machen, wie sich die Wassertemperatur entlang der Küste verändert, da es zu jedem größeren Küstenort ein solches Diagramm gibt.
+	Erstaunlicherweise haben wir sehr gute Wetterdiagramme auf Reiseseiten gefunden. Dort wird oft aufgelistet, wann die beste Reisezeit ist und es werden einem überraschend gute Graphiken gezeigt, die sowohl die Umgebungstemperatur als auch die Wassertemperatur liefen. Da diese Diagramme meist kein Quellenverzeichnis aufweisen, haben wir die Werte mit anderen Messdaten "validiert". Die Abweichungen waren vernachlässigbar gering. Aus diesen Diagrammen kann man sich nun ein sehr detailliertes Bild machen, wie sich die Wassertemperatur entlang der Küste verändert, da es zu jedem größeren Küstenort ein solches Diagramm gibt.
 
-	Beim Salzgehalt gestaltet sich die Suche nach brauchbaren Werten jedoch deutlich schwerer. Zum Nordmeer findet man mehr Messerwerte über den Salzgehalt, da dort das Wasser aufgrund der Kombination von Salz und Frost dichter wird und nach unten sinkt. Der Durchschnittswert der Salinität beträgt hier um die 34 Promille. 
+	Beim Salzgehalt gestaltet sich die Suche nach brauchbaren Werten jedoch deutlich schwieriger. Zum Nordmeer findet man mehr Messerwerte über den Salzgehalt, da dort das Wasser aufgrund der Kombination von Salz und Frost dichter wird und nach unten sinkt. Der Durchschnittswert der Salinität beträgt hier um die 34 Promille. 
 
-	Im Golf von Mexiko findet man so gut wie keine Werte. Deshalb können wir hier nicht sonderlich vergleichen. Die Salinität liegt hier bei 31 bis 32 Promille.
+	Im Golf von Mexiko findet man so gut wie keine Werte. Deshalb ist ein Vergleich hier nicht möglich und wir nehmen die Salinität bei 31 bis 32 Promille an.
 
-	Diese Werte haben wir in unser Simulink Modell des Golfstromes eingefügt. Es stellt sich jedoch die Frage, ob wir die gemessenen Werte nun tatsächlich die Umgebungstemperaturen sind, oder ob die Werte die Temperaturen vom Golfstrom sind. Schaut man sich die Auswirkungen des Golfstrom an wird deutlich, das er im Norden das Wasser erwärmt und im Süden kühlt. Also müssen die Umgebungstemperaturen im Norden niedriger und im Süden größer sein, als die Temperatur des Golfstroms. Da wir nicht wissen wie stark die Temperatur des Golfstromes von der Umgebung beeinflusst wird und anders herum gestaltet sich die Wahl der richtigen Werte sehr schwer. Wir haben deshalb die Temperatur des Golfstrom auf eine Wert gebracht der im Süden niedriger ist als die tatsächliche Temperatur und die Umgebungstemperatur wärmer als die tatsächliche Temperatur. Im Norden haben wir dies genau anders herum gemacht, da dort der Golfstrom erwärmt und somit wärmer sein muss als die Umgebung.
+	Diese Werte haben wir in unser Simulink Modell des Golfstromes eingefügt. Es stellt sich jedoch die Frage, ob die gemessenen Werte nun tatsächlich die Umgebungstemperaturen sind oder ob die Werte die Temperaturen vom Golfstrom sind. Schaut man sich die Auswirkungen des Golfstrom an wird deutlich, dass er im Norden das Wasser erwärmt und im Süden kühlt. Also müssen die Umgebungstemperaturen im Norden niedriger und im Süden höher sein, als die Temperatur des Golfstroms. Da wir nicht wissen wie stark die Temperatur des Golfstromes von der Umgebung beeinflusst wird und andersrum gestaltet sich die Wahl der richtigen Werte sehr schwer. Wir haben deshalb die Temperatur des Golfstrom auf einen Wert gebracht der im Süden niedriger ist als die tatsächliche Temperatur und die Umgebungstemperatur wärmer als die tatsächliche Temperatur. Im Norden haben wir dies genau andersrum angenommen, da dort der Golfstrom erwärmt und somit wärmer sein muss als die Umgebung.
 	
 	In unserem Modell wird nur die Auswirkung der Umgebungstemperatur betrachtet, da eine Rückwirkung noch mehr Messwerte benötigen würde, welche uns nicht zugänglich sind.  
 	
 
 	\subsection{Die Arktis schmilzt} \label{dieArktisSchmilzt}
 	
-	Aufgrund des Klimawandels erhöht sich die Temperatur weltweit. So auch Nördlich des Polarkreises. Wir haben diese Temperaturerhöhung in unserem Modell umgesetzt. Dazu haben wir die Umgebungstemperatur T02 von der Zeit abhängig gemacht. Das heißt wir haben die Temperatur doch ein logistisches Wachstum beschrieben. Wir starten mit der Umgebungstemperatur für die wir wissen, dass wir eine Gleichgewichtspunkt haben und erhöhen diesen Wert dann gegen eine obere Grenze. Wenn sich die Temperatur erhöht beginnt natürlich auch das Eis zu schmelzen.
+	Aufgrund des Klimawandels erhöht sich die Temperatur weltweit. So auch nördlich des Polarkreises. Wir haben diese Temperaturerhöhung in unserem Modell umgesetzt. Dazu haben wir die Umgebungstemperatur \(T_{02}\) von der Zeit abhängig gemacht. Das heißt wir haben die Temperatur durch ein logistisches Wachstum beschrieben. Wir starten mit der Umgebungstemperatur für die wir wissen, dass wir einen Gleichgewichtspunkt haben und erhöhen diesen Wert dann gegen eine obere Grenze. Wenn sich die Temperatur erhöht beginnt natürlich auch das Eis zu schmelzen.
 		
-	Beim Schmelzen der Arktis gelangt viel Wasser, welches in gefrorenem Zustand als Süßwasser vorliegt zusätzlich in das Nordmeer. Dadurch wird der Salzgehalt im Nordmeer abnehmen, da sich das Salz auf mehr Wassermenge verteilen wird. Dies haben wir umgesetzt, indem wir den Umgebungssalzgehalt S02 durch einen logarithmischen Zerfall beschrieben haben. Das heißt der Salzgehalt sinkt mit der Zeit auf einen niedrigeren Wert. 
+	Beim Schmelzen der Arktis gelangt viel Wasser, welches in gefrorenem Zustand als Süßwasser vorliegt, zusätzlich in das Nordmeer. Dadurch wird der Salzgehalt im Nordmeer abnehmen, da sich das Salz auf mehr Wassermenge verteilen wird. Dies haben wir umgesetzt, indem wir den Umgebungssalzgehalt \(S_{02}\) durch einen logarithmischen Zerfall beschrieben haben. Das heißt der Salzgehalt sinkt mit der Zeit auf einen niedrigeren Wert. 
 	
 	\begin{figure}[!h]
   		\centering
- 		\includegraphics[width=7cm]{../Diagramme/Arktis_schmilzt_init.png}
+ 		\includegraphics[width=7cm]{Grafiken/Arktis_schmilzt_init.png}
   		\caption{Werte mit denen der Golfstrom angeregt wird}
   		\label{fig:schmilztUmgebung}
 	\end{figure}
 
-	Man sieht deutlich, dass sich die Temperatur des Golfstromes im Norden auch erhöht. Die Kurve von T2 (Temperatur des Golfstroms im Norden) sieht ähnlich aus wie die Kurve der Umgebungstemperatur T02 mit der sie angeregt wird. Dies ist sehr gut nachvollziehbar, da T02 sich direkt auf T2 auswirkt. Erstaunlich ist dass sich auch die Temperatur vom Golfstrom im Süden erhöht. Dies ist jedoch bei genauerer Betrachtung auch logisch. Die Temperatur im Süden vom Golfstrom wird direkt von der Temperatur im Norden beeinflusst. Kommt von Norden wärmeres Wasser, so wird das Wasser im Süden nicht so stark gekühlt und gleicht sich mehr der Umgebungstemperatur im Süden an.
+	Man sieht deutlich, dass sich die Temperatur des Golfstromes im Norden auch erhöht. Die Kurve von \(T_2\) (Temperatur des Golfstroms im Norden) sieht ähnlich aus wie die Kurve der Umgebungstemperatur \(T_{02}\) mit der sie angeregt wird. Dies ist sehr gut nachvollziehbar, da \(T_{02}\) sich direkt auf \(T_2\) auswirkt. Erstaunlich ist, dass sich auch die Temperatur vom Golfstrom im Süden erhöht. Dies ist jedoch bei genauerer Betrachtung auch logisch. Die Temperatur im Süden vom Golfstrom wird direkt von der Temperatur im Norden beeinflusst. Kommt von Norden wärmeres Wasser, so wird das Wasser im Süden weniger stark gekühlt und gleicht sich mehr der Umgebungstemperatur im Süden an.
 	
-	Beim Salz folgt es genau der gleichen Sachverhalt, da Salz und Temperatur jeweils von äquivalenten Gleichungen beschrieben werden. Auch hier sinkt der Salzgehalt im Norden und der Salzgehalt im Süden vom Golfstrom nimmt mit ab.
+	Beim Salz folgt es genau dem gleichen Sachverhalt, da Salz und Temperatur jeweils von äquivalenten Gleichungen beschrieben werden. Auch hier sinkt der Salzgehalt im Norden und der Salzgehalt im Süden nimmt mit ab.
 
 	\begin{figure}[!h]
   		\centering
- 		\includegraphics[width=7cm]{../Diagramme/Arktis_schmiltz_werte.png}
+ 		\includegraphics[width=7cm]{Grafiken/Arktis_schmiltz_werte.png}
   		\caption{Auswirkungen auf den Golfstrom}
   		\label{fig:schmilztGolf}
 	\end{figure}
 
 	\subsection{Temperaturschwankungen durch Jahreszeiten} \label{TempDurchJahreszeiten}
 	
-	Als nächstes stellt sich die Frage ob und wie Stark sich die Schwankung der Temperatur über ein Jahr auf den Fluss des Golfstroms auswirkt. Dazu haben wir Klimadiagramme vom Nordmeer und vom Golf von Mexiko heran gezogen und diese durch einen Sinus nachgeahmt. 
+	Als nächstes stellt sich die Frage ob und wie stark sich die Schwankung der Temperatur über ein Jahr auf den Fluss des Golfstroms auswirkt. Dazu haben wir Klimadiagramme vom Nordmeer und vom Golf von Mexiko herangezogen und diese durch einen Sinus nachgeahmt. 
 	
-	Im Golf von Mexiko schwingt die Temperatur über ein Jahr um circa 11 Grad Celsius. Das Maximum liegt hier bei rund 30 Grad Celsius Wassertemperatur welche im Juli erreicht wird. Im Januar ist die Wassertemperatur mit rund 19 Grad am niedrigsten.
+	Im Golf von Mexiko schwingt die Temperatur über ein Jahr um circa 11 Grad Celsius. Das Maximum liegt hier bei rund 30 Grad Celsius Wassertemperatur, welche im Juli erreicht wird. Im Januar ist die Wassertemperatur mit rund 19 Grad am niedrigsten.
 	
 	Die Temperatur schwingt im Nordmeer nur um circa 3 Grad Celsius. Auch hier werden die kältesten Temperaturen im Januar und Februar gemessen. Diese betragen 4 bis 6 Grad Celsius. Die wärmste Temperatur wird im Juli und August gemessen. 
 	
-	Aufgrund von diesen Werten haben wir eine Anregung der Umgebungstemperatur vom Golf von Mexiko T01 und vom Nordmeer T02 in Abhängigkeit von der Zeit entworfen. Da an beiden Orten die Temperaturextreme etwas zur gleichen Zeit auftreten arbeiten wir jeweils mit der selben Phasenverschiebung. 
+	Aufgrund von diesen Werten haben wir eine Anregung der Umgebungstemperatur vom Golf von Mexiko \(T_{01}\) und vom Nordmeer \(T_{02}\) in Abhängigkeit von der Zeit entworfen. Da an beiden Orten die Temperaturextrema etwa zur gleichen Zeit auftreten arbeiten wir jeweils mit derselben Phasenverschiebung. 
 	
 	\begin{figure}[!h]
   		\centering
- 		\includegraphics[width=7cm]{../Diagramme/Jahreszeiten_init.png}
+ 		\includegraphics[width=7cm]{Grafiken/Jahreszeiten_init.png}
   		\caption{Werte mit denen der Golfstrom angeregt wird}
   		\label{fig:jahreszeitenUmgebung}
 	\end{figure}
 	
-	Wie wir bereits in \ref{dieArktisSchmilzt} gesehen haben, wirkt sich die Umgebungstemperatur direkt auf die Temperatur des Golfstromes aus. Die Temperaturen des Golfstromes nehmen sehr schnell die Schwingungen an. Auffällig ist, das es am Anfang eine starken Abfall gibt. Dieser ergibt sich draus, dass wir durch die Schwingung nicht mehr in unserem Gleichgewichtspunkt starten. Deshalb ist dieser starke Abfall zu vernachlässigen. Danach schwingen die Temperaturen um einen stabilen Punkt und weichen nicht mehr davon ab. Wir kommen deshalb zu der Erkenntnis, dass sich auch die Jahreszeiten auf den Golfstrom auswirken. Betrachtet man den Fluss so stellt man fest, dass dieser ebenfalls schwingt. Im Sommer fließt der Golfstrom schneller als im Winter. Dies sieht man direkt, wenn man sich die Gleichung für den Fluss anschaut, da dieser abhängig ist von der Differenz der Temperaturen im Norden und Süden. Da die Temperatur im Norden weniger stark schwingt als die Temperatur im Süden wird im Winter eine kleiner Differenz erreicht und damit wird der Fluss geringer.
+	Wie wir bereits in \ref{dieArktisSchmilzt} gesehen haben, wirkt sich die Umgebungstemperatur direkt auf die Temperatur des Golfstromes aus. Die Temperaturen des Golfstromes nehmen sehr schnell die Schwingungen an. Auffällig ist, dass es am Anfang eine starken Abfall gibt. Dieser ergibt sich draus, dass wir durch die Schwingung nicht mehr in unserem Gleichgewichtspunkt starten. Deshalb ist dieser starke Abfall zu vernachlässigen. Danach schwingen die Temperaturen um einen stabilen Punkt und weichen nicht mehr davon ab. Wir kommen daher zu der Erkenntnis, dass sich auch die Jahreszeiten auf den Golfstrom auswirken. Betrachtet man den Fluss, so stellt man fest, dass dieser ebenfalls schwingt. Im Sommer fließt der Golfstrom schneller als im Winter. Dies sieht man direkt, wenn man sich die Gleichung für den Fluss anschaut, da dieser abhängig ist von der Temperaturdifferenz von Norden und Süden. Da die Temperatur im Norden weniger stark schwingt als die Temperatur im Süden, wird im Winter eine kleinere Differenz erreicht und damit wird der Fluss geringer.
 	
-	Der Salzgehalt fängt ebenfalls an zu schwingen. Dies liegt daran, dass sie Temperatur und Salzgehalt gegenseitig beeinflussen. Das Salz schwingt jedoch nur in einem sehr kleinen Bereich und spielt dadurch fast keine Rolle.
+	Der Salzgehalt fängt ebenfalls an zu schwingen. Dies liegt daran, dass sie Temperatur und Salzgehalt sich gegenseitig beeinflussen. Das Salz schwingt jedoch nur in einem sehr kleinen Bereich und spielt dadurch fast keine Rolle.
 
 	\begin{figure}[!h]
   		\centering
- 		\includegraphics[width=7cm]{../Diagramme/Jahreszeiten_werte.png}
+ 		\includegraphics[width=7cm]{Grafiken/Jahreszeiten_werte.png}
   		\caption{Auswirkungen auf den Golfstrom}
   		\label{fig:jahreszeitenGolf}
 	\end{figure}
 
 	\section{\uppercase{Fazit}}\label{sec:Fazit}
 	
-	Wir wollen uns nun der Frage stellen, ob  der Golfstrom zum Erliegen kommen wird. Um die Fragestellung zu beantworten betrachten wir das Modell das wir in \ref{dieArktisSchmilzt} benutzt haben, da wir in \ref{TempDurchJahreszeiten} festgestellt haben, dass die Jahreszeiten keine Auswirkung auf die Gleichgewichtspunkte haben sondern nur um diese Schwingen. Es könnte sein, dass durch eine solche Schwingung das erliegen des Golfstromes etwas früher eintreten könnte jedoch wollen wir dies vernachlässigen.
+	Wir wollen uns nun der Frage stellen, ob der Golfstrom zum Erliegen kommen wird. Um diese Fragestellung zu beantworten, betrachten wir das Modell, welches wir in \ref{dieArktisSchmilzt} benutzten. Da wir in \ref{TempDurchJahreszeiten} festgestellt haben, dass die Jahreszeiten keine Auswirkung auf die Gleichgewichtspunkte haben und nur um diese Schwingen. Es könnte sein, dass durch eine solche Schwingung das Erliegen des Golfstromes etwas früher eintreten könnte, jedoch wollen wir dies vernachlässigen.
 	
-	Durch Simulation mit mehreren Werten hat sich herausgestellt, dass die Umgebungstemperatur im Norden auf 29 Grad Celsius erhöhen müsste. Das würde bedeuten dass der Golfstrom eine Temperatur von fast 30 Grad Celsius annehmen würde. Des Salzgehalt im Norden müsste auf 29.7\% abfallen. 
+	Durch Simulation mit mehreren Werten hat sich herausgestellt, dass die Umgebungstemperatur im Norden auf 29 Grad Celsius erhöhen müsste. Das würde bedeuten, dass der Golfstrom eine Temperatur von fast 30 Grad Celsius annehmen würde. Der Salzgehalt im Norden müsste auf 29.7\textperthousand ~abfallen. 
 	
-	Laut unserem Modell sind wir also noch ziemlich weit von einem stillstand des Golfstromes entfernt. 
+	Laut unserem Modell sind wir also noch ziemlich weit von einem Stillstand des Golfstromes entfernt. 
 	
-	Es sollte jedoch klar sein, dass sich der Golfstrom nicht durch ein derart einfache Modell beschreiben lässt. Es mussten zu viele Vereinfachungen getroffen werden, dass die Aussagekraft unseres Modells stark begrenzt ist. 
+	Es sollte jedoch klar sein, dass sich der Golfstrom nicht durch ein derart einfaches Modell beschreiben lässt. Es mussten zu viele Vereinfachungen getroffen werden, welche die Aussagekraft unseres Modells stark begrenzen. 
 	
-	Der Fluss wurde sehr stark vereinfacht indem er als zwei Pipelines dargestellt wurde. In echt ist der Fluss jedoch viel komplexer. Es findet ein Austausch zwischen den beiden statt, da sie in der Realität direkt aneinander vorbei fließen. So kann Wasser von dem einen Fluss in den anderen Fluss gelangen und die Temperatur auf der Reise verändert werden welche von uns nicht berücksichtigt wurde. Zum anderen spielt die Fluiddynamik eine Rolle. Nicht nur dass sich die beiden Flüsse in ihrer Geschwindigkeit gegenseitig bremsen wird auch noch durch die Beschaffenheit des Meeresbodens der Fluss des Golfstromes beeinflusst. Auch ist der Weg vom Golf von Mexiko ins Nordmeer länger als der Rückweg, da nicht beides mal der selbe Weg genommen wird.
+	Der Fluss wurde sehr stark vereinfacht indem er als zwei Pipelines dargestellt wurde. In Wirklichkeit ist der Fluss jedoch viel komplexer. Es findet ein Austausch zwischen den beiden Flüssen statt, da sie in der Realität direkt aneinander vorbei fließen. So kann Wasser von dem einen Fluss in den anderen Fluss gelangen und die Temperatur auf der Reise wird verändert. Solche Phänomene wurden von uns nicht berücksichtigt. Desweiteren spielt die Fluiddynamik eine Rolle. Neben der Tatsache, dass sich die beiden Flüsse in ihrer Geschwindigkeit gegenseitig bremsen, wird auch noch durch die Beschaffenheit des Meeresbodens der Fluss des Golfstromes beeinflusst. Außerdem ist der Weg vom Golf von Mexiko ins Nordmeer länger als der Rückweg, da die beiden Wege unterschiedlich sind.
 	
-	Wie in \ref{Datenabschaetzung} bereits angesprochen wurde, wird die Auswirkung des Golfstromes auf die Umgebung nicht berücksichtigt obwohl dies eine sehr wichtige Rolle spielt. Es gibt auch eine Wechselwirkung zwischen Golfstrom und dem Windsystem. Wie in \ref{sec:Golfstrom} beschrieben spaltet sich ein Teil des Wasser vom Golfstrom ab und fließt wieder zurück in Richtung des Äquators. Genau über diesem Zyklus kann man auch einen Kreisbewegung im Windsystem feststellen
+	Wie in \ref{Datenabschaetzung} bereits angesprochen, wird die Auswirkung des Golfstromes auf die Umgebung nicht berücksichtigt, obwohl dies eine sehr wichtige Rolle spielt. Es gibt auch eine Wechselwirkung zwischen Golfstrom und dem Windsystem. Wie in \ref{sec:Golfstrom} beschrieben, spaltet sich ein Teil des Wasser vom Golfstrom ab und fließt wieder zurück in Richtung des Äquators. Genau über diesen Zyklus kann man auch eine Kreisbewegung im Windsystem feststellen.
 	
-	Auch ist es falsch den Golfstrom als abgeschlossenes System mit einem Behälter für den Golf von Mexiko und eine für das Nordmeer zu sehen, da andere Meeresströmungen ebenfalls Einwirkungen haben und anderen wiederum vom Golfstrom Energie beziehen und dadurch angetrieben werden.
+	Weiter ist es falsch den Golfstrom als abgeschlossenes System mit zwei Behältern anzunehmen, da andere Meeresströmungen ebenfalls Einwirkungen haben und weitere wiederum vom Golfstrom Energie beziehen oder auch dadurch angetrieben werden.
 	
-	Trotzdem macht das Modell Sinn um einen Einblick in das Verhalten des Golfstromes zu bekommen. Eine Qualitative Aussage ist mit diesem Modell durchaus möglich. Jedoch macht es wenig Sinn zu versuchen mit realen Werten zu arbeiten. 
+	Das Modell ist dennoch sinnvoll und liefert einen guten Einblick in das Verhalten des Golfstromes. Außerdem ist eine qualitative Aussage mit diesem Modell durchaus möglich. Keinen Sinn macht es jedoch in diesem Modell mit realen Werten zu arbeiten. 
 	
  	\section{\uppercase{Quellen}}\label{sec: Quellen}		
 

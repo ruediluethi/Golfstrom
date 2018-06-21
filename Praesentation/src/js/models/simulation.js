@@ -35,11 +35,11 @@ module.exports = Backbone.Model.extend({
 		var S2 = [this.get('S02')];
 
 		// difference
-		var T0 = this.get('T01') - this.get('T02');
-		var S0 = this.get('S01') - this.get('S02');
-		var T = [];
-		var S = [];
-		var Q = [];
+		var T0 = T1 - T2;
+		var S0 = S1 - S2;
+		var T = [Math.abs(T0)];
+		var S = [Math.abs(S0)];
+		var Q = [this.get('a')*(this.get('b')*T0 - this.get('c')*S0)];
 
 		// without dimensions
 		var TnoDim = [1];
@@ -49,49 +49,44 @@ module.exports = Backbone.Model.extend({
     	var gamma = this.get('kS')/this.get('kT');
     	var QnoDim = [alpha * TnoDim[0] - beta * SnoDim[0]];
 
-    	var Stest = [S0/S0];
-
     	// timesteps
-		var dt = 0.01;
+		var dt = 0.1;
 		var dtNoDim = dt * this.get('kT');
-		var time = [dt];
+		var time = [0];
 
 		for(var t = 0; t < 10/dt; t++){
 
-			var dT = T1[t] - T2[t];
-	        var dS = S1[t] - S2[t];
+			time[t+1] = time[t] + dt;
+
 
 			// Original Gleichungen
-	        var q = this.get('a')*(this.get('b')*dT - this.get('c')*dS);
-	        Q[Q.length] = q;
+	        var dT1 = ( this.get('kT')*(this.get('T01') - T1[t]) + Math.abs(Q[t])*(T2[t] - T1[t]) )*dt;
+	        var dT2 = ( this.get('kT')*(this.get('T02') - T2[t]) + Math.abs(Q[t])*(T1[t] - T2[t]) )*dt;
 
-	        var dT1 = ( this.get('kT')*(this.get('T01') - T1[t]) + Math.abs(q)*(T2[t] - T1[t]) )*dt;
-	        var dT2 = ( this.get('kT')*(this.get('T02') - T2[t]) + Math.abs(q)*(T1[t] - T2[t]) )*dt;
+	        var dS1 = ( this.get('kS')*(this.get('S01') - S1[t]) + Math.abs(Q[t])*(S2[t] - S1[t]) )*dt;
+	        var dS2 = ( this.get('kS')*(this.get('S02') - S2[t]) + Math.abs(Q[t])*(S1[t] - S2[t]) )*dt;
 
-	        var dS1 = ( this.get('kS')*(this.get('S01') - S1[t]) + Math.abs(q)*(S2[t] - S1[t]) )*dt;
-	        var dS2 = ( this.get('kS')*(this.get('S02') - S2[t]) + Math.abs(q)*(S1[t] - S2[t]) )*dt;
+	        T1[t+1] = T1[t] + dT1;
+	        T2[t+1] = T2[t] + dT2;
 
-	        T1[T1.length] = T1[t] + dT1;
-	        T2[T2.length] = T2[t] + dT2;
+	        S1[t+1] = S1[t] + dS1;
+	        S2[t+1] = S2[t] + dS2;
 
-	        S1[S1.length] = S1[t] + dS1;
-	        S2[S2.length] = S2[t] + dS2;
+	        T[t+1] = Math.abs(T1[t+1] - T2[t+1]);
+	        S[t+1] = Math.abs(S1[t+1] - S2[t+1]);
 
-	        T[T.length] = Math.abs(T1[t] - T2[t]);
-	        S[S.length] = Math.abs(S1[t] - S2[t]);
-
-	        time[time.length] = time[t] + dt;
-
-	        Stest[Stest.length] = (S1[t] - S2[t])/S0;
+	        var dT = T1[t+1] - T2[t+1];
+	        var dS = S1[t+1] - S2[t+1];
+	        Q[t+1] = this.get('a')*(this.get('b')*dT - this.get('c')*dS);
 
 	        // Dimensionslos
-	        var qNoDim = alpha * TnoDim[t] - beta * SnoDim[t];
-	        var dTnoDim = ( (1 - TnoDim[t]) - Math.abs(qNoDim)*TnoDim[t] )*dtNoDim;
-	        var dSnoDim = ( gamma*(1 - SnoDim[t]) - Math.abs(qNoDim)*SnoDim[t] )*dtNoDim;
-	        TnoDim[TnoDim.length] = TnoDim[t] + dTnoDim;
-	        SnoDim[SnoDim.length] = SnoDim[t] + dSnoDim;
-	        QnoDim[QnoDim.length] = qNoDim;
+	        var dTnoDim = ( (1 - TnoDim[t]) - Math.abs(QnoDim[t])*TnoDim[t] )*dtNoDim;
+	        var dSnoDim = ( gamma*(1 - SnoDim[t]) - Math.abs(QnoDim[t])*SnoDim[t] )*dtNoDim;
+	        TnoDim[t+1] = TnoDim[t] + dTnoDim;
+	        SnoDim[t+1] = SnoDim[t] + dSnoDim;
+	        QnoDim[t+1] = alpha * TnoDim[t+1] - beta * SnoDim[t+1];
 		}
+
 
 		// console.log(TnoDim);
 		// console.log(SnoDim);
@@ -107,7 +102,6 @@ module.exports = Backbone.Model.extend({
 		this.set('TnoDim',TnoDim);
 		this.set('SnoDim',SnoDim);
 		this.set('QnoDim',QnoDim);
-		this.set('Stest',Stest);
 
 		this.trigger('simulationend');
 		this.analyse();
@@ -129,7 +123,7 @@ module.exports = Backbone.Model.extend({
 		var Z = [];
 		var Kp = [];
 		var Kn = [];
-		var resolution = 500;
+		var resolution = 100;
 		var zeroPoints = [];
 		var stableQs = [];
 		for(var i = 0; i < resolution; i++){
@@ -152,14 +146,14 @@ module.exports = Backbone.Model.extend({
 			// var k = (Math.abs(q) - Math.abs(g)) *(1 + Math.abs(q))*(gamma + Math.abs(q));
 			var k = (q - g) *(1 + q)*(gamma + q);
 			if (q >= 0){
-				Kp[Kp.length] = k;
-				Kn[Kn.length] = null;
+				Kp[i] = k;
+				Kn[i] = null;
 			}else{
-				Kp[Kp.length] = null;
+				Kp[i] = null;
 				//g = alpha*(1/(1 - q)) - beta*(gamma/(gamma - q) );
 				//k = (- q + g)*(1 - q)*(gamma - q);
 				k = -(q*q*q) + q*q*(1 + gamma) + q*(gamma*(beta-1)-alpha) + gamma*(alpha - beta);
-				Kn[Kn.length] = k;
+				Kn[i] = k;
 			}
 		}
 
@@ -208,7 +202,7 @@ module.exports = Backbone.Model.extend({
 		this.set('stableQs', stableQs);
 
 		this.trigger('analyseend');
-		this.generateTrajektorien(10,20);
+		this.generateTrajektorien(16,20);
 	},
 
 	generateTrajektorien: function(amount, fieldResolution){
@@ -224,7 +218,7 @@ module.exports = Backbone.Model.extend({
     	var QnoDim = [alpha - beta];
 
     	// timesteps
-		var dt = 0.01 * this.get('kT');
+		var dt = 0.1;
 		var time = [dt];
 
 		var Tstack = [];
@@ -232,24 +226,33 @@ module.exports = Backbone.Model.extend({
 		var Qstack = [];
 		var timeStack = [];
 
-		for (var i = 0; i < amount; i++){
-			var T = [Math.random()*2];
-			var S = [Math.random()*2];
-			var Q = [alpha*T[0] - beta*S[0]];
-			var time = [];
-			for(var t = 0; t < 10/dt; t++){
-				var q = alpha * T[t] - beta * S[t];
-		        var dT = ( (1 - T[t]) - Math.abs(q)*T[t] )*dt;
-		        var dS = ( gamma*(1 - S[t]) - Math.abs(q)*S[t] )*dt;
-		        T[T.length] = T[t] + dT;
-		        S[S.length] = S[t] + dS;
-		        Q[Q.length] = q;
-		        time[time.length] = time[t] + dt;
+		for (var i = 0; i < Math.sqrt(amount); i++){
+
+			for (var j = 0; j < Math.sqrt(amount); j++){
+
+				var T = [i/(Math.sqrt(amount)-1)];	
+				var S = [j/(Math.sqrt(amount)-1)];
+				var Q = [alpha*T[0] - beta*S[0]];
+				var time = [0];
+
+				for(var t = 0; t < 10/dt; t++){
+					time[t+1] = time[t] + dt;
+			        var dT = ( (1 - T[t]) - Math.abs(Q[t])*T[t] )*dt;
+			        var dS = ( gamma*(1 - S[t]) - Math.abs(Q[t])*S[t] )*dt;
+			        T[t+1] = T[t] + dT;
+			        S[t+1] = S[t] + dS;
+			        Q[t+1] = alpha * T[t+1] - beta * S[t+1];
+			        /*
+			        T[t+1] = T[t] + 0.01;
+			        S[t+1] = S[t] + 0.02;
+			        Q[t+1] = 0.5;
+			        */
+				}
+				Tstack.push(T);
+				Sstack.push(S);
+				Qstack.push(Q);
+				timeStack.push(time);
 			}
-			Tstack.push(T);
-			Sstack.push(S);
-			Qstack.push(Q);
-			timeStack.push(time);
 		}
 
 		var vectorField = [];

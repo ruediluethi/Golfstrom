@@ -89,7 +89,7 @@ module.exports = Backbone.View.extend({
 				return d;
 			})
 			.attr('stroke-width', 4)
-			.attr('opacity', 0.4);
+			.attr('opacity', 0.6);
 
 
 
@@ -101,8 +101,8 @@ module.exports = Backbone.View.extend({
 
 		var fieldResolution = vectorField.length;
 
-		var lineLengthX = self.diagramWidth/fieldResolution;
-		var lineLengthY = self.diagramHeight/fieldResolution;
+		var lineLengthX = self.diagramWidth/(fieldResolution-1);
+		var lineLengthY = self.diagramHeight/(fieldResolution-1);
 
 		var fieldData = [];
 		for (var x = 0; x < fieldResolution; x++){
@@ -115,7 +115,7 @@ module.exports = Backbone.View.extend({
 
 				fieldData.push({
 					x: x*lineLengthX,
-					y: self.diagramHeight - y*lineLengthX - lineLengthX,
+					y: self.diagramHeight - y*lineLengthX,
 					dx: dx/vLength * lineLengthX*0.5,
 					dy: dy/vLength * lineLengthY*0.5,
 					angle: window.atan2(dx,dy)
@@ -155,7 +155,7 @@ module.exports = Backbone.View.extend({
 			.attr('r',lineLengthX/2-1)
 			.attr('stroke', 'transparent')
 			.attr('stroke-width', 0)
-			.attr('opacity', 0.5);
+			.attr('opacity', 0.7);
 
 		circle.attr('fill', function(d,i){
 			return self.getColorOnColorWheel(d.angle / (2*Math.PI));
@@ -196,7 +196,14 @@ module.exports = Backbone.View.extend({
 				var x = self.diagramWidth * X[t];
 				var y = self.diagramHeight - (self.diagramHeight * Y[t]);
 
-				if (!isNaN(x) && !isNaN(y) && x < self.diagramWidth && self.diagramHeight){
+				var distanceToLast = self.diagramWidth*self.diagramHeight;
+				if (pathPoints.length > 0){
+					var dx = x - pathPoints[pathPoints.length-1].x;
+					var dy = y - pathPoints[pathPoints.length-1].y;
+					distanceToLast = Math.sqrt(dx*dx + dy*dy);
+				}
+
+				if (!isNaN(x) && !isNaN(y) && x > 0 && x < self.diagramWidth && y > 0 && y < self.diagramHeight && distanceToLast > 3){
 					pathPoints.push({
 						x: x,
 						y: y
@@ -235,7 +242,7 @@ module.exports = Backbone.View.extend({
 
 	interpolateColor: function(from, to, value){
 
-		value = -Math.sin((value)*Math.PI+Math.PI/2)/2+0.5;
+		// value = -Math.sin((value)*Math.PI+Math.PI/2)/2+0.5;
 
 	    var rgbFrom = this.hexToRgb(from);
 	    var rgbTo = this.hexToRgb(to);
@@ -254,18 +261,21 @@ module.exports = Backbone.View.extend({
 
 		var color = '#000000';
 
+		//var colorAnchors = ['#FF0000','#FF00FF','#0000FF','#00FFFF','#00FF00','#FFFF00'];
+		var colorAnchors = ['#dd3a78','#895baa','#40a1dd','#4be0d8','#2ee88f','#e8b22d'];
+
 		if (a < 1/6){
-			color = self.interpolateColor('#FF0000', '#FF00FF', a*6);
+			color = self.interpolateColor(colorAnchors[0], colorAnchors[1], a*6);
 		}else if (a < 2/6){
-			color = self.interpolateColor('#FF00FF', '#0000FF', (a-1/6)*6);
+			color = self.interpolateColor(colorAnchors[1], colorAnchors[2], (a-1/6)*6);
 		}else if (a < 3/6){
-			color = self.interpolateColor('#0000FF', '#00FFFF', (a-2/6)*6);
+			color = self.interpolateColor(colorAnchors[2], colorAnchors[3], (a-2/6)*6);
 		}else if (a < 4/6){
-			color = self.interpolateColor('#00FFFF', '#00FF00', (a-3/6)*6);
+			color = self.interpolateColor(colorAnchors[3], colorAnchors[4], (a-3/6)*6);
 		}else if (a < 5/6){
-			color = self.interpolateColor('#00FF00', '#FFFF00', (a-4/6)*6);
-		}else{
-			color = self.interpolateColor('#FFFF00', '#FF0000', (a-5/6)*6);
+			color = self.interpolateColor(colorAnchors[4], colorAnchors[5], (a-4/6)*6);
+		}else if (a < 6/6){
+			color = self.interpolateColor(colorAnchors[5], colorAnchors[0], (a-5/6)*6);
 		}
 
 		return color;

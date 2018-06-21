@@ -303,7 +303,7 @@ module.exports = Backbone.View.extend({
 		}
 
 		if (template == 'trajektorien'){
-			var amount = 10;
+			var amount = 16;
 			var flowColors = [];
 			var trajektorienColors = [];
 			var alpha = [];
@@ -430,7 +430,7 @@ module.exports = Backbone.View.extend({
 		self.$el.find('.param-selection .selection').removeClass('selected');
 		$btn.addClass('selected');
 
-		var animationSteps = 1;
+		var animationSteps = 20;
 		var counter = 0;
 		var valueStep = setInterval(function(){
 			counter++;
