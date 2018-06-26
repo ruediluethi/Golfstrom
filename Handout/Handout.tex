@@ -5,7 +5,6 @@
 \usepackage{url} %Bib
 \usepackage[sort&compress,numbers]{natbib} %Bib
 \usepackage{fullpage}
-\usepackage{lipsum}
 \usepackage{float}
 \usepackage{cuted}
 \usepackage{epsfig}
@@ -77,6 +76,8 @@
 	\end{align*}
 	\end{footnotesize}
 
+\section*{\uppercase{Zum Fluss}\label{sec: Fluss}}
+
 	\noindent Funktion für die Dichte \(\rho_i = \rho_0 - bT_i + cS_i\) in die Gleichung für den Fluss eingesetzt:
 	\begin{footnotesize}
 	\begin{align*}
@@ -90,7 +91,8 @@
 	\end{align*}
 	\end{footnotesize}
 	
-	\noindent Entdimensionalisierung der Temperatur mit 
+	\section*{\uppercase{Zur Entdimensionalisierung}\label{sec: Entdimensionierung}}	
+
 	\begin{footnotesize}
 	\begin{align*}
 		t = k_T \cdot t^* \Rightarrow t^* = \frac{t}{k_T} &\qquad
@@ -99,7 +101,9 @@
 		S = \frac{S^*}{S^*_0} \Rightarrow S^* = S \cdot S^*_0
 	\end{align*}
 	\end{footnotesize}
+	
 	Eingesetzt ergibt das für die Temperatur:
+	
 	\begin{footnotesize}
 	\begin{align*}
 		\frac{dT^*}{dt^*} &= k_T\left(T^*_{0} - T^*\right) - 2\left|q^*\right|T^* \\
@@ -112,7 +116,7 @@
 		\left(1 - T\right) - \left|q\right|T
 	\end{align*}
 	\end{footnotesize}
-	Analog für den Salzgehalt:
+	Analog für den Salzgehalt ergibt sich:
 	\begin{footnotesize}
 	\begin{align*}	
 		\frac{dS^*}{dt^*} &= k_S\left(S^*_{0} - S^*\right) - 2\left|q^*\right|S^* \\
@@ -120,7 +124,9 @@
 		\Rightarrow \frac{dS}{dt} &= \underbrace{\frac{k_S}{k_T}}_{=\gamma}\left(1 - S\right) - \left|q\right|S
 	\end{align*}
 	\end{footnotesize}
-	und für den Fluss:
+	
+	Für den Fluss ergibt sich:
+
 	\begin{footnotesize}
 	\begin{align*}
 		q^* &= a \left( bT^* - cS^* \right)
@@ -129,24 +135,29 @@
 	\end{align*}
 	\end{footnotesize}
 	
-	\noindent Gleichgewichtsuntersuchung:
+		\section*{\uppercase{Zur Gleichgewichtsuntersuchung}\label{sec: Gleichgewichtsuntersuchung}}
+
 	\begin{footnotesize}
 	\begin{align*}
 		\frac{dT}{dt} &= \left(1 - T\right) - \left|q\right|T \stackrel{!}{=} 0 \\
-		&\Rightarrow 1 - T\left(1 + |q|\right) \stackrel{!}{=} 0 \\
 		&\Rightarrow T = \frac{1}{1+|q|} \\
 		\Rightarrow \frac{dS}{dt} &= \gamma \left(1 - S\right) - \left|q\right|S \stackrel{!}{=} 0 \\
 		&\Rightarrow S = \frac{\gamma}{\gamma + |q|}
 	\end{align*}
 	\end{footnotesize}
-	Flussmenge wenn \(S\) und \(T\) im Gleichgewicht:
+	
+	Die Flussmenge 
+
 	\begin{footnotesize}
 	\begin{align*}
 		q = \alpha T - \beta S
 		 = \alpha \frac{1}{1+|q|} - \beta \frac{\gamma}{\gamma + |q|} = g(q)
 	\end{align*}
 	\end{footnotesize}
-	Sei nun (Schnittpunkte der Winkelhalbierenden mit g(q))
+	
+	von \(S\) und \(T\) ist im Gleichgewicht, wenn sie sich mit der Winkelhalbierenden schneidet.
+	
+
 	\begin{footnotesize}
 	\begin{align*}
 		q = g(q) &\Rightarrow 0 = q - g(q) \stackrel{q > 0}{=}  q - \left(\alpha \frac{1}{1+q} - \beta \frac{\gamma}{\gamma + q} \right) \\
@@ -159,8 +170,10 @@
 		&= q^3 + q^2(1 + \gamma) + q\left(\gamma \left(1 + \beta\right) - \alpha \right) + \gamma \left( \beta - \alpha \right)
 	\end{align*}
 	\end{footnotesize}
-	
-	\noindent Zu der Stabilitätsuntersuchung:
+
+		\section*{\uppercase{Zur Stabilitätsuntersuchung}\label{sec: Stabilitaetsuntersuchung}}
+
+
 	\begin{footnotesize}
 	\begin{align*}
 		\nabla f &= \left(\begin{array}{c}
