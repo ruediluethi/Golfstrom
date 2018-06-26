@@ -1,0 +1,105 @@
+<h2>Stabilitätsanalyse</h2>
+
+<div class="col col-100">
+	<p>
+		Durch die Differentialgleichungen unseres Systems ist folgender Gradient gegeben:
+	</p>
+
+	<table class="formula pull-back">
+		<tbody>
+			<tr>
+				<td rowspan="2">&nabla; f = <span class="over2rows">(</span></td>
+				<td>1 - T - |&alpha;T - &beta;|T</td>
+				<td rowspan="2"><span class="over2rows">)</span></td>
+			</tr>
+			<tr>
+				<td>&gamma; - &gamma;S - |&alpha;T - &beta;|S</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p>
+		Durch die Linearisierung um die Gleichgewichtspunkte entsteht folgende Jacobi-Matrix: 
+	</p>
+
+	<table class="formula pull-back">
+		<tbody>
+			<tr>
+				<td rowspan="2">Jf = <span class="over4rows">(</span></td>
+				<td class="push-right">
+					&minus; 1 &minus;
+					<span class="fraction">
+						<span class="enumerator">&nbsp; &alpha;T &minus; &beta;S &nbsp;</span>
+						<span class="numerator">|&alpha;T &minus; &beta;S|</span>
+					</span>&alpha;T
+					&minus; |&alpha;T - &beta;S|
+				</td>
+				<td>
+					&minus;
+					<span class="fraction">
+						<span class="enumerator">&nbsp; &alpha;T &minus; &beta;S &nbsp;</span>
+						<span class="numerator">|&alpha;T &minus; &beta;S|</span>
+					</span>(&minus;&beta;)T
+				</td>
+				<td rowspan="2"><span class="over4rows">)</span></td>
+			</tr>
+			<tr>
+				<td>
+					&minus;
+					<span class="fraction">
+						<span class="enumerator">&nbsp; &alpha;T &minus; &beta;S &nbsp;</span>
+						<span class="numerator">|&alpha;T &minus; &beta;S|</span>
+					</span>&alpha;S
+				</td>
+				<td>
+					&minus; &gamma; &minus;
+					<span class="fraction">
+						<span class="enumerator">&nbsp; &alpha;T &minus; &beta;S &nbsp;</span>
+						<span class="numerator">|&alpha;T &minus; &beta;S|</span>
+					</span>(&minus;&beta;)S
+					&minus; |&alpha;T - &beta;S|
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<p>
+		Diese hat folgendes charakteristisches Polynom mit <span class="formula high-yellow">&minus;spur(Jf)</span> und <span class="formula high-blue">det(Jf)</span>:<br>
+		<span class="footnote">dabei wurde <span class="formula">&alpha;T &minus; &beta;S = q</span> eingesetzt</span>
+	</p>
+	<p class="formula pull-back">
+		P<sub>Jf</sub>(&lambda;) = 
+		&lambda;<sup>2</sup> + &lambda;
+		<span class="high-yellow">
+			<span class="over2rows">(</span>
+			1 + &gamma; + 2|q| + 
+			<span class="fraction">
+				<span class="enumerator">q<sup>2</sup></span>
+				<span class="numerator">|q|</span>
+			</span>
+			<span class="over2rows">)</span>
+		</span>
+		+
+		<span class="high-blue">
+			(1+|q|)(&gamma; + |q|)
+			<span class="over3rows">(</span>
+			1 +
+			<span class="fraction">
+				<span class="enumerator">q<sup>2</sup></span>
+				<span class="numerator">|q|</span>
+			</span>
+			<span class="over2rows">(</span>
+				<span class="fraction" style="width: 70px;">
+					<span class="enumerator">&alpha;</span>
+					<span class="numerator">(1+|q|)<sup>2</sup></span>
+				</span> &minus;
+				&beta;<span class="fraction" style="width: 70px;">
+					<span class="enumerator">&gamma;</span>
+					<span class="numerator">(&gamma;+|q|)<sup>2</sup></span>
+				</span>
+			<span class="over2rows">)</span>
+			<span class="over3rows">)</span>
+		</span>
+	</p>
+
+</div>

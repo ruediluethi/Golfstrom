@@ -120,29 +120,56 @@ module.exports = Backbone.Model.extend({
 
     	var qOnX = [];
 		var G = [];
+		var ddqGp = []; // Ableitung von g für q > 0
+		var ddqGn = []; // Ableitung von g für q < 0
 		var Z = [];
 		var Kp = [];
 		var Kn = [];
 		var resolution = 100;
 		var zeroPoints = [];
 		var stableQs = [];
+
 		for(var i = 0; i < resolution; i++){
 			//var q = i/resolution*6-3;
 			var q = (i/resolution*2-1)*2;
 			qOnX[i] = q;
 			var g = alpha*(1/(1+Math.abs(q))) - beta*(gamma/(gamma+Math.abs(q)) );
 			G[i] = g;
+			var ddqg= (q/Math.abs(q))*(
+				( -alpha      / ( (1    +Math.abs(q)) * (1+    Math.abs(q)) ) ) + 
+				( (beta*gamma)/ ( (gamma+Math.abs(q)) * (gamma+Math.abs(q)) ) )
+			);
+			if (q >= 0){
+				ddqGp[i] = ddqg;
+				ddqGn[i] = null;
+			}
+			if (q < 0){
+				ddqGp[i] = null;
+				ddqGn[i] = ddqg;
+			}
+
 
 			var z = q - g;
 			Z[i] = z;
 			if (i > 0){
 				if (Z[i]*Z[i-1] < 0){
-					zeroPoints.push((i-0.5)/resolution);
-					stableQs.push(q);
+					var zeroQ = q;
+					var zeroI = (i-0.5)/resolution;
+					for (var l = 0; l < stableQs.length; l++){
+						if (Math.abs(stableQs[l] - zeroQ) < 0.1){
+							zeroQ = (stableQs[l] + zeroQ)/2;
+							zeroI = (zeroPoints[l] + zeroI)/2;
+							zeroPoints.pop();
+							stableQs.pop();
+							break;
+						}
+					}
+					zeroPoints.push(zeroI);
+					stableQs.push(zeroQ);
 				}
 			}
 
-			var g = alpha*(1/(1+Math.abs(q))) - beta*(gamma/(gamma+Math.abs(q)) );
+			// var g = alpha*(1/(1+Math.abs(q))) - beta*(gamma/(gamma+Math.abs(q)) );
 			// var k = (Math.abs(q) - Math.abs(g)) *(1 + Math.abs(q))*(gamma + Math.abs(q));
 			var k = (q - g) *(1 + q)*(gamma + q);
 			if (q >= 0){
@@ -157,19 +184,16 @@ module.exports = Backbone.Model.extend({
 			}
 		}
 
+		// Sattel/Wendepunkte
+		// für q > 0
+		var qwp = 1/3 * (Math.sqrt(3*alpha - 3*beta*gamma + gamma*gamma - gamma +1) - gamma - 1);
+
+		// Nullstellen für gamma = 1
 		var q1 = 0.5*(-Math.sqrt(4*alpha - 4*beta + 1) - 1);
 		var q2 = 0.5*(+Math.sqrt(4*alpha - 4*beta + 1) - 1);
 		var q3 = 0.5*(-Math.sqrt(4*beta - 4*alpha + 1) + 1);
 		var q4 = 0.5*(+Math.sqrt(4*beta - 4*alpha + 1) + 1);
 
-		//console.log(q1+' / '+q2+' / '+q3+' / '+q4);
-		//console.log(stableQs);
-
-		for (var i = 0; i < stableQs.length; i++){
-			var stableQ = stableQs[i];
-			var ddqg = -stableQ/Math.abs(stableQ) * ( alpha/((1+Math.abs(stableQ))*(1+Math.abs(stableQ))) - (beta*gamma)/((gamma+Math.abs(stableQ))*(gamma+Math.abs(stableQ))) );
-			//console.log('q = '+stableQ+'; k\' = '+ddqg);
-		}
 
 		var T = this.get('TnoDim');
 		var S = this.get('SnoDim');
@@ -177,24 +201,24 @@ module.exports = Backbone.Model.extend({
 		var stableS = S[S.length-1];
 		var stableQ = alpha*stableT - beta*stableS;
 
+		// Jacobi-Matrix
 		var dTdT = -1 -stableQ/Math.abs(stableQ)*alpha*stableT - Math.abs(stableQ);
 		var dTdS = -stableQ/Math.abs(stableQ)*(-beta)*stableT;
 		var dSdT = -stableQ/Math.abs(stableQ)*alpha*stableS;
 		var dSdS = -gamma -stableQ/Math.abs(stableQ)*(-beta)*stableS - Math.abs(stableQ);
 
-		//console.log(dTdT+" "+dTdS+";"+dSdT+" "+dSdS);
-
-		var det = dTdT*dSdS - dSdT*dTdS;
-		//console.log(det);
-
+		// Determinante
+		var det = dTdT*dSdS - dSdT*dTdS; // per Definition
+		// aus dem charakteristischen Polynom:
 		var det2 = stableQ/Math.abs(stableQ)*(alpha*stableT*gamma - beta*stableS) + stableQ*stableQ + gamma + Math.abs(stableQ) + Math.abs(stableQ)*gamma + Math.abs(stableQ)*Math.abs(stableQ);
-		//console.log(det2);
-
+		
+		// Spur
 		var trace = 1 + gamma + 2*Math.abs(stableQ) + (stableQ*stableQ)/Math.abs(stableQ);
-		//console.log(trace);
 
 		this.set('qOnX',qOnX);
 		this.set('G',G);
+		this.set('ddqGp',ddqGp);
+		this.set('ddqGn',ddqGn);
 		this.set('Kp',Kp);
 		this.set('Kn',Kn);
 		this.set('Z',Z);
@@ -218,7 +242,7 @@ module.exports = Backbone.Model.extend({
     	var QnoDim = [alpha - beta];
 
     	// timesteps
-		var dt = 0.1;
+		var dt = 0.05;
 		var time = [dt];
 
 		var Tstack = [];
@@ -226,12 +250,14 @@ module.exports = Backbone.Model.extend({
 		var Qstack = [];
 		var timeStack = [];
 
-		for (var i = 0; i < Math.sqrt(amount); i++){
+		var squaredAmount = Math.sqrt(amount);
+		var deltaShift = 1/squaredAmount*1.5;
 
-			for (var j = 0; j < Math.sqrt(amount); j++){
+		for (var i = 0; i < squaredAmount; i++){
+			for (var j = 0; j < squaredAmount; j++){
 
-				var T = [i/(Math.sqrt(amount)-1)];	
-				var S = [j/(Math.sqrt(amount)-1)];
+				var T = [i*deltaShift + deltaShift/2];	
+				var S = [j*deltaShift + deltaShift/2];
 				var Q = [alpha*T[0] - beta*S[0]];
 				var time = [0];
 
@@ -259,8 +285,8 @@ module.exports = Backbone.Model.extend({
 		for (var x = 0; x < fieldResolution; x++){
 			vectorField.push([]);
 			for (var y = 0; y < fieldResolution; y++){
-				var T = x/fieldResolution;
-				var S = y/fieldResolution;
+				var T = x/fieldResolution*1.5;
+				var S = y/fieldResolution*1.5;
 				var q = alpha * T - beta * S;
 		        var dT = (1 - T) - Math.abs(q)*T;
 		        var dS = gamma*(1 - S) - Math.abs(q)*S;

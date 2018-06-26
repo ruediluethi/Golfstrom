@@ -17,9 +17,9 @@ module.exports = Backbone.View.extend({
 	title: 'untitled',
 	width: 200,
 	height: 200,
-	padding: 10,
-	paddingTop: 10,
-	paddingBottom: 10,
+	padding: 0,
+	paddingTop: 0,
+	paddingBottom: 0,
 	diagramWidth: 0,
 	diagramHeight: 0,
 
@@ -88,10 +88,10 @@ module.exports = Backbone.View.extend({
 			.attr('stroke', function(d){
 				return d;
 			})
-			.attr('stroke-width', 4)
-			.attr('opacity', 0.6);
+			.attr('stroke-width', 2)
+			.attr('opacity', 0.5);
 
-
+		
 
 		return self;
 	},
@@ -101,8 +101,8 @@ module.exports = Backbone.View.extend({
 
 		var fieldResolution = vectorField.length;
 
-		var lineLengthX = self.diagramWidth/(fieldResolution-1);
-		var lineLengthY = self.diagramHeight/(fieldResolution-1);
+		var lineLengthX = Math.floor(self.diagramWidth/(fieldResolution-1));
+		var lineLengthY = Math.floor(self.diagramHeight/(fieldResolution-1));
 
 		var fieldData = [];
 		for (var x = 0; x < fieldResolution; x++){
@@ -116,14 +116,14 @@ module.exports = Backbone.View.extend({
 				fieldData.push({
 					x: x*lineLengthX,
 					y: self.diagramHeight - y*lineLengthX,
-					dx: dx/vLength * lineLengthX*0.5,
-					dy: dy/vLength * lineLengthY*0.5,
+					dx: dx/vLength * lineLengthX,
+					dy: dy/vLength * lineLengthY,
 					angle: window.atan2(dx,dy)
 				});
 			}
 		}
 
-		/*
+		
 		var rects = self.gField.selectAll('rect').data(fieldData);
 		rects.enter()
 			.append('rect')
@@ -137,12 +137,14 @@ module.exports = Backbone.View.extend({
 			.attr('height',lineLengthY)
 			.attr('stroke', 'transparent')
 			.attr('stroke-width', 0);
+			// .attr('opacity', 0.8);
 
 		rects.attr('fill', function(d,i){
 			return self.getColorOnColorWheel(d.angle / (2*Math.PI));
 		});
-		*/
 
+
+		/*
 		var circle = self.gField.selectAll('circle').data(fieldData);
 		circle.enter()
 			.append('circle')
@@ -152,7 +154,7 @@ module.exports = Backbone.View.extend({
 			.attr('cy', function(d,i){
 				return d.y;
 			})
-			.attr('r',lineLengthX/2-1)
+			.attr('r',Math.floor(lineLengthX/2*0.8))
 			.attr('stroke', 'transparent')
 			.attr('stroke-width', 0)
 			.attr('opacity', 0.7);
@@ -160,29 +162,34 @@ module.exports = Backbone.View.extend({
 		circle.attr('fill', function(d,i){
 			return self.getColorOnColorWheel(d.angle / (2*Math.PI));
 		});
+		*/
 
+		
 		var lines = self.gField.selectAll('line').data(fieldData);
 		lines.enter()
 			.append('line')
 			.attr('stroke-width', 1)
 			//.attr('stroke','#777777')
 			.attr('x1', function(d,i){
-				return d.x;
+				return d.x+lineLengthX/2;
 			})
 			.attr('y1', function(d,i){
-				return d.y;
+				return d.y+lineLengthX/2;
 			});
 
 		lines.attr('x2', function(d,i){
-				return d.x + d.dx;
+				return d.x+lineLengthX/2 + d.dx;
 			})
 			.attr('y2', function(d,i){
-				return d.y + d.dy;
+				return d.y+lineLengthX/2 - d.dy;
 			})
 			.attr('stroke', function(d,i){
 				return '#FFFFFF';
 				//return self.getColorOnColorWheel(d.angle / (2*Math.PI));
 			});
+		
+
+		var endData = [];
 
 		self.gGraphs.selectAll('path').each(function(d, i){
 			var path = d3.select(this);
@@ -193,8 +200,8 @@ module.exports = Backbone.View.extend({
 			var Y = yStack[i];
 
 			for (var t = 0; t < X.length; t++){
-				var x = self.diagramWidth * X[t];
-				var y = self.diagramHeight - (self.diagramHeight * Y[t]);
+				var x = self.diagramWidth * X[t]/1.5;
+				var y = self.diagramHeight - (self.diagramHeight * Y[t]/1.5);
 
 				var distanceToLast = self.diagramWidth*self.diagramHeight;
 				if (pathPoints.length > 0){
@@ -203,7 +210,7 @@ module.exports = Backbone.View.extend({
 					distanceToLast = Math.sqrt(dx*dx + dy*dy);
 				}
 
-				if (!isNaN(x) && !isNaN(y) && x > 0 && x < self.diagramWidth && y > 0 && y < self.diagramHeight && distanceToLast > 3){
+				if (!isNaN(x) && !isNaN(y) && x > lineLengthX && x < self.diagramWidth-lineLengthX && y > lineLengthY && y < self.diagramHeight-lineLengthY && distanceToLast > 1){
 					pathPoints.push({
 						x: x,
 						y: y
@@ -211,9 +218,92 @@ module.exports = Backbone.View.extend({
 				}
 			}
 
+			if (pathPoints.length > 0){
+				endData.push(pathPoints[pathPoints.length-1]);
+			}
+
 			path.attr('d', pathDrawFunction(pathPoints));
 		});
 
+
+		var endCircle = self.gGraphs.selectAll('circle').data(endData);
+		endCircle.enter()
+			.append('circle')
+			.attr('r',Math.floor(lineLengthX))
+			.attr('stroke', '#FFFFFF')
+			.attr('stroke-width', 2)
+			.attr('fill', 'transparent')
+			.attr('opacity', 0.6);
+
+		endCircle.attr('cx', function(d,i){
+			return d.x;
+		});
+		endCircle.attr('cy', function(d,i){
+			return d.y;
+		});
+	},
+
+	addLegend: function(color, text){
+		var self = this;
+
+		var $legend = $('<div class="plot-legend"><svg></svg>'+text+'<div>');
+		var svgIcon = d3.select($legend.find('svg')[0]);
+		svgIcon.attr('width', 14);
+		svgIcon.attr('height', 14);
+		svgIcon.append('line')
+			.attr('x1', 0)
+			.attr('y1', 10)
+			.attr('x2', 14)
+			.attr('y2', 10)
+			.attr('stroke-width', 2)
+			.attr('stroke', color)
+			.attr('opacity', 1);
+		self.$el.find('.plot-wrapper').append($legend);
+	},
+
+	addGradient: function(text){
+		var self = this;
+
+		var $legend = $('<div class="plot-legend" style="margin-left: 0px;"><svg></svg>'+text+'<div>');
+
+		var iconSize = 14;
+		var gradientLength = 12;
+
+		var svgIcon = d3.select($legend.find('svg')[0]);
+		svgIcon.attr('width', iconSize*gradientLength);
+		svgIcon.attr('height', 20);
+
+		var gRects = svgIcon.append('g');
+		var gLines = svgIcon.append('g');
+		
+		for (var i = 0; i < gradientLength; i++){
+
+			var x = i*iconSize;
+			var y = 4;
+
+			var alpha = i/(gradientLength-1);
+			gRects.append('rect')
+				.attr('x', x)
+				.attr('y', y)
+				.attr('width', iconSize)
+				.attr('height', iconSize)
+				.attr('fill', self.getColorOnColorWheel(alpha));
+
+			alpha = alpha*2*Math.PI;
+			var dx = Math.cos(alpha);
+			var dy = Math.sin(alpha);
+			var l = Math.sqrt(dx*dx + dy*dy);
+
+			gLines.append('line')
+				.attr('x1', x+iconSize/2)
+				.attr('y1', y+iconSize/2)
+				.attr('x2', x+iconSize/2+dx/l*iconSize*0.5)
+				.attr('y2', y+iconSize/2+dy/l*iconSize*0.5)
+				.attr('stroke', '#FFFFFF')
+				.attr('stroke-width', 1);
+		}
+
+		self.$el.find('.plot-wrapper').append($legend);
 	},
 
 	hexToRgb: function (hex) {
@@ -264,17 +354,17 @@ module.exports = Backbone.View.extend({
 		//var colorAnchors = ['#FF0000','#FF00FF','#0000FF','#00FFFF','#00FF00','#FFFF00'];
 		var colorAnchors = ['#dd3a78','#895baa','#40a1dd','#4be0d8','#2ee88f','#e8b22d'];
 
-		if (a < 1/6){
+		if (a <= 1/6){
 			color = self.interpolateColor(colorAnchors[0], colorAnchors[1], a*6);
-		}else if (a < 2/6){
+		}else if (a <= 2/6){
 			color = self.interpolateColor(colorAnchors[1], colorAnchors[2], (a-1/6)*6);
-		}else if (a < 3/6){
+		}else if (a <= 3/6){
 			color = self.interpolateColor(colorAnchors[2], colorAnchors[3], (a-2/6)*6);
-		}else if (a < 4/6){
+		}else if (a <= 4/6){
 			color = self.interpolateColor(colorAnchors[3], colorAnchors[4], (a-3/6)*6);
-		}else if (a < 5/6){
+		}else if (a <= 5/6){
 			color = self.interpolateColor(colorAnchors[4], colorAnchors[5], (a-4/6)*6);
-		}else if (a < 6/6){
+		}else if (a <= 6/6){
 			color = self.interpolateColor(colorAnchors[5], colorAnchors[0], (a-5/6)*6);
 		}
 

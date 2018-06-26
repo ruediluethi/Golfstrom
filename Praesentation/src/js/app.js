@@ -44,7 +44,13 @@ module.exports = Backbone.View.extend({
 		'gleichgewicht',
 		'flussimgleichgewicht',
 		'gleichgewichtplot',
-		'trajektorien'
+		'stabilitaet',
+		'eigenwerte',
+		'trajektorien',
+		'realedaten',
+		'arktisschmilzt',
+		'jahreszeiten',
+		'fazit'
 	],
 	vCrntSlide: undef,
 
@@ -66,7 +72,8 @@ module.exports = Backbone.View.extend({
 
 	events: {
 		'click .param-selection .selection': 'selectParams',
-		'click a.route': 'linkClick'
+		'click a.route': 'linkClick',
+		'click .generate-random': 'generateRandomParams'
 	},
 
 	initialize: function(options) {
@@ -152,7 +159,7 @@ module.exports = Backbone.View.extend({
 		} });
 		self.$el.find('#slides-container').append(newVSlide.render());
 
-		if (template == 'titel' || template == 'inhalt'){
+		if (template == 'titel' || template == 'inhalt' || slideNr >= 13){
 			self.$el.addClass('full-screen');
 		}else{
 			self.$el.removeClass('full-screen');
@@ -217,7 +224,7 @@ module.exports = Backbone.View.extend({
 
 			// Temperatur
 			var vTemperature = new VPlot({ title: 'Temperatur', colors: [colorGulf,colorNorthSea,colorDiff], minValue: 0, maxValue: 1.5 , helpLinesCount: 4});
-			vTemperature.listenTo(self.mSimulation, 'simulationend', function(){
+			newVSlide.listenTo(self.mSimulation, 'simulationend', function(){
 				vTemperature.update([self.mSimulation.get('T1'), self.mSimulation.get('T2'), self.mSimulation.get('T')], self.mSimulation.get('time'));
 			});
 			newVSlide.$el.find('.temp').append(vTemperature.$el);
@@ -228,7 +235,7 @@ module.exports = Backbone.View.extend({
 
 			// Salzgehalt
 			var vSalt = new VPlot({ title: 'Salzgehalt', colors: [colorGulf,colorNorthSea,colorDiff], minValue: 0, maxValue: 1.5 , helpLinesCount: 4 });
-			vSalt.listenTo(self.mSimulation, 'simulationend', function(){
+			newVSlide.listenTo(self.mSimulation, 'simulationend', function(){
 				vSalt.update([self.mSimulation.get('S1'), self.mSimulation.get('S2'), self.mSimulation.get('S')], self.mSimulation.get('time'));
 			});
 			newVSlide.$el.find('.salt').append(vSalt.$el);
@@ -239,7 +246,7 @@ module.exports = Backbone.View.extend({
 
 			// Fluss
 			var vFlow = new VPlot({ title: 'Fluss', colors: [colorFlow], minValue: -1, maxValue: 1 });
-			vFlow.listenTo(self.mSimulation, 'simulationend', function(){
+			newVSlide.listenTo(self.mSimulation, 'simulationend', function(){
 				vFlow.update([self.mSimulation.get('Q')], self.mSimulation.get('time'));
 			});
 			newVSlide.$el.find('.flow').append(vFlow.$el);
@@ -264,7 +271,7 @@ module.exports = Backbone.View.extend({
 		if (template == 'gleichgewichtplot'){
 			// Temperatur
 			var vTempSalt = new VPlot({ title: 'Temperatur / Salzgehalt', colors: [/*colorPurple,colorOrange,*/colorPurple,colorOrange], alpha: [/*0.2,0.2,*/0.7,0.7], minValue: 0, maxValue: 1 });
-			vTempSalt.listenTo(self.mSimulation, 'simulationend', function(){
+			newVSlide.listenTo(self.mSimulation, 'simulationend', function(){
 				vTempSalt.update([/*self.mSimulation.get('T'), self.mSimulation.get('S'), */self.mSimulation.get('TnoDim'), self.mSimulation.get('SnoDim')], self.mSimulation.get('time'));
 			});
 			newVSlide.$el.find('.tempsalt').append(vTempSalt.$el);
@@ -275,7 +282,7 @@ module.exports = Backbone.View.extend({
 			// vTempSalt.addLegend(1,'S: Absolut');
 
 			var vFlow = new VPlot({ title: 'Fluss', colors: [colorFlow/*,colorFlow*/], alpha: [1.0/*,0.2*/], minValue: -2, maxValue: 2 });
-			vFlow.listenTo(self.mSimulation, 'simulationend', function(){
+			newVSlide.listenTo(self.mSimulation, 'simulationend', function(){
 				vFlow.update([self.mSimulation.get('QnoDim')/*, self.mSimulation.get('Q')*/], self.mSimulation.get('time'));
 			});
 			newVSlide.$el.find('.flow').append(vFlow.$el);
@@ -283,8 +290,8 @@ module.exports = Backbone.View.extend({
 			vFlow.addLegend(0,'Q: Dimensionslos');
 			// vFlow.addLegend(1,'Q: Absolut');
 
-			var vAnalyse = new VPlot({ title: 'Stabilitätspunkte', colors: [colorFlow,colorCyan,colorYellow,colorYellow], alpha: [1.0,0.4,0.7,0.7], minValue: -2, maxValue: 2, startT: -2, endT: 2, showHalfHalf: true });
-			vAnalyse.listenTo(self.mSimulation, 'analyseend', function(){
+			var vAnalyse = new VPlot({ title: 'Gleichgewichtspunkte', colors: [colorFlow,colorCyan,colorYellow,colorYellow], alpha: [1.0,0.4,0.7,0.7], minValue: -2, maxValue: 2, startT: -2, endT: 2, showHalfHalf: true });
+			newVSlide.listenTo(self.mSimulation, 'analyseend', function(){
 				vAnalyse.update([self.mSimulation.get('G'), self.mSimulation.get('Z'), self.mSimulation.get('Kp'), self.mSimulation.get('Kn')], self.mSimulation.get('qOnX'));
 				var zeroPoints = self.mSimulation.get('zeroPoints');
 				var stableQs = self.mSimulation.get('stableQs');
@@ -304,27 +311,83 @@ module.exports = Backbone.View.extend({
 
 		if (template == 'trajektorien'){
 			var amount = 16;
+			var tempSaltColors = [];
+			var alphaTS = [];
 			var flowColors = [];
 			var trajektorienColors = [];
 			var alpha = [];
 			for (var i = 0; i < amount; i++){
-				flowColors.push(colorFlow);
-				trajektorienColors.push(colorDiff);
+				trajektorienColors.push('#000000');
 				alpha.push(0.3);
 			}
-			var vFlow = new VPlot({ title: 'Fluss', colors: flowColors, alpha: alpha, minValue: -2, maxValue: 2 });
-			vFlow.listenTo(self.mSimulation, 'trajektorienend', function(){
-				vFlow.update(self.mSimulation.get('Qstack'), self.mSimulation.get('timeStack')[0]);
+			for (var i = 0; i < amount/2; i++){
+				flowColors.push(colorFlow);
+				tempSaltColors.push(colorPurple);
+				alphaTS.push(0.2);
+			}
+			for (var i = 0; i < amount/2; i++){
+				tempSaltColors.push(colorOrange);
+				alphaTS.push(0.2);
+			}
+
+			var vFlow = new VPlot({ title: 'Q, T, S', colors: flowColors, alpha: alpha, minValue: -2, maxValue: 2, heightScale: 0.5 });
+			newVSlide.listenTo(self.mSimulation, 'trajektorienend', function(){
+				var Qstack = self.mSimulation.get('Qstack');
+				var QstackShort = [];
+				for (var i = 0; i < Qstack.length; i = i+2){
+					QstackShort.push(Qstack[i]);
+				}
+				//vFlow.update(self.mSimulation.get('Qstack'), self.mSimulation.get('timeStack')[0]);
+				vFlow.update(QstackShort, self.mSimulation.get('timeStack')[0]);
 			});
-			newVSlide.$el.find('.flow').append(vFlow.$el);
+			newVSlide.$el.find('.tempsalt').append(vFlow.$el);
 			vFlow.render();
+			vFlow.addLegend(0,'Q: Fluss',true);
+
+			var vTempSalt = new VPlot({ colors: tempSaltColors, alpha: alphaTS, minValue: 0, maxValue: 1, heightScale: 0.5 });
+			newVSlide.listenTo(self.mSimulation, 'trajektorienend', function(){
+				var TSstack = self.mSimulation.get('Tstack').concat(self.mSimulation.get('Sstack'));
+				var TSstackShort = [];
+				for (var i = 0; i < TSstack.length; i = i+2){
+					TSstackShort.push(TSstack[i]);
+				}
+				vTempSalt.update(TSstackShort, self.mSimulation.get('timeStack')[0]);
+			});
+			newVSlide.$el.find('.tempsalt').append(vTempSalt.$el);
+			vTempSalt.render();
+			vTempSalt.addLegend(0,'T: Temperatur', true);
+			vTempSalt.addLegend(self.mSimulation.get('Tstack').length/2,'S: Salzgehalt', true);
+
+			vFlow.$el.find('svg.graphic').css({
+				marginBottom: 0
+			});
+			vTempSalt.$el.find('.plot-legend').first().before(vFlow.$el.find('.plot-legend'));
+
+
+			var vAnalyse = new VPlot({ title: 'Stabilitätspunkte', colors: [colorFlow,colorGulf,colorGulf,colorYellow,colorYellow], alpha: [1.0,0.3,0.3,0.7,0.7], minValue: -2, maxValue: 2, startT: -2, endT: 2, showHalfHalf: true });
+			newVSlide.listenTo(self.mSimulation, 'analyseend', function(){
+				vAnalyse.update([self.mSimulation.get('G'), self.mSimulation.get('ddqGp'), self.mSimulation.get('ddqGn'), self.mSimulation.get('Kp'), self.mSimulation.get('Kn')], self.mSimulation.get('qOnX'));
+				var zeroPoints = self.mSimulation.get('zeroPoints');
+				var stableQs = self.mSimulation.get('stableQs');
+				for (var i = 0; i < zeroPoints.length; i++){
+					vAnalyse.plotVerticalLine(zeroPoints[i]);
+					//vFlow.plotHorizontalLine(stableQs[i]);
+				}
+			});
+			newVSlide.$el.find('.flow').append(vAnalyse.$el);
+			vAnalyse.render();
+			vAnalyse.addLegend(0,'g(q)');
+			vAnalyse.addLegend(1,'g\'(q)');
+			vAnalyse.addLegend(3,'k(q)');
 
 			var vTrajektorienPlot = new VTrajektorienPlot({ title: 'Zustandstrajektorien', colors: trajektorienColors});
-			vTrajektorienPlot.listenTo(self.mSimulation, 'trajektorienend', function(){
+			newVSlide.listenTo(self.mSimulation, 'trajektorienend', function(){
 				vTrajektorienPlot.update(self.mSimulation.get('vectorField'),self.mSimulation.get('Tstack'),self.mSimulation.get('Sstack'));
 			});
 			newVSlide.$el.find('.analysis').append(vTrajektorienPlot.$el);
-			vTrajektorienPlot.render();			
+			vTrajektorienPlot.render();
+			vTrajektorienPlot.addGradient('Vektorfeld');
+			vTrajektorienPlot.addLegend('#000000','Trajektorien');
 
 			self.mSimulation.simulate();
 		}
@@ -419,6 +482,36 @@ module.exports = Backbone.View.extend({
 		var $btn = $(e.currentTarget);
 		var params = $btn.data('params');
 
+		self.$el.find('.param-selection .selection').removeClass('selected');
+		$btn.addClass('selected');
+
+		self.doParamsAnimation(params);
+	},
+
+	generateRandomParams: function(){
+		var self = this;
+
+		var maxValue = 2;
+		var minValue = 0.1;
+		var range = maxValue - minValue;
+
+		var params = {
+			T01: minValue + Math.random()*range,
+			S01: minValue + Math.random()*range,
+			T02: minValue + Math.random()*range,
+			S02: minValue + Math.random()*range,
+			kT:  minValue + Math.random()*range,
+			kS:  minValue + Math.random()*range,
+			//a:   minValue + Math.random()*range
+		};
+
+		self.doParamsAnimation(params);
+	},
+
+
+	doParamsAnimation(params){
+		var self = this;
+
 		var oldT01 = self.mSimulation.get('T01');
 		var oldT02 = self.mSimulation.get('T02');
 		var oldS01 = self.mSimulation.get('S01');
@@ -427,10 +520,7 @@ module.exports = Backbone.View.extend({
 		var oldKS = self.mSimulation.get('kS');
 		var oldA = self.mSimulation.get('a');
 
-		self.$el.find('.param-selection .selection').removeClass('selected');
-		$btn.addClass('selected');
-
-		var animationSteps = 20;
+		var animationSteps = 10;
 		var counter = 0;
 		var valueStep = setInterval(function(){
 			counter++;
@@ -475,13 +565,10 @@ module.exports = Backbone.View.extend({
 			}
 
 			self.mSimulation.simulate();
-
-			// if (params.doTrajektorien){
-			// 	self.mSimulation.generateTrajektorien(10);
-			// }
-
-		},1/20);
+		},1/10);
 	},
+
+	
 
 	goForward: function(){
 		var self = this;

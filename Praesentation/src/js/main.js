@@ -23,13 +23,13 @@ window.atan2 = function(x,y) {
 
     var angle = Math.atan(y/x);
 
-    if (y > 0 && x < 0){ // top left
+    if (y >= 0 && x < 0){ // top left
         angle = Math.PI + angle;
     }
-    if (y < 0 && x < 0){ // bottom left
+    if (y < 0 && x <= 0){ // bottom left
         angle = Math.PI + angle;
     }
-    if (y < 0 && x > 0){ // bottom right
+    if (y <= 0 && x > 0){ // bottom right
         angle = 2*Math.PI + angle;
     }
 

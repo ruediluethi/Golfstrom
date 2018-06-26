@@ -22,6 +22,7 @@ module.exports = Backbone.View.extend({
 	paddingBottom: 20,
 	diagramWidth: 0,
 	diagramHeight: 0,
+	heightScale: 1,
 
 	colors: ['#444444'],
 	alpha: undef,
@@ -57,6 +58,9 @@ module.exports = Backbone.View.extend({
 			if (options.helpLinesCount != undef){
 				self.helpLinesCount = options.helpLinesCount;
 			}
+			if (options.heightScale != undef){
+				self.heightScale = options.heightScale;
+			}
 		}
 	},
 
@@ -68,7 +72,7 @@ module.exports = Backbone.View.extend({
 		var svg = d3.select(self.$el.find('svg')[0]);
 
 		self.width = self.$el.width();
-		self.height = self.width;
+		self.height = self.width*self.heightScale;
 
 		svg.attr('width', self.width);
 		svg.attr('height', self.height);
@@ -107,7 +111,7 @@ module.exports = Backbone.View.extend({
 		return self;
 	},
 
-	addLegend: function(i, text){
+	addLegend: function(i, text, fullAlpha){
 		var self = this;
 
 		var $legend = $('<div class="plot-legend"><svg></svg>'+text+'<div>');
@@ -116,13 +120,13 @@ module.exports = Backbone.View.extend({
 		svgIcon.attr('height', 14);
 		svgIcon.append('line')
 			.attr('x1', 0)
-			.attr('y1', 8)
+			.attr('y1', 10)
 			.attr('x2', 14)
-			.attr('y2', 8)
+			.attr('y2', 10)
 			.attr('stroke-width', 4)
 			.attr('stroke',self.colors[i])
 			.attr('opacity', function(){
-				if (self.alpha != undef){
+				if (self.alpha != undef && !fullAlpha){
 					return self.alpha[i];
 				}
 				return 1;
