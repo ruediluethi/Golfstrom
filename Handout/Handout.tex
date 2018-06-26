@@ -1,0 +1,82 @@
+\documentclass[a4paper,twoside]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{url} %Bib
+\usepackage[sort&compress,numbers]{natbib} %Bib
+\usepackage{fullpage}
+\usepackage{lipsum}
+\usepackage{float}
+\usepackage{cuted}
+\usepackage{epsfig}
+\usepackage{subfigure}
+\usepackage{calc}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{multicol}
+\usepackage{pslatex}
+\usepackage{apalike}
+\usepackage{enumitem}
+\usepackage{bbm}
+\usepackage{etoolbox}
+\usepackage{textcomp}
+%\usepackage{hyperref}
+\apptocmd{\UrlBreaks}{\do\f\do\m}{}{}
+\usepackage{MOSI}     % Please add other packages that you may need BEFORE the MOSI.sty package.
+
+\newcommand{\team}{Patrick Neher, Ruedi Lüthi}
+\newcommand{\theme}{Golfstrom}
+\setcounter{page}{1}
+
+\subfigtopskip=0pt
+\subfigcapskip=0pt
+\subfigbottomskip=0pt
+
+\begin{document}
+	
+	\begin{center}
+	\begin{LARGE}
+			\uppercase{\textbf{Der Golfstrom}} \\[12pt] 
+	\end{LARGE}
+	\end{center}
+
+	
+	
+	Dieses Handout dient dazu die Rechnung, während der Präsentation besser zu verstehen.
+	
+	\section*{\uppercase{Zur Differenz}\label{sec: Differenz}}
+	
+	\begin{footnotesize}
+	\noindent Das sind die 4 Gleichung von unserer Modellskizze:
+	\begin{align*}
+		\frac{dT^*_1}{dt^*} &= k_T\left(T^*_{01} - T^*_1\right) + \left|q^*\right|\left(T^*_2 - T^*_1\right) \\
+		\frac{dT^*_2}{dt^*} &= k_T\left(T^*_{02} - T^*_2\right) + \left|q^*\right|\left(T^*_1 - T^*_2\right) \\
+		\frac{dS^*_1}{dt^*} &= k_S\left(S^*_{01} - S^*_1\right) + \left|q^*\right|\left(S^*_2 - S^*_1\right) \\
+		\frac{dS^*_2}{dt^*} &= k_S\left(S^*_{02} - S^*_2\right) + \left|q^*\right|\left(S^*_1 - S^*_2\right)
+	\end{align*}
+	\end{footnotesize}
+	
+	\noindent Diese 4 Gleichungen werden auf 2 Gleichungen reduziert, indem man die Differenzen betrachtet
+	\begin{footnotesize}
+	\begin{align*}
+		\frac{dT^*}{dt^*} = \frac{dT^*_1}{dt^*} - \frac{dT^*_2}{dt^*} &= 
+		k_T\left(T^*_{0} + T^*_{02} - T^* - T^*_2 \right) + \left|q^*\right|\left(T^*_2 - T^*_1\right)  - \left( k_T\left(T^*_{02} - T^*_2\right) + \left|q^*\right|\left(T^*_1 - T^*_2\right) \right) \\
+		&= k_T\left(T^*_{0} - T^*\right) + k_T\left(T^*_{02} - T^*_2\right) + \left|q^*\right|\left(T^*_2 - T^*_1\right) - k_T\left(T^*_{02} - T^*_2\right) - \left|q^*\right|\left(T^*_1 - T^*_2\right) \\
+		&= k_T\left(T^*_{0} - T^*\right) - 2\left|q^*\right|\left(T^*_1 - T^*_2\right) \\
+		&= k_T\left(T^*_{0} - T^*\right) - 2\left|q^*\right|T^*
+	\end{align*}
+	\end{footnotesize}
+	
+	\noindent Äquivalent wird dies für die Gleichungen des Salzgehaltes gemacht. Daraus erhalten wir nun die beiden Gleichungen:
+	\begin{footnotesize}
+	\begin{align*}
+		\frac{dT}{dt} &= k_T\left(T_{0} - T\right) - 2\left|q\right|T \\		
+		\frac{dS}{dt} &= k_S\left(S_{0} - S\right) - 2\left|q\right|S
+	\end{align*}
+	\end{footnotesize}
+
+	
+	
+\end{document}
