@@ -25,6 +25,21 @@ module.exports = Backbone.View.extend({
 		self.$el.html(templates[self.template]({ colors: self.colors }));
 
 		return self.$el;
+	}, 
+
+	resize: function(){
+		var self = this;
+
+		var imgSize = $('#slides-container').height() - $('#navigation').height() - self.$el.height();
+
+		self.$el.find('img').css({
+			maxHeight: imgSize,
+			maxWidth: '100%',
+			width: 'auto',
+			height: 'auto'
+		});
+
+		self.$el.find('img').fadeIn(200);
 	}
 
 });

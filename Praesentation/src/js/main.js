@@ -50,7 +50,7 @@ $(document).ready(function(){
         $('body').removeClass('medium');
         $('body').removeClass('portrait');
 
-        if ($(window).width() < 1024){
+        if ($(window).width() < 1100){
             window.isMedium = true;
             $('body').addClass('medium');
         }

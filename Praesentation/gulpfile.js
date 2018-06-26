@@ -54,14 +54,14 @@ gulp.task('js', function(){
         .pipe(html2tpl('templates.js'));
     es.merge(labels, templates)
         .pipe(concat('templates.js'))
-        // .pipe(gulpif(env !== 'dev', streamify(uglify())))
+        .pipe(gulpif(env !== 'dev', streamify(uglify())))
         .pipe(gulp.dest('builds/'+env+'/js'));
 
     // compile custom code
     return browserify('./src/js/main', { debug: env === 'dev' })
         .bundle()
         .pipe(source('app.js'))
-        // .pipe(gulpif(env !== 'dev', streamify(uglify())))
+        .pipe(gulpif(env !== 'dev', streamify(uglify())))
         .pipe(gulp.dest('./builds/'+env+'/js'));
 
 });

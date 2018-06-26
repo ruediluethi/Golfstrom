@@ -53,6 +53,8 @@ module.exports = Backbone.View.extend({
 		'fazit'
 	],
 	vCrntSlide: undef,
+	prevSlide: undef,
+	nextSlide: undef,
 
 	vT01slider: undef,
 	vT02slider: undef,
@@ -137,14 +139,18 @@ module.exports = Backbone.View.extend({
 				slideNr = i;
 				if (i > 0){
 					self.$el.find('#navigation .go-back').show();
-					self.$el.find('#navigation .go-back').attr('href', 'slide/'+self.slidesTemplateList[i-1]);
+					self.prevSlide = 'slide/'+self.slidesTemplateList[i-1];
+					self.$el.find('#navigation .go-back').attr('href', self.prevSlide);
 				}else{
+					self.prevSlide = undef;
 					self.$el.find('#navigation .go-back').hide();
 				}
 				if (i < self.slidesTemplateList.length-1){
 					self.$el.find('#navigation .go-forward').show();
-					self.$el.find('#navigation .go-forward').attr('href', 'slide/'+self.slidesTemplateList[i+1]);
+					self.nextSlide = 'slide/'+self.slidesTemplateList[i+1];
+					self.$el.find('#navigation .go-forward').attr('href', self.nextSlide);
 				}else{
+					self.nextSlide = undef;
 					self.$el.find('#navigation .go-forward').hide();
 				}
 				break;
@@ -393,6 +399,7 @@ module.exports = Backbone.View.extend({
 		}
 
 		self.vCrntSlide = newVSlide; // the new slide is now the current
+		self.vCrntSlide.resize();
 		self.hideLoading();
 	},
 
@@ -502,14 +509,26 @@ module.exports = Backbone.View.extend({
 			S02: minValue + Math.random()*range,
 			kT:  minValue + Math.random()*range,
 			kS:  minValue + Math.random()*range,
-			//a:   minValue + Math.random()*range
+			a: 1,
+			b: 1,
+			c: 1
 		};
+
+		var alpha = 2*(1/params.kT)*(params.T01 - params.T02); 
+    	var beta  = 2*(1/params.kT)*(params.S01 - params.S02); 
+
+    	var g0 = alpha - beta;
+    	var maxG0 = 1.5;
+
+    	if (Math.abs(g0) > maxG0){
+    		params.a = maxG0/Math.abs(g0);
+    	}
 
 		self.doParamsAnimation(params);
 	},
 
 
-	doParamsAnimation(params){
+	doParamsAnimation: function(params){
 		var self = this;
 
 		var oldT01 = self.mSimulation.get('T01');
@@ -572,12 +591,16 @@ module.exports = Backbone.View.extend({
 
 	goForward: function(){
 		var self = this;
-		self.router.navigate(self.$el.find('#navigation .go-forward').attr('href'), {trigger: true});
+		if (self.nextSlide != undef){
+			self.router.navigate(self.nextSlide, {trigger: true});
+		}
 	},
 
 	goBack: function(){
 		var self = this;
-		self.router.navigate(self.$el.find('#navigation .go-back').attr('href'), {trigger: true});
+		if (self.prevSlide != undef){
+			self.router.navigate(self.prevSlide, {trigger: true});
+		}
 	},
 
 	linkClick: function(e){

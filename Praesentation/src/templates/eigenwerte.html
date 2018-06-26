@@ -1,4 +1,4 @@
-<h2>Eigenwerte</h2>
+<h2><span>Eigenwerte</span></h2>
 
 <div class="col col-100">
 	<p>
@@ -14,13 +14,15 @@
 		</span>
 		&gt; 0 
 		<span class="quad"></span>&#8658;<span class="quad"></span>
+		spur(Jf) < 0
+		<span class="quad"></span>&#8658;<span class="quad"></span>
 		&lambda;<sub>1</sub> + &lambda;<sub>2</sub> &lt; 0
 		<!--&lambda;<sub>1</sub>, &lambda;<sub>2</sub> &gt; 0 <span class="textrm">oder</span>
 		&lambda;<sub>1</sub>, &lambda;<sub>2</sub> &lt; 0-->
 	</p>
 
 	<p class="formula pull-back">
-		Det(Jf) = &lambda;<sub>1</sub>&#x2219;&lambda;<sub>2</sub> = 
+		det(Jf) = 
 		(1+|q|)(&gamma; + |q|)
 		<span class="over3rows">(</span>
 		1 +
@@ -41,15 +43,17 @@
 			<span class="over2rows">)</span>
 		</span>
 		<span class="over3rows">)</span>
+		 = &lambda;<sub>1</sub>&#x2219;&lambda;<sub>2</sub> 
 	</p>
 
 	<p>
 		Wobei <span class="high-yellow">dieser Teil</span> gerade <span class="formula">
+			&minus;
 			<span class="fraction">
 				<span class="enumerator">&nbsp;d&nbsp;</span>
 				<span class="numerator">dq</span>
 			</span>
-			g(q) = g'(q)
+			g(q) = &minus; g'(q)
 		</span>
 		entspricht.
 	</p>
@@ -60,14 +64,14 @@
 	</p>
 
 	<p class="formula pull-back">
-		g'(q<sub>i</sub>) &lt; 1
+		g'(q<sub>i</sub>) &lt; 1 &#8658; det(Jf) > 0
 		<span class="quad"></span>&#8658;<span class="quad"></span>
 		&lambda;<sub>1</sub>, &lambda;<sub>2</sub> &lt; 0</span>
 		<span class="quad"></span>&#8658;<span class="quad"></span>
 		q<sub>i</sub> <span class="textrm">stabil</span> <br>
-		g'(q<sub>i</sub>) &gt; 1
+		g'(q<sub>i</sub>) &gt; 1 &#8658; det(Jf) < 0
 		<span class="quad"></span>&#8658;<span class="quad"></span>
-		...
+		&lambda;<sub>1</sub> &lt; 0 <span class="textrm">oder</span> &lambda;<sub>2</sub> &lt; 0
 		<span class="quad"></span>&#8658;<span class="quad"></span>
 		q<sub>i</sub> <span class="textrm">instabil</span> <br>
 	</p>
