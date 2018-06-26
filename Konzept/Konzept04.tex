@@ -31,7 +31,7 @@
 	Nach Beschreibung muss \(T^*_1 > T^*_2\) sowie \(S^*_1 < S^*_2\) gelten. So gilt auch \(T^*_{01} > T^*_{02}\) sowie \(S^*_{01} < S^*_{02}\). Damit ist \(T^*_0 = T^*_{01} - T^*_{02} > 0\) und \(S^*_0 = S^*_{01} - S^*_{02} < 0\). Was wiederum bedeutet, dass für \(a, b, c, k_T, s_T > 0\) die Werte \(2\frac{ab}{k_T}T^*_0 = \alpha > 0\) und  \(2\frac{ac}{k_T}S^*_0 = \beta < 0\) gelten muss. Womit wiederum \(\alpha - \beta > 0\) gilt. Betrachten wir nun die Funktion \(g(q) = \alpha \frac{1}{1+|q|} - \beta \frac{\gamma}{\gamma + |q|} \):
 
 	\begin{center}
-	\includegraphics[width=9cm]{Diagramme/g_von_q.png} \\
+	\includegraphics[width=9cm]{Grafik/g_von_q.png} \\
 	\textit{Abb. 1 zeigt die Funktion \(g(q)\) für \(\alpha = 1, \gamma = 0.2\) und Variationen für \(\beta\). Dabei ist \(\beta < 0\) für die durchgezogenen Linien, \(\beta > 0\) und \(\alpha - \beta > 0\) für die gestrichelte Linien und \(\beta > 0\) und \(\alpha - \beta < 0\) für die gepunkteten Linien.}
 	\end{center}
 	
@@ -66,7 +66,7 @@
 	Die Werte für \(b\) und \(c\) für die lineare Approximation der Salzgehalt, Temperatur, Dichte Relation können aus der Abbildung 13.2 in den Unterlagen entnommen werden.
 	
 	\begin{center}
-	\includegraphics[width=9cm]{Diagramme/salz_temp_dichte.png} \\
+	\includegraphics[width=9cm]{Grafik/salz_temp_dichte.png} \\
 	\textit{Aus der Abbildung 13.2 in den Unterlagen, wurde für eine Dichte von \(1027.5~kg/m^3\) ein Salzgehalt von \(33~\permil\) und eine Temperatur von \(0^\circ\) abgelesen. Gehen wir nun von einem linearen Verhalten aus, so müsste bei gleichbleibender Dichte und einem Salzgehalt von \(37~\permil\) die Temperatur \(30^\circ\) abzulesen sein. Mit diesen Werten und den folgenden zwei Gleichungen, können nun die Konstanten \(b\) und \(c\) (unter der Annahme von \(\rho_0 = 1000~kg/m^3\)) bestimmt werden:}
 	\begin{align*}
 		\left. \begin{array}{ll}
@@ -85,7 +85,7 @@
 	Eine notwendige Erweiterung ist sicherlich, dass \(T_0\) (sowie evtl. \(S_0\)?) als eine Funktion von \(t\) beschrieben werden. So unterliegt \(T_0\) über das Jahr hinweg einer Temperaturschwankung, welche problemlos als Sinus interpoliert werden könnten:
 	
 	\begin{center}
-	\includegraphics[width=9cm]{Diagramme/GISTEMP.png} \\
+	\includegraphics[width=9cm]{Grafik/GISTEMP.png} \\
 	\textit{Historischer Temperaturverlauf der globalen Umgebungstemperatur über das Jahr. Es wird die Differenz zu einem jährlichen globalen Mittel dargestellt.  \\
 	Quelle: \url{https://data.giss.nasa.gov/gistemp/graphs/}}
 	\end{center}	
@@ -100,7 +100,7 @@
 	Für ein besseres Verständnis des Modelles haben wir in einer ersten Studie die 6 verschiedenen Fälle von \(\alpha, \beta \) und \(\alpha - \beta\) betrachtet. Dabei wurden jeweils nur die Konstanten \(T^*_{01}, T^*_{02}\) und \(S^*_{01}, S^*_{02}\) variiert. Für die restlichen Konstanten wurden folgende Werte benutzt: \(k_T = 1, k_S = 0.1 \Rightarrow \gamma = 0.1\) und \(a = b = c = 1 \). 
 	
 	\begin{center}
-	\includegraphics[width=14cm]{Diagramme/Fallstudie.png}
+	\includegraphics[width=14cm]{Grafik/Fallstudie.png}
 	\begin{align*}
 		\textrm{Fall 1: } &\qquad \alpha > \beta > 0: g(0) = \alpha - \beta > 0 &\qquad \footnotesize{\textrm{(rot, durchgezogen)}} \\
 		&\qquad T^*_{01} = 1, T^*_{02} = 0.5, S^*_{01} = 1, S^*_{02} = 0.75 \Rightarrow \alpha = 1, \beta = 0.5 \\
