@@ -77,6 +77,150 @@
 	\end{align*}
 	\end{footnotesize}
 
+	\noindent Funktion für die Dichte \(\rho_i = \rho_0 - bT_i + cS_i\) in die Gleichung für den Fluss eingesetzt:
+	\begin{footnotesize}
+	\begin{align*}
+		q^* = a\left( \rho^*_2 - \rho^*_1 \right) &=
+		a \left( 
+			\rho^*_0 - bT^*_2 + cS^*_2 -
+			\left( \rho^*_0 - bT^*_1 + cS^*_1 \right)
+		\right) \\
+		&= a \left( b \left(T^*_1 - T^*_2\right) + c \left( S^*_2 - S^*_1 \right) \right) \\
+		&= a \left( bT^* - cS^* \right)
+	\end{align*}
+	\end{footnotesize}
 	
+	\noindent Entdimensionalisierung der Temperatur mit 
+	\begin{footnotesize}
+	\begin{align*}
+		t = k_T \cdot t^* \Rightarrow t^* = \frac{t}{k_T} &\qquad
+		q = 2\frac{q^*}{k_T} \Rightarrow q^* = \frac{q \cdot k_T}{2} \qquad
+		T = \frac{T^*}{T^*_0} \Rightarrow T^* = T \cdot T^*_0 \qquad
+		S = \frac{S^*}{S^*_0} \Rightarrow S^* = S \cdot S^*_0
+	\end{align*}
+	\end{footnotesize}
+	Eingesetzt ergibt das für die Temperatur:
+	\begin{footnotesize}
+	\begin{align*}
+		\frac{dT^*}{dt^*} &= k_T\left(T^*_{0} - T^*\right) - 2\left|q^*\right|T^* \\
+		\frac{dT \cdot T^*_0}{\frac{dt}{k_T}} &= 
+		k_T\left(T^*_{0} - T \cdot T^*_0 \right) - 2\left|\frac{q \cdot k_T}{2}\right|T \cdot T^*_0 \\
+		\stackrel{\substack{
+			T^*_{0} \textrm{ konst.}\\
+			k_T > 0
+		}}{\Rightarrow} \frac{dT}{dt} &=
+		\left(1 - T\right) - \left|q\right|T
+	\end{align*}
+	\end{footnotesize}
+	Analog für den Salzgehalt:
+	\begin{footnotesize}
+	\begin{align*}	
+		\frac{dS^*}{dt^*} &= k_S\left(S^*_{0} - S^*\right) - 2\left|q^*\right|S^* \\
+		\frac{dS \cdot S^*_0}{\frac{dt}{k_T}} &= k_S\left(S^*_{0} - S \cdot S^*_0\right) - 2\left|\frac{q \cdot k_T}{2}\right|S \cdot S^*_0 \\
+		\Rightarrow \frac{dS}{dt} &= \underbrace{\frac{k_S}{k_T}}_{=\gamma}\left(1 - S\right) - \left|q\right|S
+	\end{align*}
+	\end{footnotesize}
+	und für den Fluss:
+	\begin{footnotesize}
+	\begin{align*}
+		q^* &= a \left( bT^* - cS^* \right)
+		\Rightarrow \frac{q \cdot k_T}{2} = a\left(b \cdot T \cdot T^*_0 - c \cdot S \cdot S^*_0 \right) \\
+		\Rightarrow q &= \underbrace{2\frac{ab}{k_T}T^*_0}_{=\alpha}T - \underbrace{2\frac{ac}{k_T}S^*_0}_{=\beta}S
+	\end{align*}
+	\end{footnotesize}
+	
+	\noindent Gleichgewichtsuntersuchung:
+	\begin{footnotesize}
+	\begin{align*}
+		\frac{dT}{dt} &= \left(1 - T\right) - \left|q\right|T \stackrel{!}{=} 0 \\
+		&\Rightarrow 1 - T\left(1 + |q|\right) \stackrel{!}{=} 0 \\
+		&\Rightarrow T = \frac{1}{1+|q|} \\
+		\Rightarrow \frac{dS}{dt} &= \gamma \left(1 - S\right) - \left|q\right|S \stackrel{!}{=} 0 \\
+		&\Rightarrow S = \frac{\gamma}{\gamma + |q|}
+	\end{align*}
+	\end{footnotesize}
+	Flussmenge wenn \(S\) und \(T\) im Gleichgewicht:
+	\begin{footnotesize}
+	\begin{align*}
+		q = \alpha T - \beta S
+		 = \alpha \frac{1}{1+|q|} - \beta \frac{\gamma}{\gamma + |q|} = g(q)
+	\end{align*}
+	\end{footnotesize}
+	Sei nun (Schnittpunkte der Winkelhalbierenden mit g(q))
+	\begin{footnotesize}
+	\begin{align*}
+		q = g(q) &\Rightarrow 0 = q - g(q) \stackrel{q > 0}{=}  q - \left(\alpha \frac{1}{1+q} - \beta \frac{\gamma}{\gamma + q} \right) \\
+		& \stackrel{\textrm{ist äquivalent zu}}{\Rightarrow}
+		k(q) := \left( q - g(q) \right) (1+q) (\gamma + q) = 0 \\
+		k(q) &= q(1+q) (\gamma + q) - \alpha \frac{(1+q) (\gamma + q)}{1+q} + \beta \frac{\gamma (1+q) (\gamma + q)}{\gamma + q} \\
+		&= q(1+q) (\gamma + q) - \alpha (\gamma + q) + \beta \gamma (1+q) \\
+		&= q \gamma + q^2 + q^2 \gamma + q^3 - \alpha \gamma - \alpha q + \beta \gamma + \beta \gamma q \\
+		&= q^3 + q^2(1 + \gamma) + q(\gamma - \alpha + \beta \gamma) - \alpha \gamma + \beta \gamma \\
+		&= q^3 + q^2(1 + \gamma) + q\left(\gamma \left(1 + \beta\right) - \alpha \right) + \gamma \left( \beta - \alpha \right)
+	\end{align*}
+	\end{footnotesize}
+	
+	\noindent Zu der Stabilitätsuntersuchung:
+	\begin{footnotesize}
+	\begin{align*}
+		\nabla f &= \left(\begin{array}{c}
+			1 - T - |\alpha T - \beta S|T \\
+			\gamma - \gamma S - |\alpha T - \beta S|S
+		\end{array}\right) \\
+		Jf &= \left(\begin{array}{cc}
+			\frac{\partial \nabla f_T}{\partial T} & \frac{\partial \nabla f_T}{\partial S} \\
+			\frac{\partial \nabla f_S}{\partial T} & \frac{\partial \nabla f_S}{\partial S} \\
+		\end{array}\right) = \left(\begin{array}{cc}
+			-1 - \frac{\alpha T - \beta S}{|\alpha T - \beta S|}\alpha T - |\alpha T - \beta S| &
+			-\frac{\alpha T - \beta S}{|\alpha T - \beta S|}(-\beta) T \\
+			-\frac{\alpha T - \beta S}{|\alpha T - \beta S|}\alpha S &
+			-\gamma -\frac{\alpha T - \beta S}{|\alpha T - \beta S|}(-\beta) S - |\alpha T - \beta S|
+		\end{array}\right) \\
+		&= \left(-1 - \frac{q}{|q|}\alpha T - |q| - \lambda\right)\cdot \left( -\gamma - \frac{q}{|q|}(-\beta) S - |q|- \lambda \right) - -\frac{q}{|q|}\alpha S \cdot  -\frac{q}{|q|}(-\beta) T \\
+		&= \gamma - \frac{q}{|q|}\beta S + |q| + \lambda 
+		+ \frac{q}{|q|}\alpha T\gamma - \frac{q^2}{|q|^2}\alpha T \beta S + \frac{q}{|q|} \alpha T |q| + \frac{q}{|q|}\alpha T\lambda \\
+		&+ |q|\gamma - |q|\frac{q}{|q|} \beta S + |q|^2 + |q|\lambda
+		+ \lambda \gamma - \lambda\frac{q}{|q|}\beta S + \lambda|q| + \lambda^2
+		+ \frac{q^2}{|q|^2}\alpha S \beta T \\
+		&= \lambda^2 + \lambda\left( 1 + \frac{q}{|q|}\alpha T + |q| + \gamma - \frac{q}{|q|}\beta S + |q| \right) 
+		+ \gamma - \frac{q}{|q|}\beta S + |q| + \frac{q}{|q|}\alpha T \gamma + \frac{q}{|q|}\alpha T |q| + |q|\gamma - |q|\frac{q}{|q|}\beta S + |q|^2 \\
+		&= \lambda^2 + \lambda \underbrace{\left( 
+		1  + \gamma + 2|q| + \frac{q}{|q|} \left( \underbrace{\alpha T - \beta S}_{=q} \right)
+		\right)}_{-\textrm{spur}(Jf) > 0 ~\Rightarrow~ \textrm{spur}(Jf) < 0} +
+		\underbrace{
+			\frac{q}{|q|}\left(\alpha T \gamma - \beta S + \alpha T |q| - |q|\beta S\right)
+			 + \underbrace{\gamma + |q| + |q|\gamma + |q|^2}_{=(1 + |q|)(\gamma + |q|)}
+		}_{\textrm{det}(Jf)}
+	\end{align*}		
+	\end{footnotesize}
+	Untersuchen wir die Determinante etwas genauer:
+	\begin{footnotesize}
+	\begin{align*}
+		\textrm{det}(Jf) &= \frac{q}{|q|}\left(\alpha T \gamma - \beta S + \alpha T |q| - |q|\beta S\right) + (1 + |q|)(\gamma + |q|) \\
+		&= (1 + |q|)(\gamma + |q|) \left(
+		\underbrace{
+		\frac{\frac{q}{|q|}\left(\alpha T \gamma - \beta S + \alpha T |q| - |q|\beta S\right)}{(1 + |q|)(\gamma + |q|)}}_{h(q)} + 1
+		\right)\\
+		h(q) &= \frac{\frac{q}{|q|}\alpha T \gamma - \frac{q}{|q|}\beta S + |q|\frac{q}{|q|}(\alpha T - \beta S)}
+		{(1+|q|)(\gamma + |q|} \\
+		&= 
+		\frac{q}{|q|}
+		\frac{\frac{\alpha \gamma}{1 + |q|} - \frac{\beta \gamma}{\gamma + |q|} + 
+		\frac{|q| \alpha}{1+|q|} - \frac{|q| \beta\gamma}{\gamma + |q|}}
+		{(1+|q|)(\gamma + |q|)} \\
+		&= \frac{q}{|q|}
+		\frac{\frac{\alpha}{1+|q|}(\gamma + |q|) - \frac{\beta \gamma}{\gamma + |q|}(1 + \gamma)}
+		{(1+|q|)(\gamma + |q|)} \\
+		&= \frac{q}{|q|} \left(
+			\frac{\frac{\alpha}{1+|q|}}{1+|q|} - \frac{\frac{\beta \gamma}{\gamma + |q|}}{\gamma+|q|}
+		\right) \\
+		&= \frac{q}{|q|}
+		\left(
+			\frac{\alpha}{(1 + |q|)^2} - \frac{\beta \gamma}{(\gamma + |q|)^2}
+		\right)
+		= -g'(q) \\
+		\Rightarrow \textrm{det}(Jf) &= (1 + |q|)(\gamma + |q|)(1 - g'(q))
+	\end{align*}
+	\end{footnotesize}		
 	
 \end{document}
