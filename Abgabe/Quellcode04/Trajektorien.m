@@ -36,7 +36,7 @@ disp(['beta = ',num2str(beta)]);
 
 rng(4);
 
-for i = 1:2
+for i = 1:20
 
     random_range = 2;
     
@@ -155,8 +155,6 @@ dS = @(T,S) gamma.*(1 - S) - abs(alpha.*T - beta.*S).*S;
 %dT = @(T,S) k_T.*(Tstar_0 - T) - 2.*abs(a.*(b.*T - c.*S)).*T;
 %dS = @(T,S) k_S.*(Sstar_0 - S) - 2.*abs(a.*(b.*T - c.*S)).*S;
 n = sqrt( dT(T,S).^2 + dS(T,S).^2 ); % norm
-
-dT(T,S) 
 
 q_plot = quiver(T,S,dT(T,S)./n,dS(T,S)./n,0.5);
 q_plot.Color = [0.5 0.5 0.5];

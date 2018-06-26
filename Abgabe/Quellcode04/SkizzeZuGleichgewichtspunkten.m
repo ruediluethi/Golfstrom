@@ -57,8 +57,6 @@ title(subplots(2),'k(q) := ( q - g(q) )( 1 + q )( \gamma + q )');
 xlabel(subplots(2),'q');
 ylabel(subplots(2),'k(q)');
 
-
-
 %fig = gcf;
 %fig.PaperUnits = 'centimeters';
 %fig.PaperPosition = [0 0 10 10];

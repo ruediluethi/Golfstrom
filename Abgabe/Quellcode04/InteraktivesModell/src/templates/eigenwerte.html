@@ -1,0 +1,78 @@
+<h2><span>Eigenwerte</span></h2>
+
+<div class="col col-100">
+	<p>
+		Aus dem charakteristischen Polynom der Jacobi-Matrix wissen wir über die Eigenwerte <span class="formula">&lambda;<sub>1</sub>, &lambda;<sub>2</sub></span> folgendes:
+	</p>
+
+	<p class="formula pull-back">
+		&minus;spur(Jf) = 
+		1 + &gamma; + 2|q| + 
+		<span class="fraction">
+			<span class="enumerator">q<sup>2</sup></span>
+			<span class="numerator">|q|</span>
+		</span>
+		&gt; 0 
+		<span class="quad"></span>&#8658;<span class="quad"></span>
+		spur(Jf) < 0
+		<span class="quad"></span>&#8658;<span class="quad"></span>
+		&lambda;<sub>1</sub> + &lambda;<sub>2</sub> &lt; 0
+		<!--&lambda;<sub>1</sub>, &lambda;<sub>2</sub> &gt; 0 <span class="textrm">oder</span>
+		&lambda;<sub>1</sub>, &lambda;<sub>2</sub> &lt; 0-->
+	</p>
+
+	<p class="formula pull-back">
+		det(Jf) = 
+		(1+|q|)(&gamma; + |q|)
+		<span class="over3rows">(</span>
+		1 +
+		<span class="high-yellow">
+			<span class="fraction">
+				<span class="enumerator">q<sup>2</sup></span>
+				<span class="numerator">|q|</span>
+			</span>
+			<span class="over2rows">(</span>
+				<span class="fraction" style="width: 70px;">
+					<span class="enumerator">&alpha;</span>
+					<span class="numerator">(1+|q|)<sup>2</sup></span>
+				</span> &minus;
+				&beta;<span class="fraction" style="width: 70px;">
+					<span class="enumerator">&gamma;</span>
+					<span class="numerator">(&gamma;+|q|)<sup>2</sup></span>
+				</span>
+			<span class="over2rows">)</span>
+		</span>
+		<span class="over3rows">)</span>
+		 = &lambda;<sub>1</sub>&#x2219;&lambda;<sub>2</sub> 
+	</p>
+
+	<p>
+		Wobei <span class="high-yellow">dieser Teil</span> gerade <span class="formula">
+			&minus;
+			<span class="fraction">
+				<span class="enumerator">&nbsp;d&nbsp;</span>
+				<span class="numerator">dq</span>
+			</span>
+			g(q) = &minus; g'(q)
+		</span>
+		entspricht.
+	</p>
+
+	<p>
+		Ein Gleichgewichtspunkt <span class="formula">q<sub>i</sub></span> ist stabil, wenn für die Eigenwerte <span class="formula">&lambda;<sub>1</sub>, &lambda;<sub>2</sub> &lt; 0</span> gilt.<br>
+		Also:
+	</p>
+
+	<p class="formula pull-back">
+		g'(q<sub>i</sub>) &lt; 1 &#8658; det(Jf) > 0
+		<span class="quad"></span>&#8658;<span class="quad"></span>
+		&lambda;<sub>1</sub>, &lambda;<sub>2</sub> &lt; 0</span>
+		<span class="quad"></span>&#8658;<span class="quad"></span>
+		q<sub>i</sub> <span class="textrm">stabil</span> <br>
+		g'(q<sub>i</sub>) &gt; 1 &#8658; det(Jf) < 0
+		<span class="quad"></span>&#8658;<span class="quad"></span>
+		&lambda;<sub>1</sub> &lt; 0 <span class="textrm">oder</span> &lambda;<sub>2</sub> &lt; 0
+		<span class="quad"></span>&#8658;<span class="quad"></span>
+		q<sub>i</sub> <span class="textrm">instabil</span> <br>
+	</p>
+</div>
