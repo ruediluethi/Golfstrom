@@ -66,6 +66,11 @@ module.exports = Backbone.View.extend({
 	vBslider: undef,
 	vCslider: undef,
 
+	newParams: undef,
+	oldParams: undef,
+	animationStep: 0,
+	frameCounter: 0,
+
 	mSimulation: undef,
 
 	tempSaltParamsShown: false,
@@ -77,7 +82,7 @@ module.exports = Backbone.View.extend({
 		'click a.route': 'linkClick',
 		// 'click a.go-forward': 'goForward',
 		// 'click a.go-back': 'goBack',
-		'click .generate-random': 'generateRandomParams'
+		'click .generate-random': 'startAnimation'
 	},
 
 	initialize: function(options) {
@@ -390,17 +395,22 @@ module.exports = Backbone.View.extend({
 			vAnalyse.addLegend(1,'g\'(q)');
 			vAnalyse.addLegend(3,'k(q)');
 
-			var vTrajektorienPlot = new VTrajektorienPlot({ title: 'Zustandstrajektorien', colors: trajektorienColors});
+			var vTrajektorienPlot = new VTrajektorienPlot({ title: 'Zustandsraumdiagramm', colors: trajektorienColors});
 			newVSlide.listenTo(self.mSimulation, 'trajektorienend', function(){
 				vTrajektorienPlot.update(self.mSimulation.get('vectorField'),self.mSimulation.get('Tstack'),self.mSimulation.get('Sstack'));
 			});
 			newVSlide.$el.find('.analysis').append(vTrajektorienPlot.$el);
 			vTrajektorienPlot.render();
-			vTrajektorienPlot.addLabel();
+			// vTrajektorienPlot.addLabel();
 			vTrajektorienPlot.addGradient('Vektorfeld');
 			vTrajektorienPlot.addLegend('#000000','Trajektorien');
 
+			self.plot = vTrajektorienPlot;
+
 			self.mSimulation.simulate();
+			self.plot.save('0', function(){
+				console.log('done');
+			});
 		}
 
 		self.vCrntSlide = newVSlide; // the new slide is now the current
@@ -529,7 +539,86 @@ module.exports = Backbone.View.extend({
     		params.a = maxG0/Math.abs(g0);
     	}
 
-		self.doParamsAnimation(params);
+		// self.doParamsAnimation(params);
+		return params;
+	},
+
+
+	startAnimation: function(){
+		var self = this;
+
+		self.$el.find('#parameters').fadeOut(200);
+
+		self.oldParams = {
+			'T01': self.mSimulation.get('T01'),
+			'T02': self.mSimulation.get('T02'),
+			'S01': self.mSimulation.get('S01'),
+			'S02': self.mSimulation.get('S02'),
+			'kT': self.mSimulation.get('kT'),
+			'kS': self.mSimulation.get('kS'),
+			'a': self.mSimulation.get('a')
+		}
+		
+
+		self.newParams = self.generateRandomParams();
+
+		// console.log(self.oldParams);
+		// console.log(self.newParams);
+		// console.log(self.frameCounter);
+
+		self.animationStep = 0;
+		self.doAnimation();
+	},
+
+	doAnimation: function(){
+		var self = this;
+
+		self.frameCounter++;
+		console.log(self.frameCounter);
+
+		var s = self.animationStep/50;
+		s = -Math.sin(s*Math.PI+Math.PI/2)/2+0.5;
+
+		var T01 = self.oldParams.T01 + (self.newParams.T01 - self.oldParams.T01)*s;
+		self.vT01slider.setValue(T01);
+		self.mSimulation.set('T01',T01);
+
+		var T02 = self.oldParams.T02 + (self.newParams.T02 - self.oldParams.T02)*s;
+		self.vT02slider.setValue(T02);
+		self.mSimulation.set('T02',T02);
+
+		var S01 = self.oldParams.S01 + (self.newParams.S01 - self.oldParams.S01)*s;
+		self.vS01slider.setValue(S01);
+		self.mSimulation.set('S01',S01);
+
+		var S02 = self.oldParams.S02 + (self.newParams.S02 - self.oldParams.S02)*s;
+		self.vS02slider.setValue(S02);
+		self.mSimulation.set('S02',S02);
+
+		var kT = self.oldParams.kT + (self.newParams.kT - self.oldParams.kT)*s;
+		self.vKTslider.setValue(kT);
+		self.mSimulation.set('kT',kT);
+		
+		var kS = self.oldParams.kS + (self.newParams.kS - self.oldParams.kS)*s;
+		self.vKSslider.setValue(kS);
+		self.mSimulation.set('kS',kS);
+		
+		var a = self.oldParams.a + (self.newParams.a - self.oldParams.a)*s;
+		self.vAslider.setValue(a);
+		self.mSimulation.set('a',a);
+		
+		self.mSimulation.simulate();
+
+		self.plot.save(self.frameCounter, function(){
+			if (self.animationStep < 50){
+				self.animationStep++;
+				self.doAnimation();
+			}else{
+				if (self.frameCounter < 1000){
+					self.startAnimation();
+				}
+			}
+		});
 	},
 
 
@@ -550,10 +639,13 @@ module.exports = Backbone.View.extend({
 			counter++;
 			if (counter > animationSteps){
 				clearInterval(valueStep);
+				// self.generateRandomParams();
 				return;
 			}
 
-			var s = -Math.sin((counter/animationSteps)*Math.PI+Math.PI/2)/2+0.5;
+			var s = counter/animationSteps;
+			// var s = -Math.sin((counter/animationSteps)*Math.PI+Math.PI/2)/2+0.5;
+
 
 			var T01 = oldT01 + (params.T01 - oldT01)*s;
 			self.vT01slider.setValue(T01);
@@ -592,7 +684,6 @@ module.exports = Backbone.View.extend({
 		},1/10);
 	},
 
-	
 
 	goForward: function(e){
 		var self = this;

@@ -15,8 +15,8 @@ module.exports = Backbone.View.extend({
 	className: 'plot',
 
 	title: 'untitled',
-	width: 200,
-	height: 200,
+	width: 512,
+	height: 512,
 	paddingLeft: 0,
 	paddingRight: 0,
 	paddingTop: 0,
@@ -50,8 +50,8 @@ module.exports = Backbone.View.extend({
 		
 		var svg = d3.select($svg[0]);
 
-		self.width = self.$el.width();
-		self.height = self.width;
+		// self.width = self.$el.width();
+		// self.height = self.width;
 
 		svg.attr('width', self.width);
 		svg.attr('height', self.height);
@@ -92,8 +92,8 @@ module.exports = Backbone.View.extend({
 			.attr('stroke', function(d){
 				return d;
 			})
-			.attr('stroke-width', 2)
-			.attr('opacity', 0.5);
+			.attr('stroke-width', 1)
+			// .attr('opacity', 0.5);
 
 		
 
@@ -105,8 +105,8 @@ module.exports = Backbone.View.extend({
 
 		var fieldResolution = vectorField.length;
 
-		var lineLengthX = Math.floor(self.diagramWidth/(fieldResolution-1));
-		var lineLengthY = Math.floor(self.diagramHeight/(fieldResolution-1));
+		var lineLengthX = Math.floor(self.diagramWidth/(fieldResolution));
+		var lineLengthY = Math.floor(self.diagramHeight/(fieldResolution));
 
 		var fieldData = [];
 		for (var x = 0; x < fieldResolution; x++){
@@ -118,16 +118,136 @@ module.exports = Backbone.View.extend({
 				var vLength = Math.sqrt(dx*dx + dy*dy);
 
 				fieldData.push({
+					ix: x,
+					iy: y,
 					x: x*lineLengthX,
 					y: self.diagramWidth - lineLengthY - y*lineLengthY,
-					dx: dx/vLength * lineLengthX,
-					dy: dy/vLength * lineLengthY,
+					dx: dx/vLength,
+					dy: dy/vLength,
 					angle: window.atan2(dx,dy)
 				});
 			}
 		}
 
-		
+		/*
+		var rects = self.gField.selectAll('g.rect').data(fieldData);
+
+		rects.enter()
+			.append('g')
+			.attr('class', 'rect')
+			.attr('transform', function(d,i){
+				return 'translate('+d.x+','+d.y+')';
+			})
+			.each(function(d,i){
+				var g = d3.select(this);
+
+				// if (d.ix > 0 && d.iy > 0){
+
+					g.append('rect')
+						.attr('width',lineLengthX)
+						.attr('height',lineLengthY)
+						.attr('stroke', 'transparent')
+						.attr('stroke-width', 0);
+
+					g.append('line')
+						.attr('class', 'direction')
+						.attr('x1', lineLengthX/2)
+						.attr('y1', lineLengthY/2)
+						.attr('stroke-width', 1)
+						.attr('stroke', '#FFFFFF');
+				// }else{
+
+					if (d.ix == 0){
+						g.append('line')
+							.attr('x1', -5)
+							.attr('y1', 0)
+							.attr('x2', -5)
+							.attr('y2', lineLengthY)
+							.attr('stroke-width', 1)
+							.attr('stroke','#777777');
+
+						
+
+						var s = d.iy/fieldResolution*1.5;
+						if(Math.abs(Math.round(s)-s) < 0.03){
+
+							g.append('line')
+								.attr('x1', -5+4)
+								.attr('y1', lineLengthY/2)
+								.attr('x2', -5-4)
+								.attr('y2', lineLengthY/2)
+								.attr('stroke-width', 1)
+								.attr('stroke','#777777');
+
+							g.append('text')
+								.attr('class', 'small')
+								.attr('x', -5-11)
+								.attr('y', lineLengthY/2 +5)
+								.text(Math.round(s));
+
+						}else{
+							g.append('line')
+								.attr('x1', -3)
+								.attr('y1', lineLengthY/2)
+								.attr('x2', -7)
+								.attr('y2', lineLengthY/2)
+								.attr('stroke-width', 1)
+								.attr('stroke','#777777');
+						}
+					}
+
+					if (d.iy == 0){
+						g.append('line')
+							.attr('x1', 0)
+							.attr('y1', lineLengthX+5)
+							.attr('x2', lineLengthX)
+							.attr('y2', lineLengthX+5)
+							.attr('stroke-width', 1)
+							.attr('stroke','#777777');
+
+						
+
+						var t = d.ix/fieldResolution*1.5;
+
+						if(Math.abs(Math.round(t)-t) < 0.03){
+							
+							g.append('line')
+								.attr('x1', lineLengthX/2)
+								.attr('y1', lineLengthX+5+4)
+								.attr('x2', lineLengthX/2)
+								.attr('y2', lineLengthX+5-4)
+								.attr('stroke-width', 1)
+								.attr('stroke','#777777');
+
+							g.append('text')
+								.attr('class', 'small')
+								.attr('x', lineLengthX/2+2)
+								.attr('y', lineLengthY+5 + 12)
+								.text(Math.round(t));
+						}else{
+							g.append('line')
+								.attr('x1', lineLengthX/2)
+								.attr('y1', lineLengthX+5+2)
+								.attr('x2', lineLengthX/2)
+								.attr('y2', lineLengthX+5-2)
+								.attr('stroke-width', 1)
+								.attr('stroke','#777777');
+						}
+					// }
+
+				}
+			});
+
+		rects.each(function(d,i){
+			var g = d3.select(this);
+
+			g.select('rect').attr('fill', self.getColorOnColorWheel(d.angle / (2*Math.PI)));
+			g.select('line.direction').attr('x2', lineLengthX/2+d.dx);
+			g.select('line.direction').attr('y2', lineLengthY/2-d.dy);
+		});
+		*/
+
+
 		var rects = self.gField.selectAll('rect').data(fieldData);
 		rects.enter()
 			.append('rect')
@@ -146,7 +266,6 @@ module.exports = Backbone.View.extend({
 		rects.attr('fill', function(d,i){
 			return self.getColorOnColorWheel(d.angle / (2*Math.PI));
 		});
-
 
 		/*
 		var circle = self.gField.selectAll('circle').data(fieldData);
@@ -168,24 +287,38 @@ module.exports = Backbone.View.extend({
 		});
 		*/
 
-		
-		var lines = self.gField.selectAll('line').data(fieldData);
+
+		var lineData = [];
+		var lineResolution = 32;
+		var linesPerRect = fieldResolution/lineResolution;
+
+		var lineLengthX = Math.floor(self.diagramWidth/lineResolution);
+		var lineLengthY = Math.floor(self.diagramHeight/lineResolution);		
+
+		for (var i = 0; i < fieldData.length; i++){
+			if ( fieldData[i].ix > 0 && fieldData[i].iy > 0 && fieldData[i].ix%linesPerRect == 0 && fieldData[i].iy%linesPerRect == 0 ){
+				lineData.push(fieldData[i]);
+			}
+		}
+
+		var lines = self.gField.selectAll('line.abs').data(lineData);
 		lines.enter()
 			.append('line')
+			.attr('class', 'abs')
 			.attr('stroke-width', 1)
 			//.attr('stroke','#777777')
 			.attr('x1', function(d,i){
-				return d.x+lineLengthX/2;
+				return d.x;
 			})
 			.attr('y1', function(d,i){
-				return d.y+lineLengthY/2;
+				return d.y;
 			});
 
 		lines.attr('x2', function(d,i){
-				return d.x+lineLengthX/2 + d.dx;
+				return d.x + d.dx*lineLengthX*0.5;
 			})
 			.attr('y2', function(d,i){
-				return d.y+lineLengthY/2 - d.dy;
+				return d.y - d.dy*lineLengthY*0.5;
 			})
 			.attr('stroke', function(d,i){
 				return '#FFFFFF';
@@ -229,7 +362,7 @@ module.exports = Backbone.View.extend({
 			path.attr('d', pathDrawFunction(pathPoints));
 		});
 
-
+		/*
 		var endCircle = self.gGraphs.selectAll('circle').data(endData);
 		endCircle.enter()
 			.append('circle')
@@ -245,6 +378,7 @@ module.exports = Backbone.View.extend({
 		endCircle.attr('cy', function(d,i){
 			return d.y;
 		});
+		*/
 	},
 
 	addLabel: function(){
@@ -274,7 +408,7 @@ module.exports = Backbone.View.extend({
 
 		$yAxis.css({
 			position: 'absolute',
-			right: -17,
+			left: -17,
 			top: 32
 		});
 
@@ -298,7 +432,7 @@ module.exports = Backbone.View.extend({
 	addLegend: function(color, text){
 		var self = this;
 
-		var $legend = $('<div class="plot-legend"><svg></svg>'+text+'<div>');
+		var $legend = $('<div class="plot-legend" style="margin-left: 20px;"><svg></svg>'+text+'<div>');
 		var svgIcon = d3.select($legend.find('svg')[0]);
 		svgIcon.attr('width', 14);
 		svgIcon.attr('height', 14);
@@ -316,7 +450,7 @@ module.exports = Backbone.View.extend({
 	addGradient: function(text){
 		var self = this;
 
-		var $legend = $('<div class="plot-legend" style="margin-left: 0px;"><svg></svg>'+text+'<div>');
+		var $legend = $('<div class="plot-legend" style="margin-left: 20px;"><svg></svg>'+text+'<div>');
 
 		var iconSize = 14;
 		var gradientLength = 12;
@@ -342,8 +476,8 @@ module.exports = Backbone.View.extend({
 				.attr('fill', self.getColorOnColorWheel(alpha));
 
 			alpha = alpha*2*Math.PI;
-			var dx = Math.cos(alpha);
-			var dy = Math.sin(alpha);
+			var dx = Math.cos(-alpha);
+			var dy = Math.sin(-alpha);
 			var l = Math.sqrt(dx*dx + dy*dy);
 
 			gLines.append('line')
@@ -421,5 +555,21 @@ module.exports = Backbone.View.extend({
 		}
 
 		return color;
+	},
+
+	save: function(i, callback){
+		var self = this;
+
+		$.ajax({
+			
+			type: 'POST',
+            url: 'http://svg2png:8888/',
+            data: {
+            	'i': i,
+            	'svg': self.$el.find('.graphic-wrapper').html()
+            },
+                
+            success: callback
+		});
 	}
 });

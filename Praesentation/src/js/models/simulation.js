@@ -226,7 +226,7 @@ module.exports = Backbone.Model.extend({
 		this.set('stableQs', stableQs);
 
 		this.trigger('analyseend');
-		this.generateTrajektorien(16,20);
+		this.generateTrajektorien(16,128);
 	},
 
 	generateTrajektorien: function(amount, fieldResolution){
@@ -242,7 +242,7 @@ module.exports = Backbone.Model.extend({
     	var QnoDim = [alpha - beta];
 
     	// timesteps
-		var dt = 0.05;
+		var dt = 0.01;
 		var time = [dt];
 
 		var Tstack = [];
